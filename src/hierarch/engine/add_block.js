@@ -3,7 +3,7 @@ import push_upgrades from "./push_upgrades"
 var add_ahead = (address, program, code, block_name) => {
   var block = choose_block(code, program)
   var lead = leading_spaces(program, block)
-  var block_code = Math.random().toString()
+  var block_code = Math.random().toString().slice(2)
 
   var upgrades = [{
     begin: block.startIndex,
@@ -22,7 +22,7 @@ var add_ahead = (address, program, code, block_name) => {
 var add_behind = (address, program, code, block_name) => {
   var block = choose_block(code, program)
   var lead = leading_spaces(program, block)
-  var block_code = Math.random().toString()
+  var block_code = Math.random().toString().slice(2)
 
   var lagging_1 = program.source.slice(block.endIndex, block.endIndex+1)
 

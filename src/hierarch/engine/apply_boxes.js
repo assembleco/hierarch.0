@@ -111,7 +111,7 @@ const apply_boxes = (program, address) => {
       {
         begin: opening_name.startIndex,
         end: opening_name.endIndex,
-        grade: `Box original={${original}} code="${Math.random()}"`,
+        grade: `Box original={${original}} code="${Math.random().toString().slice(2)}"`,
       },
       {
         begin: closing_name.startIndex,
@@ -141,7 +141,7 @@ const apply_boxes = (program, address) => {
       {
         begin: name.startIndex,
         end: name.endIndex,
-        grade: `Box original={${original}} code="${Math.random()}"`,
+        grade: `Box original={${original}} code="${Math.random().toString().slice(2)}"`,
       },
     ])
   })
