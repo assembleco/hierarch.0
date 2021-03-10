@@ -39,8 +39,8 @@ class Sidebar extends React.Component {
           hold={this.props.hold}
         >
           <Heading>
-            <a href="#" onClick={() => scope.signal("add_prior", null)}>
-            + prior
+            <a href="#" onClick={() => scope.signal("add_ahead", null)}>
+            + ahead
             </a>
             &nbsp;|&nbsp;
             <a href="#" onClick={() => scope.signal("add_behind", null)}>

@@ -128,7 +128,7 @@ class Hierarch extends React.Component {
 
           if(
             code_key
-            && ["display", "add_prior", "add_behind"].some(x => this.state.scope.signal === x)
+            && ["display", "add_ahead", "add_behind"].some(x => this.state.scope.signal === x)
           )
             this.signal(this.state.scope.signal, code_key)
         }}

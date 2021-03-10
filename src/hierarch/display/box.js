@@ -37,7 +37,7 @@ class Box extends React.Component {
         outlineColor: (p.signal.signal === "display" && p.signal.code === p.code) ? "red" : "blue",
       },
     }))`
-    ${p => (p.signal.signal === "add_prior" && p.signal.code === p.code)
+    ${p => (p.signal.signal === "add_ahead" && p.signal.code === p.code)
       && css`&:before {${add_icon}}
     `}
     ${p => (p.signal.signal === "add_behind" && p.signal.code === p.code)
@@ -67,7 +67,7 @@ class Box extends React.Component {
             onClick={(e) => {
               if(scope.chosen.signal === "display")
                 scope.signal('change', code)
-              if(scope.chosen.signal === "add_prior") {
+              if(scope.chosen.signal === "add_ahead") {
                 add_ahead(scope.address, scope.index, code, "BlockA")
                   .then(block_code => scope.signal('change', block_code))
               }
@@ -127,7 +127,7 @@ class Box extends React.Component {
             onClick={(e) => {
               if(scope.chosen.signal === "display")
                 scope.signal('change', code)
-              if(scope.chosen.signal === "add_prior") {
+              if(scope.chosen.signal === "add_ahead") {
                 add_ahead(scope.address, scope.index, code, "BlockA")
                   .then(block_code => scope.signal('change', block_code))
               }
