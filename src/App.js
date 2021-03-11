@@ -7,28 +7,26 @@ import logo from './logo.svg'
 function App() {
   return (
     <Column>
-      <Block>
-        <Header>
-          <Logo src={logo} alt="hierarch logo" />
+      <Header>
+        <Logo src={logo} alt="hierarch logo" />
+
+        <Div>
+          <H3>Hierarch!</H3>
+
+          <P>
+            A programming engine breaking many rules –<br/>
+            change code by clicking and clacking.
+          </P>
 
           <Div>
-            <H3>Hierarch!</H3>
-
-            <P>
-              A programming engine breaking many rules –<br/>
-              change code by clicking and clacking.
-            </P>
-
-            <Div>
-              click. clack!
-            </Div>
-
-            <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
-              Read our engine's code.
-            </Link>
+            click. clack!
           </Div>
-        </Header>
-      </Block>
+
+          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+            Read our engine's code.
+          </Link>
+        </Div>
+      </Header>
 
       <Scope
         source="assemble-company.herokuapp.com/v1/graphql"
@@ -115,7 +113,7 @@ height: 6rem;
 margin-right: 2rem;
 `
 
-const Header = styled.header`
+const Header = styled(Block)`
 display: flex;
 flex-direction: row;
 font-size: 1rem;
