@@ -52,11 +52,13 @@ class Box extends React.Component {
     `}
     `
 
-
     var running = (
       scope.chosen &&
       scope.chosen.code === code
     )
+
+    if(running)
+      console.log("Rendering boxed original", original.componentStyle.rules[0])
 
     var focus_count = 0
 
