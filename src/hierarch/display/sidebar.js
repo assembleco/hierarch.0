@@ -8,7 +8,6 @@ import { Observer } from "mobx-react"
 import { HierarchScope } from "../index"
 import Scope from "../engine/scope"
 
-import Change from "./change"
 import Grid from "./grid"
 import Hierarchy from "./hierarchy"
 
@@ -87,35 +86,24 @@ class Sidebar extends React.Component {
   )
 
   renderHierarch = (scope) => (
-            scope.signal === 'grid'
-            ?
-              <Scope
-              {...JSON.parse(scope.code)}
-              >
-                {(model, upgrade) => (
-                  <Grid
-                  schema={JSON.parse(scope.code).schema}
-                  model={model}
-                  upgradeRecord={this.upgradeRecord(model, upgrade)}
-                  />
-                )}
-              </Scope>
-            : (
-              scope.signal === 'change'
-              ?
-                <Change.Board>
-                  <Change.Color name="background-color" />
-                  <Change.Color name="color" />
-                  <Change.Size name="font-size" />
-                  <Change.Size name="width" />
-                  <Change.Size name="height" />
-                </Change.Board>
-              :
-                <Hierarchy
-                  hierarchy={scope.hierarchy}
-                  display={this.props.display}
-                />
-              )
+    scope.signal === 'grid'
+    ?
+      <Scope
+      {...JSON.parse(scope.code)}
+      >
+        {(model, upgrade) => (
+          <Grid
+          schema={JSON.parse(scope.code).schema}
+          model={model}
+          upgradeRecord={this.upgradeRecord(model, upgrade)}
+          />
+        )}
+      </Scope>
+    :
+      <Hierarchy
+        hierarchy={scope.hierarchy}
+        display={this.props.display}
+      />
   )
 }
 
