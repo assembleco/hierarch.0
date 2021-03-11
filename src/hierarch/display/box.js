@@ -22,43 +22,20 @@ class Box extends React.Component {
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
 
-    var add_icon = `
-      font-size: 1.6rem;
-      border: 2px solid #ccc3da;
-      border-radius: 50%;
-      display: block;
-      width: 1.2rem;
-      height: 1.2rem;
-      content: "+";
-      align-self: center;
-      color: #ccc3da;
-      text-align: center;
-      line-height: 1rem;
-    `
-
     const Original = styled(original).attrs(p => ({
       "data-code": p.code,
       style: {
-        outlineWidth: p.signal.signal === "display" ? "1px" : 0,
-        outlineStyle: p.signal.signal === "display" ? "solid" : null,
-        outlineColor: (p.signal.signal === "display" && p.signal.code === p.code) ? "red" : "blue",
+        outline: (p.signal.signal === "display" && p.signal.code === p.code)
+        ? "1px solid red"
+        : null,
       },
     }))`
-    ${p => (p.signal.signal === "add_ahead" && p.signal.code === p.code)
-      && css`&:before {${add_icon}}
-    `}
-    ${p => (p.signal.signal === "add_behind" && p.signal.code === p.code)
-      && css`&:after {${add_icon}}
-    `}
     `
 
     var running = (
       scope.chosen &&
       scope.chosen.code === code
     )
-
-    if(running)
-      console.log("Rendering boxed original", original.componentStyle.rules[0])
 
     var focus_count = 0
 
