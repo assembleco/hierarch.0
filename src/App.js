@@ -97,9 +97,8 @@ min-height: 100vh;
   min-height: 100vh;
 }
 
-background: rgb(15,12,73);
-background: linear-gradient(0deg, rgba(15,12,73,1) 0%, rgba(16,116,181,1) 45%, rgba(26,228,202,1) 100%);
-color: #2209a4;
+background: #f8f6bb;
+color: #3d3b11;
 
 display: flex;
 flex-direction: column;
@@ -123,11 +122,7 @@ align-items: flex-end;
 const Link = styled.a.attrs(p => ({
   href: p.address,
 }))`
-color: #ccc3da;
-`
-
-const H2 = styled.h2`
-color: #6502ff;
+color: #3f0894;
 `
 
 const H3 = styled.h3`
