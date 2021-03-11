@@ -2,7 +2,7 @@ import { P, Box, Code, Div, H1, S } from './hierarch/display/lens'
 
 import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
-import logo from './hierarch.svg'
+import logo from './logo.svg'
 
 function App() {
   return (
