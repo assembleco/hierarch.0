@@ -42,129 +42,129 @@ class Box extends React.Component {
 
     return (
     <Observer>{() => (
-    children
-    ? ( running && scope.chosen.signal === "change"
-      ?
-      <Original
-        ref={this.changeableBox}
-        {...remainder}
-        signal={scope.chosen}
-        code={code}
-        onClick={(e) => {
-          if(scope.chosen.signal === "display")
-            scope.signal('change', code)
-          if(scope.chosen.signal === "add_ahead") {
-            add_ahead(scope.address, scope.index, code, "BlockA")
-              .then(block_code => scope.signal('change', block_code))
-          }
-          if(scope.chosen.signal === "add_behind") {
-            add_behind(scope.address, scope.index, code, "BlockB")
-              .then(block_code => scope.signal('change', block_code))
-          }
+      children
+      ? ( running && scope.chosen.signal === "change"
+        ?
+        <Original
+          ref={this.changeableBox}
+          {...remainder}
+          signal={scope.chosen}
+          code={code}
+          onClick={(e) => {
+            if(scope.chosen.signal === "display")
+              scope.signal('change', code)
+            if(scope.chosen.signal === "add_ahead") {
+              add_ahead(scope.address, scope.index, code, "BlockA")
+                .then(block_code => scope.signal('change', block_code))
+            }
+            if(scope.chosen.signal === "add_behind") {
+              add_behind(scope.address, scope.index, code, "BlockB")
+                .then(block_code => scope.signal('change', block_code))
+            }
 
-          e.stopPropagation()
-          e.preventDefault()
-          e.bubbles = false
-          return false
-        }}
-      >
-        {children instanceof Array
-        ? children.map((c, i) => {
-          if(typeof(c) === 'string') {
+            e.stopPropagation()
+            e.preventDefault()
+            e.bubbles = false
+            return false
+          }}
+        >
+          {children instanceof Array
+          ? children.map((c, i) => {
+            if(typeof(c) === 'string') {
 
-            return (
-              <Change
-                key={i}
-                focus={(e) => {
-                  console.log('focusing?', focus_count, c)
-                  if(e && focus_count === 0) {
-                    e.focus()
-                    focus_count += 1
-                  }
-                }}
-                record={() => this.recordChanges(scope.address, scope.index).then(() => scope.signal('display', code))}
-                escape={() => scope.signal('display', code)}
-              >
-                {c}
-              </Change>
-            )
-          }
-          return c
-        })
-        :
-        (typeof(children) === 'string'
-          ? <Change
-            focus={e => e && e.focus()}
-            record={() => this.recordChanges(scope.address, scope.index).then(() => scope.signal('display', code))}
-            escape={() => scope.signal('display', code)}
-          >
-            {children}
-          </Change>
-          : children
-        )
-        }
-      </Original>
-
-      :
-      <Original
-        {...remainder}
-        signal={scope.chosen}
-        code={code}
-        onClick={(e) => {
-          if(scope.chosen.signal === "display")
-            scope.signal('change', code)
-          if(scope.chosen.signal === "add_ahead") {
-            add_ahead(scope.address, scope.index, code, "BlockA")
-              .then(block_code => scope.signal('change', block_code))
-          }
-          if(scope.chosen.signal === "add_behind") {
-            add_behind(scope.address, scope.index, code, "BlockB")
-              .then(block_code => scope.signal('change', block_code))
-          }
-
-          e.stopPropagation()
-          e.preventDefault()
-          e.bubbles = false
-          return false
-        }}
-      >
-        {children instanceof Array
-        ? (() => {
-          var child_index = 0
-          return children.map((c, i) => {
-            if(typeof(c) === 'string' && this.state.changes[child_index]) {
-              child_index += 1
-              return this.state.changes[child_index - 1]
+              return (
+                <Change
+                  key={i}
+                  focus={(e) => {
+                    console.log('focusing?', focus_count, c)
+                    if(e && focus_count === 0) {
+                      e.focus()
+                      focus_count += 1
+                    }
+                  }}
+                  record={() => this.recordChanges(scope.address, scope.index).then(() => scope.signal('display', code))}
+                  escape={() => scope.signal('display', code)}
+                >
+                  {c}
+                </Change>
+              )
             }
             return c
           })
-        })()
-        : (this.state.changes[0] || children)
-        }
-      </Original>
-    )
-    : ( running && scope.chosen.signal === "resize"
-      ?
-      <Resize
-        original={original}
-        code={code}
-        {...remainder}
-      />
-      :
-      <Original
-        {...remainder}
-        signal={scope.chosen}
-        code={code}
-        onClick={(e) => {
-          scope.signal('resize', code)
+          :
+          (typeof(children) === 'string'
+            ? <Change
+              focus={e => e && e.focus()}
+              record={() => this.recordChanges(scope.address, scope.index).then(() => scope.signal('display', code))}
+              escape={() => scope.signal('display', code)}
+            >
+              {children}
+            </Change>
+            : children
+          )
+          }
+        </Original>
 
-          e.stopPropagation()
-          e.preventDefault()
-          e.bubbles = false
-          return false
-        }}
-      />
-    )
+        :
+        <Original
+          {...remainder}
+          signal={scope.chosen}
+          code={code}
+          onClick={(e) => {
+            if(scope.chosen.signal === "display")
+              scope.signal('change', code)
+            if(scope.chosen.signal === "add_ahead") {
+              add_ahead(scope.address, scope.index, code, "BlockA")
+                .then(block_code => scope.signal('change', block_code))
+            }
+            if(scope.chosen.signal === "add_behind") {
+              add_behind(scope.address, scope.index, code, "BlockB")
+                .then(block_code => scope.signal('change', block_code))
+            }
+
+            e.stopPropagation()
+            e.preventDefault()
+            e.bubbles = false
+            return false
+          }}
+        >
+          {children instanceof Array
+          ? (() => {
+            var child_index = 0
+            return children.map((c, i) => {
+              if(typeof(c) === 'string' && this.state.changes[child_index]) {
+                child_index += 1
+                return this.state.changes[child_index - 1]
+              }
+              return c
+            })
+          })()
+          : (this.state.changes[0] || children)
+          }
+        </Original>
+      )
+      : ( running && scope.chosen.signal === "resize"
+        ?
+        <Resize
+          original={original}
+          code={code}
+          {...remainder}
+        />
+        :
+        <Original
+          {...remainder}
+          signal={scope.chosen}
+          code={code}
+          onClick={(e) => {
+            scope.signal('resize', code)
+
+            e.stopPropagation()
+            e.preventDefault()
+            e.bubbles = false
+            return false
+          }}
+        />
+      )
     )}</Observer>
     )
   }
