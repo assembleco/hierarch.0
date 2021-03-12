@@ -1,6 +1,8 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
+import { observer } from "mobx-react"
+
 import Change, { Field } from "./change"
 import Resize from "./resize"
 import apply_changes from "../engine/apply_changes"
@@ -183,4 +185,4 @@ class Box extends React.Component {
   }
 }
 
-export default Box
+export default observer(Box)

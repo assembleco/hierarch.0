@@ -1,5 +1,7 @@
 import React from "react"
 import styled from "styled-components"
+import { observable, makeAutoObservable } from "mobx"
+import { observer } from "mobx-react"
 
 import Logo from "./display/logo"
 import Sidebar from "./display/sidebar"
@@ -8,25 +10,33 @@ import makeProgram from "./engine/program"
 import apply_boxes from "./engine/apply_boxes"
 import parse_hierarchy from "./engine/parse_hierarchy"
 
-const HierarchScope = React.createContext({
-  address: null,
-  chosen: { code: null, signal: null },
-  hierarchy: [0,0,[],"",false],
-  index: null,
-  signal: (s, code) => {},
-})
+const HierarchScope = React.createContext()
+
+class Scope {
+  address = "src/App.js"
+  chosen = {
+    code: null,
+    signal: "display",
+  }
+
+  hierarchy = [0,0,[],"",false]
+  index = null
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  signal = (signal, code) => {
+    if(signal !== this.chosen.signal || code !== this.chosen.code)
+      console.log("Signal", signal, code)
+
+    this.chosen = { code, signal }
+  }
+}
 
 class Hierarch extends React.Component {
   state = {
     open: false,
-
-    address: "src/App.js",
-    index: null,
-    hierarchy: [0,0,[],"",false],
-    scope: {
-      code: null,
-      signal: "display",
-    },
     mouse: {
       x: 0,
       y: 0,
@@ -36,17 +46,18 @@ class Hierarch extends React.Component {
   }
 
   pullSource = () => {
-    fetch(`http://${process.env.REACT_APP_HIERARCH_ADDRESS}/source?address=${this.state.address}`)
+    fetch(`http://${process.env.REACT_APP_HIERARCH_ADDRESS}/source?address=${this.scope.address}`)
       .then(response => response.text())
       .then(response => makeProgram(response))
       .then(program => {
-        this.setState({ index: program })
-        parse_hierarchy(program, h => this.setState({ hierarchy: h }))
+        this.scope.index = program
+        parse_hierarchy(program, h => this.scope.hierarchy = h)
       })
   }
 
   constructor(p) {
     super(p)
+    this.scope = new Scope()
     this.pullSource()
   }
 
@@ -91,28 +102,11 @@ class Hierarch extends React.Component {
 
   secondaryClick = (e) => {
     e.preventDefault()
-    apply_boxes(this.state.index, this.state.address)
-      // .then(response => response.text())
-      // .then(response => makeProgram(response))
-      // .then(program => this.setState({ index: program }))
-      .then(this.pullSource)
-  }
-
-  signal = (signal, code) => {
-    console.log("Signal", signal, code)
-    this.setState({ scope: { code, signal } })
+    apply_boxes(this.scope.index, this.scope.address).then(this.pullSource)
   }
 
   render = () => (
-    <HierarchScope.Provider
-      value={{
-        address: this.state.address,
-        chosen: this.state.scope,
-        hierarchy: this.state.hierarchy,
-        index: this.state.index,
-        signal: this.signal,
-      }}
-    >
+    <HierarchScope.Provider value={this.scope} >
       <Display
         hold={this.state.mouse.hold}
         scroll={this.state.mouse.scroll}
@@ -128,9 +122,9 @@ class Hierarch extends React.Component {
 
           if(
             code_key
-            && ["display", "add_ahead", "add_behind"].some(x => this.state.scope.signal === x)
+            && ["display", "add_ahead", "add_behind"].some(x => this.scope.chosen.signal === x)
           )
-            this.signal(this.state.scope.signal, code_key)
+            this.scope.signal(this.scope.chosen.signal, code_key)
         }}
       >
         {this.props.children}
@@ -139,7 +133,7 @@ class Hierarch extends React.Component {
         ?
           <Sidebar
             close={() => this.setState({ open: false })}
-            display={(code) => this.signal("display", code)}
+            display={(code) => this.scope.signal("display", code)}
             place={this.state.mouse}
           />
         :
@@ -207,4 +201,4 @@ width: 40px;
 `
 
 export { HierarchScope }
-export default Hierarch
+export default observer(Hierarch)
