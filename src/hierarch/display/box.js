@@ -25,10 +25,27 @@ class Box extends React.Component {
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
 
-    const Original = styled(original).attrs(p => ({
-      "data-code": p.code,
+    const Original = styled(original).attrs(({ code, running, scope }) => ({
+      onClick: (e) => {
+        if(scope.chosen.signal === "display")
+          scope.signal('change', code)
+        if(scope.chosen.signal === "add_ahead") {
+          add_ahead(scope.address, scope.index, code, "BlockA")
+            .then(block_code => scope.signal('change', block_code))
+        }
+        if(scope.chosen.signal === "add_behind") {
+          add_behind(scope.address, scope.index, code, "BlockB")
+            .then(block_code => scope.signal('change', block_code))
+        }
+        e.stopPropagation()
+        e.preventDefault()
+        e.bubbles = false
+        return false
+      },
+
+      "data-code": code,
       style: {
-        outline: p.running ? "1px solid red" : null,
+        outline: running ? "1px solid red" : null,
       },
     }))`
     `
@@ -47,25 +64,10 @@ class Box extends React.Component {
         <Original
           ref={this.changeableBox}
           {...remainder}
-          running={running.get()}
-          code={code}
-          onClick={(e) => {
-            if(scope.chosen.signal === "display")
-              scope.signal('change', code)
-            if(scope.chosen.signal === "add_ahead") {
-              add_ahead(scope.address, scope.index, code, "BlockA")
-                .then(block_code => scope.signal('change', block_code))
-            }
-            if(scope.chosen.signal === "add_behind") {
-              add_behind(scope.address, scope.index, code, "BlockB")
-                .then(block_code => scope.signal('change', block_code))
-            }
 
-            e.stopPropagation()
-            e.preventDefault()
-            e.bubbles = false
-            return false
-          }}
+          code={code}
+          running={running.get()}
+          scope={scope}
         >
           {children instanceof Array
           ? children.map((c, i) => {
@@ -107,25 +109,10 @@ class Box extends React.Component {
         :
         <Original
           {...remainder}
-          running={running.get()}
-          code={code}
-          onClick={(e) => {
-            if(scope.chosen.signal === "display")
-              scope.signal('change', code)
-            if(scope.chosen.signal === "add_ahead") {
-              add_ahead(scope.address, scope.index, code, "BlockA")
-                .then(block_code => scope.signal('change', block_code))
-            }
-            if(scope.chosen.signal === "add_behind") {
-              add_behind(scope.address, scope.index, code, "BlockB")
-                .then(block_code => scope.signal('change', block_code))
-            }
 
-            e.stopPropagation()
-            e.preventDefault()
-            e.bubbles = false
-            return false
-          }}
+          code={code}
+          running={running.get()}
+          scope={scope}
         >
           {children instanceof Array
           ? (() => {
@@ -152,8 +139,7 @@ class Box extends React.Component {
         :
         <Original
           {...remainder}
-          running={running.get()}
-          code={code}
+
           onClick={(e) => {
             scope.signal('resize', code)
 
@@ -162,6 +148,10 @@ class Box extends React.Component {
             e.bubbles = false
             return false
           }}
+
+          code={code}
+          running={running.get()}
+          scope={scope}
         />
       )
     )}</Observer>
