@@ -126,22 +126,6 @@ class Hierarch extends React.Component {
       </Display>
     </HierarchScope.Provider>
   )
-
-  upgradeRecord = (model, upgrade) => (rowIndex, columnId, value) => {
-    var company = model.companies.toJSON()[rowIndex]
-    console.log(company)
-    var grade = Object.assign(
-      {},
-      {
-        name: company.name,
-        address: company.address,
-        number: company.number,
-      },
-      { [columnId]: value },
-    )
-
-    upgrade(grade)
-  }
 }
 
 const Display = styled.div`
@@ -153,21 +137,6 @@ ${({hold, scroll, open}) => open && hold && `
   right: 0;
   bottom: 0;
 `}
-`
-
-const Modal = styled.div`
-text-align: left;
-position: absolute;
-height: 90vh;
-width: 90vw;
-background: #08080a;
-background: #a0a080;
-top: 5vh;
-left: 5vw;
-overflow: scroll;
-`
-
-const Page = styled.div`
 `
 
 const Corner = styled.div`

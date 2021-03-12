@@ -33,7 +33,6 @@ class Box extends React.Component {
       },
     }))`
     `
-
     var running = (
       scope.chosen &&
       scope.chosen.code === code
