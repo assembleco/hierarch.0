@@ -61,17 +61,6 @@ function App() {
   );
 }
 
-const Pair = styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr;
-grid-gap: 2rem;
-width: 40rem;
-`
-
-const San = styled(Pair)`
-grid-template-columns: repeat(3, 1fr);
-`
-
 const Block = styled.div`
 border: 2px solid purple;
 border-radius: 6px;
