@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-import { observer } from "mobx-react"
+import { observer, Observer } from "mobx-react"
 
 import Change, { Field } from "./change"
 import Resize from "./resize"
@@ -40,7 +40,9 @@ class Box extends React.Component {
 
     var focus_count = 0
 
-    return children
+    return (
+    <Observer>{() => (
+    children
     ? ( running && scope.chosen.signal === "change"
       ?
       <Original
@@ -162,6 +164,8 @@ class Box extends React.Component {
           return false
         }}
       />
+    )
+    )}</Observer>
     )
   }
 

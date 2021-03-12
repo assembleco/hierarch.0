@@ -1,6 +1,7 @@
 import React from "react"
 import { HierarchScope } from "../index"
 import styled from "styled-components"
+import { observer, Observer } from "mobx-react"
 
 class Hierarchy extends React.Component {
   state = {
@@ -25,9 +26,10 @@ const display_hierarchy_index = (index, hierarchy) => (
     ))
 )
 
-const Hierarchical = ({name, permissions, code}) => (
+const Hierarchical = observer(({name, permissions, code}) => (
     <HierarchScope.Consumer>
     {scope => (
+      <Observer>{() => (
         <Border running={scope.chosen.code && code === scope.chosen.code}>
 
         {
@@ -60,9 +62,10 @@ const Hierarchical = ({name, permissions, code}) => (
         >display grid</a>
         }
         </Border>
+      )}</Observer>
     )}
     </HierarchScope.Consumer>
-)
+))
 
 const Border = styled.span`
     border: ${p => p.running ? "1px solid #ee00ee" : "none"};

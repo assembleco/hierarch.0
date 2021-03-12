@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { observer } from "mobx-react"
+import { observer, Observer } from "mobx-react"
 
 import Scope from "./scope"
 import Logo from "./display/logo"
@@ -85,6 +85,8 @@ class Hierarch extends React.Component {
 
   render = () => (
     <HierarchScope.Provider value={this.scope} >
+
+    <Observer>{() => (
       <Display
         hold={this.state.mouse.hold}
         scroll={this.state.mouse.scroll}
@@ -124,6 +126,7 @@ class Hierarch extends React.Component {
           </Corner>
         }
       </Display>
+    )}</Observer>
     </HierarchScope.Provider>
   )
 }
