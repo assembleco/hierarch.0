@@ -2,6 +2,7 @@ import React from "react"
 import styled, { css } from "styled-components"
 
 import { observer, Observer } from "mobx-react"
+import { computed } from "mobx"
 
 import Change, { Field } from "./change"
 import Resize from "./resize"
@@ -27,16 +28,14 @@ class Box extends React.Component {
     const Original = styled(original).attrs(p => ({
       "data-code": p.code,
       style: {
-        outline: (p.signal.signal === "display" && p.signal.code === p.code)
-        ? "1px solid red"
-        : null,
+        outline: p.running ? "1px solid red" : null,
       },
     }))`
     `
-    var running = (
+    var running = computed(() => (
       scope.chosen &&
       scope.chosen.code === code
-    )
+    ))
 
     var focus_count = 0
 
@@ -48,7 +47,7 @@ class Box extends React.Component {
         <Original
           ref={this.changeableBox}
           {...remainder}
-          signal={scope.chosen}
+          running={running.get()}
           code={code}
           onClick={(e) => {
             if(scope.chosen.signal === "display")
@@ -108,7 +107,7 @@ class Box extends React.Component {
         :
         <Original
           {...remainder}
-          signal={scope.chosen}
+          running={running.get()}
           code={code}
           onClick={(e) => {
             if(scope.chosen.signal === "display")
@@ -153,7 +152,7 @@ class Box extends React.Component {
         :
         <Original
           {...remainder}
-          signal={scope.chosen}
+          running={running.get()}
           code={code}
           onClick={(e) => {
             scope.signal('resize', code)
