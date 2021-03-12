@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { observable, makeAutoObservable } from "mobx"
 import { observer } from "mobx-react"
 
+import Scope from "./scope"
 import Logo from "./display/logo"
 import Sidebar from "./display/sidebar"
 
@@ -11,28 +11,6 @@ import apply_boxes from "./engine/apply_boxes"
 import parse_hierarchy from "./engine/parse_hierarchy"
 
 const HierarchScope = React.createContext()
-
-class Scope {
-  address = "src/App.js"
-  chosen = {
-    code: null,
-    signal: "display",
-  }
-
-  hierarchy = [0,0,[],"",false]
-  index = null
-
-  constructor() {
-    makeAutoObservable(this)
-  }
-
-  signal = (signal, code) => {
-    if(signal !== this.chosen.signal || code !== this.chosen.code)
-      console.log("Signal", signal, code)
-
-    this.chosen = { code, signal }
-  }
-}
 
 class Hierarch extends React.Component {
   state = {
