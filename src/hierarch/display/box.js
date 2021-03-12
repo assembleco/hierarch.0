@@ -12,6 +12,35 @@ import { add_ahead, add_behind } from "../engine/add_block"
 
 import { HierarchScope } from "../index"
 
+var makeDisplayBlock = (original, code, children, scope, running) => (
+  styled(original).attrs(() => ({
+    "data-code": code,
+    style: { outline: running.get() ? "1px solid red" : null },
+
+    onClick: (e) => {
+      console.log("Click!", code)
+
+      if(scope.chosen.signal === "display")
+        scope.signal('change', code)
+
+      if(scope.chosen.signal === "add_ahead") {
+        add_ahead(scope.address, scope.index, code, "BlockA")
+          .then(block_code => scope.signal('change', block_code))
+      }
+
+      if(scope.chosen.signal === "add_behind") {
+        add_behind(scope.address, scope.index, code, "BlockB")
+          .then(block_code => scope.signal('change', block_code))
+      }
+
+      e.stopPropagation()
+      e.preventDefault()
+      e.bubbles = false
+      return false
+    },
+  }))``
+)
+
 class Box extends React.Component {
   changeableBox = React.createRef()
   state = { changes: [] }
@@ -25,49 +54,23 @@ class Box extends React.Component {
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
 
-    const Original = styled(original).attrs(({ code, running, scope }) => ({
-      onClick: (e) => {
-        if(scope.chosen.signal === "display")
-          scope.signal('change', code)
-        if(scope.chosen.signal === "add_ahead") {
-          add_ahead(scope.address, scope.index, code, "BlockA")
-            .then(block_code => scope.signal('change', block_code))
-        }
-        if(scope.chosen.signal === "add_behind") {
-          add_behind(scope.address, scope.index, code, "BlockB")
-            .then(block_code => scope.signal('change', block_code))
-        }
-        e.stopPropagation()
-        e.preventDefault()
-        e.bubbles = false
-        return false
-      },
-
-      "data-code": code,
-      style: {
-        outline: running ? "1px solid red" : null,
-      },
-    }))`
-    `
     var running = computed(() => (
       scope.chosen &&
       scope.chosen.code === code
     ))
+
+    var Original = makeDisplayBlock(original, code, children, scope, running)
 
     var focus_count = 0
 
     return (
     <Observer>{() => (
       children
-      ? ( running && scope.chosen.signal === "change"
+      ? ( running.get() && scope.chosen.signal === "change"
         ?
         <Original
           ref={this.changeableBox}
           {...remainder}
-
-          code={code}
-          running={running.get()}
-          scope={scope}
         >
           {children instanceof Array
           ? children.map((c, i) => {
@@ -107,13 +110,7 @@ class Box extends React.Component {
         </Original>
 
         :
-        <Original
-          {...remainder}
-
-          code={code}
-          running={running.get()}
-          scope={scope}
-        >
+        <Original {...remainder} >
           {children instanceof Array
           ? (() => {
             var child_index = 0
@@ -129,7 +126,7 @@ class Box extends React.Component {
           }
         </Original>
       )
-      : ( running && scope.chosen.signal === "resize"
+      : ( running.get() && scope.chosen.signal === "resize"
         ?
         <Resize
           original={original}
@@ -148,10 +145,6 @@ class Box extends React.Component {
             e.bubbles = false
             return false
           }}
-
-          code={code}
-          running={running.get()}
-          scope={scope}
         />
       )
     )}</Observer>
