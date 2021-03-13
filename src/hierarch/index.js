@@ -102,9 +102,11 @@ class Hierarch extends React.Component {
 
           if(
             code_key
-            && ["display", "add_ahead", "add_behind"].some(x => this.scope.chosen.signal === x)
+            && ["display", "add_ahead", "add_behind"].some(x =>
+              this.scope.chosen.signal === x
+            )
           )
-            this.scope.signal(this.scope.chosen.signal, code_key)
+            this.scope.sign(this.scope.chosen.signal, code_key)
         }}
       >
         {this.props.children}
@@ -113,7 +115,7 @@ class Hierarch extends React.Component {
         ?
           <Sidebar
             close={() => this.setState({ open: false })}
-            display={(code) => this.scope.signal("display", code)}
+            display={(code) => this.scope.sign("display", code)}
             place={this.state.mouse}
           />
         :

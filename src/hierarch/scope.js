@@ -2,6 +2,7 @@ import { observable, makeAutoObservable } from "mobx"
 
 class Scope {
   address = "src/App.js"
+
   chosen = {
     code: null,
     signal: "display",
@@ -14,7 +15,7 @@ class Scope {
     makeAutoObservable(this)
   }
 
-  signal = (signal, code) => {
+  sign = (signal, code) => {
     if(signal !== this.chosen.signal || code !== this.chosen.code)
       console.log("Signal", signal, code)
 

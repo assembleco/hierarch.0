@@ -38,27 +38,27 @@ const Hierarchical = observer(({name, permissions, code}) => (
         <a
             key={code}
             href="#"
-            onClick={() => scope.signal("change", code)}
-            onMouseOver={() => scope.signal("display", code)}
+            onClick={() => scope.sign("change", code)}
+            onMouseOver={() => scope.sign("display", code)}
         >{name}</a>
         :
         <span
             key={code}
-            onMouseOver={() => scope.signal("display", code)}
+            onMouseOver={() => scope.sign("display", code)}
         >{name}</span>
         }
 
         {permissions.indexOf("g-4:resize") !== -1
         && <a
             href="#"
-            onClick={() => scope.signal("resize", code) }
+            onClick={() => scope.sign("resize", code) }
         >resize</a>
         }
 
         {permissions.indexOf("g-4:scope:grid") !== -1
         && <a
             href="#"
-            onClick={() => scope.signal("grid", code) }
+            onClick={() => scope.sign("grid", code) }
         >display grid</a>
         }
         </Border>

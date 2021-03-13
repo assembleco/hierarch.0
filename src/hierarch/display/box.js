@@ -21,16 +21,16 @@ var makeDisplayBlock = (original, code, children, scope, running) => (
       console.log("Click!", code)
 
       if(scope.chosen.signal === "display")
-        scope.signal('change', code)
+        scope.sign('change', code)
 
       if(scope.chosen.signal === "add_ahead") {
         add_ahead(scope.address, scope.index, code, "BlockA")
-          .then(block_code => scope.signal('change', block_code))
+          .then(block_code => scope.sign('change', block_code))
       }
 
       if(scope.chosen.signal === "add_behind") {
         add_behind(scope.address, scope.index, code, "BlockB")
-          .then(block_code => scope.signal('change', block_code))
+          .then(block_code => scope.sign('change', block_code))
       }
 
       e.stopPropagation()
@@ -66,7 +66,7 @@ class Box extends React.Component {
     return (
     <Observer>{() => (
       children
-      ? ( running.get() && scope.chosen.signal === "change"
+      ? ( running && scope.chosen.signal === "change"
         ?
         <Original
           ref={this.changeableBox}
@@ -86,8 +86,11 @@ class Box extends React.Component {
                       focus_count += 1
                     }
                   }}
-                  record={() => this.recordChanges(scope.address, scope.index).then(() => scope.signal('display', code))}
-                  escape={() => scope.signal('display', code)}
+                  record={() =>
+                    this.recordChanges(scope.address, scope.index)
+                    .then(() => scope.sign('display', code))
+                  }
+                  escape={() => scope.sign('display', code)}
                 >
                   {c}
                 </Change>
@@ -99,8 +102,11 @@ class Box extends React.Component {
           (typeof(children) === 'string'
             ? <Change
               focus={e => e && e.focus()}
-              record={() => this.recordChanges(scope.address, scope.index).then(() => scope.signal('display', code))}
-              escape={() => scope.signal('display', code)}
+              record={() =>
+                this.recordChanges(scope.address, scope.index)
+                .then(() => scope.sign('display', code))
+              }
+              escape={() => scope.sign('display', code)}
             >
               {children}
             </Change>
@@ -138,7 +144,7 @@ class Box extends React.Component {
           {...remainder}
 
           onClick={(e) => {
-            scope.signal('resize', code)
+            scope.sign('resize', code)
 
             e.stopPropagation()
             e.preventDefault()

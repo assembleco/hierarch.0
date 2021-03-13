@@ -38,15 +38,15 @@ class Sidebar extends React.Component {
           hold={this.props.hold}
         >
           <Heading>
-            <a href="#" onClick={() => scope.signal("add_ahead", null)}>
+            <a href="#" onClick={() => scope.sign("add_ahead", null)}>
             + ahead
             </a>
             &nbsp;|&nbsp;
-            <a href="#" onClick={() => scope.signal("add_behind", null)}>
+            <a href="#" onClick={() => scope.sign("add_behind", null)}>
             + behind
             </a>
             &nbsp;|&nbsp;
-            <a href="#" onClick={() => scope.signal("display", null)}>
+            <a href="#" onClick={() => scope.sign("display", null)}>
             change
             </a>
           </Heading>
@@ -86,7 +86,7 @@ class Sidebar extends React.Component {
   )
 
   renderHierarch = (scope) => (
-    scope.signal === 'grid'
+    scope.sign === 'grid'
     ?
       <Scope
       {...JSON.parse(scope.code)}
