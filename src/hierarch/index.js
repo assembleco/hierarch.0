@@ -103,10 +103,10 @@ class Hierarch extends React.Component {
           if(
             code_key
             && ["display", "add_ahead", "add_behind"].some(x =>
-              this.scope.chosen.signal === x
+              this.scope.chosen.message === x
             )
           )
-            this.scope.sign(this.scope.chosen.signal, code_key)
+            this.scope.sign(this.scope.chosen.message, code_key)
         }}
       >
         {this.props.children}

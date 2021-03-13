@@ -20,15 +20,15 @@ var makeDisplayBlock = (original, code, children, scope, running) => (
     onClick: (e) => {
       console.log("Click!", code)
 
-      if(scope.chosen.signal === "display")
+      if(scope.chosen.message === "display")
         scope.sign('change', code)
 
-      if(scope.chosen.signal === "add_ahead") {
+      if(scope.chosen.message === "add_ahead") {
         add_ahead(scope.address, scope.index, code, "BlockA")
           .then(block_code => scope.sign('change', block_code))
       }
 
-      if(scope.chosen.signal === "add_behind") {
+      if(scope.chosen.message === "add_behind") {
         add_behind(scope.address, scope.index, code, "BlockB")
           .then(block_code => scope.sign('change', block_code))
       }
@@ -66,7 +66,7 @@ class Box extends React.Component {
     return (
     <Observer>{() => (
       children
-      ? ( running && scope.chosen.signal === "change"
+      ? ( running && scope.chosen.message === "change"
         ?
         <Original
           ref={this.changeableBox}
@@ -132,7 +132,7 @@ class Box extends React.Component {
           }
         </Original>
       )
-      : ( running.get() && scope.chosen.signal === "resize"
+      : ( running.get() && scope.chosen.message === "resize"
         ?
         <Resize
           original={original}

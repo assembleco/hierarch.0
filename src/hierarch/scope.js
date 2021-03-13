@@ -5,7 +5,7 @@ class Scope {
 
   chosen = {
     code: null,
-    signal: "display",
+    message: "display",
   }
 
   hierarchy = [0,0,[],"",false]
@@ -15,11 +15,11 @@ class Scope {
     makeAutoObservable(this)
   }
 
-  sign = (signal, code) => {
-    if(signal !== this.chosen.signal || code !== this.chosen.code)
-      console.log("Signal", signal, code)
+  sign = (message, code) => {
+    if(message !== this.chosen.message || code !== this.chosen.code)
+      console.log("Signal", message, code)
 
-    this.chosen = { code, signal }
+    this.chosen = { code, message }
   }
 }
 
