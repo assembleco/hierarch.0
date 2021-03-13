@@ -12,14 +12,12 @@ import { add_ahead, add_behind } from "../engine/add_block"
 
 import { HierarchScope } from "../index"
 
-var makeDisplayBlock = (original, code, children) => (
-  styled(original).attrs(({ scope }) => ({
+var makeDisplayBlock = (original, code, children, scope) => (
+  styled(original).attrs(({ running }) => ({
     "data-code": code,
-    style: { outline: scope.display === code && "1px solid red" },
+    style: { outline: running && "1px solid red" },
 
     onClick: (e) => {
-      console.log("Click!", code)
-
       if(scope.display === code)
         scope.chosen = code
 
@@ -37,28 +35,25 @@ class Box extends React.Component {
 
   render = () => (
     <HierarchScope.Consumer>
-    {scope =>
-      <Observer>{() => (
-        this.renderUsingScope(scope)
-      )}</Observer>
-    }
+    {this.renderUsingScope.bind(this)}
     </HierarchScope.Consumer>
   )
 
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
 
-    var Original = makeDisplayBlock(original, code, children)
+    var Original = makeDisplayBlock(original, code, children, scope)
 
     var focus_count = 0
 
     return (
+      <Observer>{() => (
       children
       ? ( scope.change === code
         ?
         <Original
           ref={this.changeableBox}
-          scope={scope}
+          running={scope.display === code}
           {...remainder}
         >
           {children instanceof Array
@@ -105,7 +100,7 @@ class Box extends React.Component {
         </Original>
 
         :
-        <Original {...remainder} scope={scope} >
+        <Original {...remainder} running={scope.display === code} >
           {children instanceof Array
           ? (() => {
             var child_index = 0
@@ -130,8 +125,9 @@ class Box extends React.Component {
           {...remainder}
         />
         :
-        <Original scope={scope} {...remainder} />
+        <Original {...remainder} running={scope.display === code} />
       )
+      )}</Observer>
     )
   }
 
