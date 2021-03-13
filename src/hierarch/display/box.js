@@ -18,6 +18,8 @@ var makeDisplayBlock = (original, code, children, scope) => (
     style: { outline: running && "1px solid red" },
 
     onClick: (e) => {
+      if(scope.chosen === code)
+        scope.change = code
       if(scope.display === code)
         scope.chosen = code
 
@@ -44,8 +46,6 @@ class Box extends React.Component {
 
     var Original = makeDisplayBlock(original, code, children, scope)
 
-    var focus_count = 0
-
     return (
       <Observer>{() => (
       children
@@ -56,47 +56,7 @@ class Box extends React.Component {
           running={scope.display === code}
           {...remainder}
         >
-          {children instanceof Array
-          ? children.map((c, i) => {
-            if(typeof(c) === 'string') {
-
-              return (
-                <Change
-                  key={i}
-                  focus={(e) => {
-                    console.log('focusing?', focus_count, c)
-                    if(e && focus_count === 0) {
-                      e.focus()
-                      focus_count += 1
-                    }
-                  }}
-                  record={() =>
-                    this.recordChanges(scope.address, scope.index)
-                    .then(() => scope.display = code)
-                  }
-                  escape={() => scope.display = code}
-                >
-                  {c}
-                </Change>
-              )
-            }
-            return c
-          })
-          :
-          (typeof(children) === 'string'
-            ? <Change
-              focus={e => e && e.focus()}
-              record={() =>
-                this.recordChanges(scope.address, scope.index)
-                .then(() => scope.display = code)
-              }
-              escape={() => scope.display = code}
-            >
-              {children}
-            </Change>
-            : children
-          )
-          }
+          {this.renderChangeableChildren(children, scope, code)}
         </Original>
 
         :
@@ -128,6 +88,53 @@ class Box extends React.Component {
         <Original {...remainder} running={scope.display === code} />
       )
       )}</Observer>
+    )
+  }
+
+  renderChangeableChildren = (children, scope, code) => {
+    var focus_count = 0
+
+    return (
+      children instanceof Array
+      ? children.map((c, i) => {
+        if(typeof(c) === 'string') {
+
+          return (
+            <Change
+            key={i}
+            focus={(e) => {
+              console.log('focusing?', focus_count, c)
+              if(e && focus_count === 0) {
+                e.focus()
+                focus_count += 1
+              }
+            }}
+            record={() =>
+              this.recordChanges(scope.address, scope.index)
+              .then(() => scope.change = null)
+            }
+            escape={() => scope.change = null}
+            >
+            {c}
+            </Change>
+          )
+        }
+        return c
+      })
+      :
+      (typeof(children) === 'string'
+        ? <Change
+        focus={e => e && e.focus()}
+        record={() =>
+          this.recordChanges(scope.address, scope.index)
+          .then(() => scope.change = null)
+        }
+        escape={() => scope.change = null}
+        >
+        {children}
+        </Change>
+        : children
+      )
     )
   }
 

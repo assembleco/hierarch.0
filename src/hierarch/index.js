@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import { observer, Observer } from "mobx-react"
-import { autorun } from "mobx"
 
 import Scope from "./scope"
 import Logo from "./display/logo"
