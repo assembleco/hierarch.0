@@ -21,7 +21,7 @@ var makeDisplayBlock = (original, code, children, scope, running) => (
       console.log("Click!", code)
 
       if(scope.signal.message === "display")
-        scope.sign('change', code)
+        scope.sign('choose', code)
 
       if(scope.signal.message === "add_ahead") {
         add_ahead(scope.address, scope.index, code, "BlockA")
@@ -132,7 +132,8 @@ class Box extends React.Component {
           }
         </Original>
       )
-      : ( running.get() && scope.signal.message === "resize"
+      : (
+        running.get() && scope.signal.message === "choose"
         ?
         <Resize
           original={original}
@@ -140,18 +141,7 @@ class Box extends React.Component {
           {...remainder}
         />
         :
-        <Original
-          {...remainder}
-
-          onClick={(e) => {
-            scope.sign('resize', code)
-
-            e.stopPropagation()
-            e.preventDefault()
-            e.bubbles = false
-            return false
-          }}
-        />
+        <Original {...remainder} />
       )
     )}</Observer>
     )
