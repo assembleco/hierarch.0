@@ -37,20 +37,6 @@ class Sidebar extends React.Component {
           place={this.props.place}
           hold={this.props.hold}
         >
-          <Heading>
-            <a href="#" onClick={() => scope.sign("add_ahead", null)}>
-            + ahead
-            </a>
-            &nbsp;|&nbsp;
-            <a href="#" onClick={() => scope.sign("add_behind", null)}>
-            + behind
-            </a>
-            &nbsp;|&nbsp;
-            <a href="#" onClick={() => scope.sign("display", null)}>
-            change
-            </a>
-          </Heading>
-
           <MainBody>
             <ScrollColumn>
               <ScrollBox onChange={num => {
@@ -178,9 +164,6 @@ overflow-y: scroll;
 ::-webkit-scrollbar {
   display: none;
 }
-`
-
-const Heading = styled.div`
 `
 
 const Close = styled.span`

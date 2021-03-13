@@ -1,25 +1,20 @@
-import { observable, makeAutoObservable } from "mobx"
+import { observable, makeAutoObservable, autorun } from "mobx"
 
 class Scope {
   address = "src/App.js"
 
-  signal = {
-    code: null,
-    message: "display",
-  }
+  display = null
+  chosen = null
+  change = null
 
   hierarchy = [0,0,[],"",false]
   index = null
 
   constructor() {
     makeAutoObservable(this)
-  }
-
-  sign = (message, code) => {
-    if(message !== this.signal.message || code !== this.signal.code)
-      console.log("Signal", message, code)
-
-    this.signal = { code, message }
+    autorun(() => console.log("display", this.display))
+    autorun(() => console.log("chosen", this.chosen))
+    autorun(() => console.log("change", this.change))
   }
 }
 

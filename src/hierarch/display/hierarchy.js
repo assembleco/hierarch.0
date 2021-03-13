@@ -30,7 +30,7 @@ const Hierarchical = observer(({name, permissions, code}) => (
     <HierarchScope.Consumer>
     {scope => (
       <Observer>{() => (
-        <Border running={scope.signal.code && code === scope.signal.code}>
+        <Border running={scope.display === code}>
 
         {
         permissions.indexOf("g-4:change") !== -1
@@ -38,29 +38,16 @@ const Hierarchical = observer(({name, permissions, code}) => (
         <a
             key={code}
             href="#"
-            onClick={() => scope.sign("change", code)}
-            onMouseOver={() => scope.sign("display", code)}
+            onClick={() => scope.change = code}
+            onMouseOver={() => scope.display = code}
         >{name}</a>
         :
         <span
             key={code}
-            onMouseOver={() => scope.sign("display", code)}
+            onMouseOver={() => scope.display = code}
         >{name}</span>
         }
 
-        {permissions.indexOf("g-4:resize") !== -1
-        && <a
-            href="#"
-            onClick={() => scope.sign("resize", code) }
-        >resize</a>
-        }
-
-        {permissions.indexOf("g-4:scope:grid") !== -1
-        && <a
-            href="#"
-            onClick={() => scope.sign("grid", code) }
-        >display grid</a>
-        }
         </Border>
       )}</Observer>
     )}

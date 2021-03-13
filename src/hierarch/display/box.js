@@ -12,26 +12,16 @@ import { add_ahead, add_behind } from "../engine/add_block"
 
 import { HierarchScope } from "../index"
 
-var makeDisplayBlock = (original, code, children, scope, running) => (
-  styled(original).attrs(() => ({
+var makeDisplayBlock = (original, code, children) => (
+  styled(original).attrs(({ scope }) => ({
     "data-code": code,
-    style: { outline: running.get() ? "1px solid red" : null },
+    style: { outline: scope.display === code && "1px solid red" },
 
     onClick: (e) => {
       console.log("Click!", code)
 
-      if(scope.signal.message === "display")
-        scope.sign('choose', code)
-
-      if(scope.signal.message === "add_ahead") {
-        add_ahead(scope.address, scope.index, code, "BlockA")
-          .then(block_code => scope.sign('change', block_code))
-      }
-
-      if(scope.signal.message === "add_behind") {
-        add_behind(scope.address, scope.index, code, "BlockB")
-          .then(block_code => scope.sign('change', block_code))
-      }
+      if(scope.display === code)
+        scope.chosen = code
 
       e.stopPropagation()
       e.preventDefault()
@@ -47,29 +37,28 @@ class Box extends React.Component {
 
   render = () => (
     <HierarchScope.Consumer>
-      {this.renderUsingScope.bind(this)}
+    {scope =>
+      <Observer>{() => (
+        this.renderUsingScope(scope)
+      )}</Observer>
+    }
     </HierarchScope.Consumer>
   )
 
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
 
-    var running = computed(() => (
-      scope.signal &&
-      scope.signal.code === code
-    ))
-
-    var Original = makeDisplayBlock(original, code, children, scope, running)
+    var Original = makeDisplayBlock(original, code, children)
 
     var focus_count = 0
 
     return (
-    <Observer>{() => (
       children
-      ? ( running && scope.signal.message === "change"
+      ? ( scope.change === code
         ?
         <Original
           ref={this.changeableBox}
+          scope={scope}
           {...remainder}
         >
           {children instanceof Array
@@ -88,9 +77,9 @@ class Box extends React.Component {
                   }}
                   record={() =>
                     this.recordChanges(scope.address, scope.index)
-                    .then(() => scope.sign('display', code))
+                    .then(() => scope.display = code)
                   }
-                  escape={() => scope.sign('display', code)}
+                  escape={() => scope.display = code}
                 >
                   {c}
                 </Change>
@@ -104,9 +93,9 @@ class Box extends React.Component {
               focus={e => e && e.focus()}
               record={() =>
                 this.recordChanges(scope.address, scope.index)
-                .then(() => scope.sign('display', code))
+                .then(() => scope.display = code)
               }
-              escape={() => scope.sign('display', code)}
+              escape={() => scope.display = code}
             >
               {children}
             </Change>
@@ -116,7 +105,7 @@ class Box extends React.Component {
         </Original>
 
         :
-        <Original {...remainder} >
+        <Original {...remainder} scope={scope} >
           {children instanceof Array
           ? (() => {
             var child_index = 0
@@ -133,7 +122,7 @@ class Box extends React.Component {
         </Original>
       )
       : (
-        running.get() && scope.signal.message === "choose"
+        scope.chosen === code
         ?
         <Resize
           original={original}
@@ -141,9 +130,8 @@ class Box extends React.Component {
           {...remainder}
         />
         :
-        <Original {...remainder} />
+        <Original scope={scope} {...remainder} />
       )
-    )}</Observer>
     )
   }
 

@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { observer, Observer } from "mobx-react"
+import { autorun } from "mobx"
 
 import Scope from "./scope"
 import Logo from "./display/logo"
@@ -100,13 +101,8 @@ class Hierarch extends React.Component {
             ? e.target.getAttribute("data-code")
             : null
 
-          if(
-            code_key
-            && ["display", "add_ahead", "add_behind"].some(x =>
-              this.scope.signal.message === x
-            )
-          )
-            this.scope.sign(this.scope.signal.message, code_key)
+          if(code_key)
+            this.scope.display = code_key
         }}
       >
         {this.props.children}
@@ -115,7 +111,7 @@ class Hierarch extends React.Component {
         ?
           <Sidebar
             close={() => this.setState({ open: false })}
-            display={(code) => this.scope.sign("display", code)}
+            display={(code) => this.scope.display = code}
             place={this.state.mouse}
           />
         :
