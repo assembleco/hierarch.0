@@ -30,7 +30,7 @@ const Hierarchical = observer(({name, permissions, code}) => (
     <HierarchScope.Consumer>
     {scope => (
       <Observer>{() => (
-        <Border running={scope.chosen.code && code === scope.chosen.code}>
+        <Border running={scope.signal.code && code === scope.signal.code}>
 
         {
         permissions.indexOf("g-4:change") !== -1
