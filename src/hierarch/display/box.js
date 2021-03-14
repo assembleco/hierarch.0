@@ -13,9 +13,9 @@ import { add_ahead, add_behind } from "../engine/add_block"
 import { HierarchScope } from "../index"
 
 var makeDisplayBlock = (original, code, children, scope) => (
-  styled(original).attrs(({ display }) => ({
+  styled(original).attrs(({ border }) => ({
     "data-code": code,
-    style: { outline: display && "1px solid red" },
+    style: { outline: border && `1px solid ${border}` },
 
     onClick: (e) => {
       if(scope.chosen === code)
@@ -69,13 +69,13 @@ class Box extends React.Component {
         code={code}
         {...remainder}
       >
-        <Original display {...remainder} >{children}</Original>
+        <Original border="blue" {...remainder} >{children}</Original>
       </Resize>
 
       :
       scope.display === code
       ?
-      <Original display {...remainder} >
+      <Original border="red" {...remainder} >
         {this.renderChangedChildren(children)}
       </Original>
 
