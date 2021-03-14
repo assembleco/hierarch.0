@@ -13,9 +13,9 @@ import { add_ahead, add_behind } from "../engine/add_block"
 import { HierarchScope } from "../index"
 
 var makeDisplayBlock = (original, code, children, scope) => (
-  styled(original).attrs(({ running }) => ({
+  styled(original).attrs(({ display }) => ({
     "data-code": code,
-    style: { outline: running && "1px solid red" },
+    style: { outline: display && "1px solid red" },
 
     onClick: (e) => {
       if(scope.chosen === code)
@@ -43,53 +43,65 @@ class Box extends React.Component {
 
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
+    remainder.display = scope.display === code
+    remainder.chosen = scope.chosen === code
+    remainder.change = scope.change === code
 
     var Original = makeDisplayBlock(original, code, children, scope)
 
     return (
       <Observer>{() => (
-      children
-      ? ( scope.change === code
-        ?
-        <Original
-          ref={this.changeableBox}
-          running={scope.display === code}
-          {...remainder}
-        >
-          {this.renderChangeableChildren(children, scope, code)}
-        </Original>
 
-        :
-        <Original {...remainder} running={scope.display === code} >
-          {children instanceof Array
-          ? (() => {
-            var child_index = 0
-            return children.map((c, i) => {
-              if(typeof(c) === 'string' && this.state.changes[child_index]) {
-                child_index += 1
-                return this.state.changes[child_index - 1]
-              }
-              return c
-            })
-          })()
-          : (this.state.changes[0] || children)
-          }
-        </Original>
-      )
-      : (
-        scope.chosen === code
-        ?
-        <Resize
-          original={original}
-          code={code}
-          {...remainder}
-        />
-        :
-        <Original {...remainder} running={scope.display === code} />
-      )
+      scope.change === code
+      ?
+      <Original
+        ref={this.changeableBox}
+        {...remainder}
+      >
+        {this.renderChangeableChildren(children, scope, code)}
+      </Original>
+
+      :
+      scope.chosen === code
+      ?
+      <Resize
+        original={original}
+        code={code}
+        {...remainder}
+      >
+        <Original display {...remainder} >{children}</Original>
+      </Resize>
+
+      :
+      scope.display === code
+      ?
+      <Original display {...remainder} >
+        {this.renderChangedChildren(children)}
+      </Original>
+
+      :
+      <Original {...remainder} >
+        {children}
+      </Original>
+
       )}</Observer>
     )
   }
+
+  renderChangedChildren = (children) => (
+    children instanceof Array
+    ? (() => {
+      var child_index = 0
+      return children.map((c, i) => {
+        if(typeof(c) === 'string' && this.state.changes[child_index]) {
+          child_index += 1
+          return this.state.changes[child_index - 1]
+        }
+        return c
+      })
+    })()
+    : (this.state.changes[0] || children)
+  )
 
   renderChangeableChildren = (children, scope, code) => {
     var focus_count = 0
