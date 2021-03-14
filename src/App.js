@@ -27,36 +27,6 @@ function App() {
           </Link>
         </Div>
       </Header>
-
-      <Scope
-        source="assemble-company.herokuapp.com/v1/graphql"
-        passcode={process.env.REACT_APP_HASURA_PASSCODE}
-        schema={{ companies: { '_': [ 'number', 'name', 'address' ], danger: "integer?"}}}
-        order={{danger: 'desc', name: 'asc'}}
-      >
-        {(model) => (
-          <Margin>
-            {model.companies.length > 0 &&
-              <>
-                <H3>Keep building!</H3>
-                ...using some similar programs:
-              </>
-            }
-            <Board>
-              {model.companies.map((c, i) => (
-                <Link
-                  key={i}
-                  address={c.address}
-                  style={{fontSize: (6 + (c.danger || 5) * 2) + 'px'}}
-                  target="_blank"
-                >
-                  {c.name}
-                </Link>
-              ))}
-            </Board>
-          </Margin>
-        )}
-      </Scope>
     </Column>
   );
 }
@@ -67,14 +37,6 @@ border-radius: 6px;
 padding: 2rem;
 overflow: hidden;
 background: #2a2a2a2a;
-`
-
-const Board = styled.ul`
-display: grid;
-grid-template-columns: repeat(4, auto);
-grid-row-gap: 0.2rem;
-grid-column-gap: 0.6rem;
-text-align: center;
 `
 
 const Column = styled.div`
@@ -116,11 +78,6 @@ color: #3f0894;
 
 const H3 = styled.h3`
 margin: 0;
-`
-
-const Margin = styled.div`
-margin-top: 2rem;
-text-align: center;
 `
 
 export default App;
