@@ -15,7 +15,7 @@ import { HierarchScope } from "../index"
 var makeDisplayBlock = (original, code, children, scope) => (
   styled(original).attrs(({ border }) => ({
     "data-code": code,
-    style: { outline: border && `1px solid ${border}` },
+    style: { outline: border && `1px dashed ${border}` },
 
     onClick: (e) => {
       if(scope.chosen === code)
