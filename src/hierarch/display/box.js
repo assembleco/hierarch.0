@@ -43,9 +43,6 @@ class Box extends React.Component {
 
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
-    remainder.display = scope.display === code
-    remainder.chosen = scope.chosen === code
-    remainder.change = scope.change === code
 
     var Original = makeDisplayBlock(original, code, children, scope)
 
@@ -80,9 +77,7 @@ class Box extends React.Component {
       </Original>
 
       :
-      <Original {...remainder} >
-        {children}
-      </Original>
+      <Original {...remainder} >{children}</Original>
 
       )}</Observer>
     )
