@@ -61,13 +61,9 @@ class Box extends React.Component {
       :
       scope.chosen === code
       ?
-      <Resize
-        original={original}
-        code={code}
-        {...remainder}
-      >
-        <Original border="blue" {...remainder} >{children}</Original>
-      </Resize>
+      <Original border="blue" {...remainder} >
+        {children}
+      </Original>
 
       :
       scope.display === code
