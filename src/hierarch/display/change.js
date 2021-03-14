@@ -54,7 +54,7 @@ border: none;
 display: inline;
 color: inherit;
 border-bottom: 1px dashed pink;
-font-family: "Monaco", monospace;
+font-family: monospace;
 font-size: inherit;
 width: ${p => `${p.value.length}ch`};
 `
