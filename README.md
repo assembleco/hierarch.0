@@ -1,4 +1,4 @@
-<img src="./src/hierarch.svg" height="80" width="120" />
+<img src="./src/logo.svg" height="80" width="120" />
 
 # Hierarch
 
