@@ -94,6 +94,7 @@ Hierarch is made by Assemble LLC, a Michigan-based company led by @c4lliope.
 * https://github.com/assembleapp/engine
 * https://github.com/assembleapp/assembleapp.co
 * https://github.com/assembleapp/bass
-* https://github.com/c4lliope/assembled (nonpublic)
+* https://github.com/assembleapp/assembled
+* https://github.com/assembleapp/assembled.0
 * https://github.com/assembleapp/snake
 * https://github.com/assembleapp/donors
