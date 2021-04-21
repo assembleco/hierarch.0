@@ -87,46 +87,57 @@ class Hierarch extends React.Component {
     <HierarchScope.Provider value={this.scope} >
 
     <Observer>{() => (
-      <Display
-        hold={this.state.mouse.hold}
-        scroll={this.state.mouse.scroll}
-        open={this.state.open}
-        onMouseMove={(e) => {
-          if(this.state.open && !this.state.mouse.hold)
-            this.setState({ mouse: { x: e.clientX, y: e.clientY }})
+      <>
+        <UpperBar>
+          <Corner>
+            <Logo
+              size={20}
+              repeat={5000}
+              onClick={() => this.setState({ open: true, mouse: { hold: false } })}
+            />
+          </Corner>
 
-          var code_key = e.target
-            && typeof e.target.getAttribute === 'function'
-            ? e.target.getAttribute("data-code")
-            : null
-
-          if(code_key)
-            this.scope.display = code_key
-        }}
-      >
-        {this.props.children}
-
-        {this.state.open
-        ?
           <Sidebar
             close={() => this.setState({ open: false })}
             display={(code) => this.scope.display = code}
             place={this.state.mouse}
           />
-        :
-          <Corner>
-            <Logo
-              size={20}
-              repeat={100000}
-              onClick={() => this.setState({ open: true, mouse: { hold: false } })}
-            />
-          </Corner>
-        }
-      </Display>
+        </UpperBar>
+
+        <Display
+          hold={this.state.mouse.hold}
+          scroll={this.state.mouse.scroll}
+          open={this.state.open}
+          onMouseMove={(e) => {
+            if(this.state.open && !this.state.mouse.hold)
+              this.setState({ mouse: { x: e.clientX, y: e.clientY }})
+
+            var code_key = e.target
+              && typeof e.target.getAttribute === 'function'
+              ? e.target.getAttribute("data-code")
+              : null
+
+            if(code_key)
+              this.scope.display = code_key
+          }}
+        >
+          {this.props.children}
+        </Display>
+      </>
     )}</Observer>
     </HierarchScope.Provider>
   )
 }
+
+var UpperBar = styled.div`
+height: 4rem;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+background-color: #FAF9DD;
+border-bottom: 2px solid #3d3b11;
+`
 
 const Display = styled.div`
 margin: 0;
@@ -140,9 +151,6 @@ ${({hold, scroll, open}) => open && hold && `
 `
 
 const Corner = styled.div`
-position: fixed;
-bottom: 40px;
-right: 80px;
 height: 40px;
 width: 40px;
 `
