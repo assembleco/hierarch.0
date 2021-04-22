@@ -24,14 +24,6 @@ import symbols from "../mockup/typography.png"
 import place from "../mockup/position.png"
 import dynamics from "../mockup/layout.png"
 
-const panes = {
-  size,
-  spacing,
-  symbols,
-  place,
-  dynamics,
-}
-
 class Sidebar extends React.Component {
   state = {
     open: null,
@@ -50,11 +42,25 @@ class Sidebar extends React.Component {
           />
         </Opener>
 
-        {Object.keys(panes).map((pane, i) => (
-          <Opener name={pane} >
-            <img src={panes[pane]} alt={pane} />
-          </Opener>
-        ))}
+        <Opener name="size" >
+          <img src={size} alt="size" />
+        </Opener>
+
+        <Opener name="spacing" >
+          <img src={spacing} alt="spacing" />
+        </Opener>
+
+        <Opener name="symbols" >
+          <img src={symbols} alt="symbols" />
+        </Opener>
+
+        <Opener name="place" >
+          <img src={place} alt="place" />
+        </Opener>
+
+        <Opener name="dynamics" >
+          <img src={dynamics} alt="dynamics" />
+        </Opener>
       </Bar>
     )}
     </HierarchScope.Consumer>
