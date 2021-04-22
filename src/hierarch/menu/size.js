@@ -27,8 +27,10 @@ var Size = () => (
 
 var Grid = styled.div`
 display: grid;
-grid-template-columns: repeat(4, 1fr);
+grid-template-columns: repeat(4, 4rem);
 grid-template-rows: repeat(3, 1fr) 1.5fr;
+width: 18rem;
+grid-column-gap: 0.5rem;
 `
 
 export default Size
