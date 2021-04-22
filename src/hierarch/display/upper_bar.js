@@ -38,30 +38,26 @@ class Sidebar extends React.Component {
   }
 
   render = () => (
-    <Bar>
-      {this.props.children}
+    <HierarchScope.Consumer>
+    {scope => (
+      <Bar>
+        {this.props.children}
 
-      <HierarchScope.Consumer>
-      {scope => (
-        <Place>
-          <MainBody>
-            <Opener name="Hierarch" >
-              <Hierarchy
-                hierarchy={scope.hierarchy}
-                display={this.props.display}
-              />
-            </Opener>
+        <Opener name="Hierarch" >
+          <Hierarchy
+            hierarchy={scope.hierarchy}
+            display={this.props.display}
+          />
+        </Opener>
 
-            {Object.keys(panes).map((pane, i) => (
-              <Opener name={pane} >
-                <img src={panes[pane]} alt={pane} />
-              </Opener>
-            ))}
-          </MainBody>
-        </Place>
-      )}
-      </HierarchScope.Consumer>
-    </Bar>
+        {Object.keys(panes).map((pane, i) => (
+          <Opener name={pane} >
+            <img src={panes[pane]} alt={pane} />
+          </Opener>
+        ))}
+      </Bar>
+    )}
+    </HierarchScope.Consumer>
   )
 }
 
@@ -78,22 +74,6 @@ var Opener = ({ name, children }) => {
     </>
   )
 }
-
-const Place = styled.div`
-display: flex;
-flex-direction: column;
-::-webkit-scrollbar {
-  display: none;
-}
-`
-
-const MainBody = styled.div`
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-width: auto;
-height: auto;
-`
 
 const BaseColumn = styled.div`
 background: #2a2a2aa0;
@@ -144,6 +124,7 @@ border-bottom: 2px solid #3d3b11;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
+align-items: baseline;
 `
 
 export default Sidebar
