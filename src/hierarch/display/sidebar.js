@@ -107,18 +107,12 @@ const Pane = styled.span`
 color: ${({ chosen }) => chosen ? '#3a3ad4' : '#d0d0d0'};
 `
 
-const Place = styled.div.attrs(p => ({
-  style: {
-    top: -20 + (p.place.y || 0) + 'px',
-    left: (p.place.hold ? -20 : 40) + (p.place.x || 0) + 'px',
-    overflowY: p.place.hold ? 'scroll' : 'hidden',
-  }
-}))`
+const Place = styled.div`
 position: fixed;
 display: flex;
 flex-direction: column;
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 `
 

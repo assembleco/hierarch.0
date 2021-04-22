@@ -15,12 +15,12 @@ const HierarchScope = React.createContext()
 class Hierarch extends React.Component {
   state = {
     open: false,
-    mouse: {
-      x: 0,
-      y: 0,
-      scroll: 0,
-      hold: false,
-    },
+  }
+
+  constructor(p) {
+    super(p)
+    this.scope = new Scope()
+    this.pullSource()
   }
 
   pullSource = () => {
@@ -33,41 +33,14 @@ class Hierarch extends React.Component {
       })
   }
 
-  constructor(p) {
-    super(p)
-    this.scope = new Scope()
-    this.pullSource()
-  }
-
   componentDidMount() {
     if(!window.assemble || !window.assemble.repull) {
       window.assemble = {}
       window.assemble.repull = this.pullSource.bind(this)
     }
-
-    document.onkeydown = e => {
-      if(e.code === "Space") {
-        e.preventDefault()
-        var original_scroll = this.state.mouse.scroll
-        this.setState({ mouse: Object.assign(
-          this.state.mouse,
-          {
-            hold: !this.state.mouse.hold,
-            scroll: this.state.mouse.hold
-            ? 0
-            : window.pageYOffset,
-          },
-        )})
-        if(!this.state.mouse.hold) {
-          window.scrollBy(0, original_scroll)
-        }
-      }
-    }
   }
 
   componentWillUnmount() {
-    document.onkeydown = null
-
     window.assemble.repull = null
     if(!Object.keys(window.assemble).length) window.assemble = null
   }
@@ -93,25 +66,19 @@ class Hierarch extends React.Component {
             <Logo
               size={20}
               repeat={5000}
-              onClick={() => this.setState({ open: true, mouse: { hold: false } })}
+              onClick={() => this.setState({ open: true })}
             />
           </Corner>
 
           <Sidebar
             close={() => this.setState({ open: false })}
             display={(code) => this.scope.display = code}
-            place={this.state.mouse}
           />
         </UpperBar>
 
         <Display
-          hold={this.state.mouse.hold}
-          scroll={this.state.mouse.scroll}
           open={this.state.open}
           onMouseMove={(e) => {
-            if(this.state.open && !this.state.mouse.hold)
-              this.setState({ mouse: { x: e.clientX, y: e.clientY }})
-
             var code_key = e.target
               && typeof e.target.getAttribute === 'function'
               ? e.target.getAttribute("data-code")
@@ -141,6 +108,7 @@ border-bottom: 2px solid #3d3b11;
 
 const Display = styled.div`
 margin: 0;
+margin-top: 4rem;
 ${({hold, scroll, open}) => open && hold && `
   position: fixed;
   top: ${-1 * (scroll || 0)}px;
