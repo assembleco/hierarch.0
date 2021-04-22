@@ -119,7 +119,6 @@ class Logo extends React.Component {
 }
 
 const OuterContainer = styled.div`
-  position: absolute;
   height: ${({ size }) => size * 1.5}px;
   width: ${({ size }) => size * 2.5}px;
   z-index: ${p => p.zIndex || 0};

@@ -33,10 +33,7 @@ class Sidebar extends React.Component {
   render = () => (
     <HierarchScope.Consumer>
       {scope => (
-        <Place
-          place={this.props.place}
-          hold={this.props.hold}
-        >
+        <Place>
           <MainBody>
             <ScrollColumn>
               <ScrollBox onChange={num => {
@@ -108,7 +105,6 @@ color: ${({ chosen }) => chosen ? '#3a3ad4' : '#d0d0d0'};
 `
 
 const Place = styled.div`
-position: fixed;
 display: flex;
 flex-direction: column;
 ::-webkit-scrollbar {

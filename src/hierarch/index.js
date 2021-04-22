@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import { observer, Observer } from "mobx-react"
 
 import Scope from "./scope"
@@ -61,7 +61,23 @@ class Hierarch extends React.Component {
 
     <Observer>{() => (
       <>
-        <UpperBar>
+        {this.state.open
+          ?
+          <UpperBar>
+            <LogoSpace>
+              <Logo
+                size={20}
+                repeat={5000}
+                onClick={() => this.setState({ open: false })}
+              />
+            </LogoSpace>
+
+            <Sidebar
+              close={() => this.setState({ open: false })}
+              display={(code) => this.scope.display = code}
+            />
+          </UpperBar>
+          :
           <Corner>
             <Logo
               size={20}
@@ -69,12 +85,7 @@ class Hierarch extends React.Component {
               onClick={() => this.setState({ open: true })}
             />
           </Corner>
-
-          <Sidebar
-            close={() => this.setState({ open: false })}
-            display={(code) => this.scope.display = code}
-          />
-        </UpperBar>
+        }
 
         <Display
           open={this.state.open}
@@ -104,21 +115,22 @@ left: 0;
 right: 0;
 background-color: #FAF9DD;
 border-bottom: 2px solid #3d3b11;
+display: flex;
+flex-direction: row;
+`
+
+var LogoSpace = styled.div`
 `
 
 const Display = styled.div`
 margin: 0;
-margin-top: 4rem;
-${({hold, scroll, open}) => open && hold && `
-  position: fixed;
-  top: ${-1 * (scroll || 0)}px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`}
+${({open}) => open && css`margin-top: 4rem;`}
 `
 
 const Corner = styled.div`
+position: fixed;
+top: 0;
+left: 0;
 height: 40px;
 width: 40px;
 `
