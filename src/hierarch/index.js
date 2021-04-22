@@ -117,6 +117,7 @@ background-color: #FAF9DD;
 border-bottom: 2px solid #3d3b11;
 display: flex;
 flex-direction: row;
+justify-content: space-between;
 `
 
 var LogoSpace = styled.div`
