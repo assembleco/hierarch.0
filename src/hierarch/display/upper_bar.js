@@ -62,18 +62,35 @@ class Sidebar extends React.Component {
 }
 
 var Opener = ({ name, children }) => {
-  var popover = usePopoverState()
+  var popover = usePopoverState({ animated: 250 })
 
   return (
     <>
       <PopoverDisclosure {...popover}>{name}</PopoverDisclosure>
       <Popover {...popover} aria-label={name}>
-        <PopoverArrow {...popover} />
-        {children}
+        <PopoverWrapper>
+          <PopoverArrow {...popover} />
+          {children}
+        </PopoverWrapper>
       </Popover>
     </>
   )
 }
+
+var PopoverWrapper = styled.div`
+  background-color: white;
+  padding: 16px;
+  border: 1px solid rgba(33, 33, 33, 0.25);
+  border-radius: 4px;
+  transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+  opacity: 0;
+  transform-origin: top center;
+  transform: translate3d(0, -20px, 0);
+  [data-enter] & {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+`
 
 const BaseColumn = styled.div`
 background: #2a2a2aa0;
