@@ -45,14 +45,8 @@ class Hierarch extends React.Component {
     if(!Object.keys(window.assemble).length) window.assemble = null
   }
 
-  componentDidUpdate() {
-    document.oncontextmenu = this.state.open
-      ? this.secondaryClick
-      : null
-  }
-
-  secondaryClick = (e) => {
-    e.preventDefault()
+  apply_boxes = () => {
+    this.setState({ open: !this.state.open })
     apply_boxes(this.scope.index, this.scope.address).then(this.pullSource)
   }
 
@@ -68,12 +62,12 @@ class Hierarch extends React.Component {
               <Logo
                 size={20}
                 repeat={5000}
-                onClick={() => this.setState({ open: false })}
+                onClick={() => this.apply_boxes()}
               />
             </LogoSpace>
 
             <Sidebar
-              close={() => this.setState({ open: false })}
+              close={() => this.apply_boxes()}
               display={(code) => this.scope.display = code}
             />
           </UpperBar>
@@ -82,7 +76,7 @@ class Hierarch extends React.Component {
             <Logo
               size={20}
               repeat={5000}
-              onClick={() => this.setState({ open: true })}
+              onClick={() => this.apply_boxes()}
             />
           </Corner>
         }
