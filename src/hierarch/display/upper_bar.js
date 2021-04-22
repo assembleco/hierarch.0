@@ -18,6 +18,7 @@ import {
   PopoverArrow,
 } from "reakit/Popover"
 
+import Size from "../menu/size"
 import size from "../mockup/size.png"
 import spacing from "../mockup/spacing.png"
 import symbols from "../mockup/typography.png"
@@ -35,14 +36,15 @@ class Sidebar extends React.Component {
       <Bar>
         {this.props.children}
 
-        <Opener name="Hierarch" visible >
+        <Opener name="Hierarch" >
           <Hierarchy
             hierarchy={scope.hierarchy}
             display={this.props.display}
           />
         </Opener>
 
-        <Opener name="size" >
+        <Opener name="size" visible >
+          <Size />
           <img src={size} alt="size" />
         </Opener>
 
