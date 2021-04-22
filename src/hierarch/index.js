@@ -57,7 +57,7 @@ class Hierarch extends React.Component {
       <>
         {this.state.open
           ?
-          <UpperBar>
+          <UpperBar display={(code) => this.scope.display = code} >
             <LogoSpace>
               <Logo
                 size={20}

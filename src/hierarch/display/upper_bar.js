@@ -11,6 +11,13 @@ import Scope from "../engine/scope"
 import Grid from "./grid"
 import Hierarchy from "./hierarchy"
 
+import {
+  usePopoverState,
+  Popover,
+  PopoverDisclosure,
+  PopoverArrow,
+} from "reakit/Popover"
+
 import size from "../mockup/size.png"
 import spacing from "../mockup/spacing.png"
 import symbols from "../mockup/typography.png"
@@ -38,40 +45,18 @@ class Sidebar extends React.Component {
       {scope => (
         <Place>
           <MainBody>
-            <ScrollColumn>
-              <ScrollBox onChange={num => {
-                console.log(num)
-                this.setState({ scroll: num })
-              }} />
-              <Pane chosen={this.state.scroll === 0}>Hierarch</Pane>
-              <Pane chosen={this.state.scroll === 1}>code</Pane>
+            <Opener name="Hierarch" >
+              <Hierarchy
+                hierarchy={scope.hierarchy}
+                display={this.props.display}
+              />
+            </Opener>
 
-              {Object.keys(panes).map((pane, i) => (
-                <Pane chosen={this.state.scroll === (i + 2)}>{pane}</Pane>
-              ))}
-            </ScrollColumn>
-
-            <Column>
-              <div>
-                <span>Hierarch</span>
-                <Close onClick={() => this.props.close()}><Icon path={mdiClose} size={1} /></Close>
-              </div>
-
-              {this.state.scroll === 0
-              ? <Hierarchy
-                  hierarchy={scope.hierarchy}
-                  display={this.props.display}
-                />
-
-              : this.state.scroll === 1
-              ? <pre><code>{scope.index.source}</code></pre>
-
-              : <img
-                src={panes[Object.keys(panes)[this.state.scroll - 2]]}
-                alt={Object.keys(panes)[this.state.scroll - 2]}
-                />
-              }
-            </Column>
+            {Object.keys(panes).map((pane, i) => (
+              <Opener name={pane} >
+                <img src={panes[pane]} alt={pane} />
+              </Opener>
+            ))}
           </MainBody>
         </Place>
       )}
@@ -80,19 +65,19 @@ class Sidebar extends React.Component {
   )
 }
 
-class ScrollBox extends React.Component {
-  render = () => (
-    <Scrollable onScroll={(e) =>
-      this.props.onChange(Math.floor(e.target.scrollTop / 10) % (Object.keys(panes).length + 1))
-    }>
-      <Scroller/>
-    </Scrollable>
+var Opener = ({ name, children }) => {
+  var popover = usePopoverState()
+
+  return (
+    <>
+      <PopoverDisclosure {...popover}>{name}</PopoverDisclosure>
+      <Popover {...popover} aria-label={name}>
+        <PopoverArrow {...popover} />
+        {children}
+      </Popover>
+    </>
   )
 }
-
-const Pane = styled.span`
-color: ${({ chosen }) => chosen ? '#3a3ad4' : '#d0d0d0'};
-`
 
 const Place = styled.div`
 display: flex;
