@@ -27,11 +27,14 @@ const panes = {
 
 class Sidebar extends React.Component {
   state = {
-    scroll: 0,
+    open: null,
   }
 
   render = () => (
-    <HierarchScope.Consumer>
+    <Bar>
+      {this.props.children}
+
+      <HierarchScope.Consumer>
       {scope => (
         <Place>
           <MainBody>
@@ -54,8 +57,15 @@ class Sidebar extends React.Component {
                 <Close onClick={() => this.props.close()}><Icon path={mdiClose} size={1} /></Close>
               </div>
 
-              {this.state.scroll === 0 ? this.renderHierarch(scope)
-              : this.state.scroll === 1 ? <pre><code>{scope.index.source}</code></pre>
+              {this.state.scroll === 0
+              ? <Hierarchy
+                  hierarchy={scope.hierarchy}
+                  display={this.props.display}
+                />
+
+              : this.state.scroll === 1
+              ? <pre><code>{scope.index.source}</code></pre>
+
               : <img
                 src={panes[Object.keys(panes)[this.state.scroll - 2]]}
                 alt={Object.keys(panes)[this.state.scroll - 2]}
@@ -65,28 +75,8 @@ class Sidebar extends React.Component {
           </MainBody>
         </Place>
       )}
-    </HierarchScope.Consumer>
-  )
-
-  renderHierarch = (scope) => (
-    scope.sign === 'grid'
-    ?
-      <Scope
-      {...JSON.parse(scope.code)}
-      >
-        {(model, upgrade) => (
-          <Grid
-          schema={JSON.parse(scope.code).schema}
-          model={model}
-          upgradeRecord={this.upgradeRecord(model, upgrade)}
-          />
-        )}
-      </Scope>
-    :
-      <Hierarchy
-        hierarchy={scope.hierarchy}
-        display={this.props.display}
-      />
+      </HierarchScope.Consumer>
+    </Bar>
   )
 }
 
@@ -133,9 +123,7 @@ const ScrollColumn = styled(Column)`
 position: relative;
 overflow: hidden;
 display: flex;
-flex-direction: column;
-justify-content: space-between;
-height: 8rem;
+flex-direction: row;
 `
 
 const Scroller = styled.div`
@@ -158,6 +146,19 @@ overflow-y: scroll;
 
 const Close = styled.span`
 float: right;
+`
+
+var Bar = styled.div`
+height: 4rem;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+background-color: #FAF9DD;
+border-bottom: 2px solid #3d3b11;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
 `
 
 export default Sidebar

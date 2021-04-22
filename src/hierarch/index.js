@@ -4,7 +4,7 @@ import { observer, Observer } from "mobx-react"
 
 import Scope from "./scope"
 import Logo from "./display/logo"
-import Sidebar from "./display/sidebar"
+import UpperBar from "./display/upper_bar"
 
 import makeProgram from "./engine/program"
 import apply_boxes from "./engine/apply_boxes"
@@ -65,11 +65,6 @@ class Hierarch extends React.Component {
                 onClick={() => this.apply_boxes()}
               />
             </LogoSpace>
-
-            <Sidebar
-              close={() => this.apply_boxes()}
-              display={(code) => this.scope.display = code}
-            />
           </UpperBar>
           :
           <Corner>
@@ -100,19 +95,6 @@ class Hierarch extends React.Component {
     </HierarchScope.Provider>
   )
 }
-
-var UpperBar = styled.div`
-height: 4rem;
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-background-color: #FAF9DD;
-border-bottom: 2px solid #3d3b11;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-`
 
 var LogoSpace = styled.div`
 `
