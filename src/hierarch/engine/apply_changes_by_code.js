@@ -1,11 +1,6 @@
 import push_upgrades from "./push_upgrades"
 
-const apply_changes_by_code = async (
-  program,
-  address,
-  code,
-  { width, height }
-) => {
+const apply_changes_by_code = async (program, address, code, changes) => {
   var upgrades = []
 
   console.log(
@@ -14,7 +9,8 @@ const apply_changes_by_code = async (
     "someone could hack our parser's query."
   )
 
-  var original_matches = program.query(`
+  var original_matches = program.query([
+  `
   (
     jsx_self_closing_element
     name: (_) @name
@@ -25,7 +21,29 @@ const apply_changes_by_code = async (
     (#eq? @_code "code")
     (#match? @code "^.${code}.$")
   ) @element
-  `)
+  `,
+  `
+  (jsx_element
+    open_tag: (
+      jsx_opening_element
+      name: (_) @opening-name
+      attribute: (jsx_attribute (property_identifier) @_original "=" (jsx_expression (_) @original))
+      attribute: (jsx_attribute (property_identifier) @_code "=" (string) @code)
+      )
+
+    [(jsx_text) (jsx_element) (jsx_self_closing_element)]* @children
+
+    close_tag: (jsx_closing_element name: (_) @closing-name)
+
+    (#eq? @opening-name "Box")
+    (#eq? @closing-name "Box")
+    (#eq? @_original "original")
+    (#eq? @_code "code")
+    (#match? @code "^.${code}.$")
+  ) @element
+  `
+  ])
+
   // program.debug_query(original_matches)
   if(original_matches.length > 1) {
     program.debug_query(original_matches)
@@ -101,45 +119,41 @@ const apply_changes_by_code = async (
     css,
   ).rootNode
 
-  var query = program.query(`
-  (stylesheet
-    (declaration (property_name) @prop (_) @value)
-    (#eq? @prop "height")
-  )
-  `, css_node, 'css')
-  if(query[0] && query[0].captures[1]) {
-    upgrades = upgrades.concat({
-      begin: query[0].captures[1].node.startIndex,
-      end: query[0].captures[1].node.endIndex,
-      grade: height,
-    })
-  } else {
-    upgrades = upgrades.concat({
-      begin: css_string.startIndex + 1,
-      end: css_string.startIndex + 1,
-      grade: `\nheight: ${height};`,
-    })
-  }
+  Object.keys(changes).forEach(change => {
+    var query = program.query(`
+    (stylesheet
+      (declaration (property_name) @prop (_) @value) @declare
+      (#eq? @prop "${change}")
+    )
+    `, css_node, 'css')
 
-  var query = program.query(`
-  (stylesheet
-    (declaration (property_name) @prop (_) @value)
-    (#eq? @prop "width")
-  )
-  `, css_node, 'css')
-  if(query[0] && query[0].captures[1]) {
-    upgrades = upgrades.concat({
-      begin: query[0].captures[1].node.startIndex,
-      end: query[0].captures[1].node.endIndex,
-      grade: width,
-    })
-  } else {
-    upgrades = upgrades.concat({
-      begin: css_string.startIndex + 1,
-      end: css_string.startIndex + 1,
-      grade: `\nwidth: ${width};`,
-    })
-  }
+    if(changes[change]) {
+      if(query[0] && query[0].captures[1]) {
+        upgrades = upgrades.concat({
+          begin: query[0].captures[2].node.startIndex,
+          end: query[0].captures[2].node.endIndex,
+          grade: changes[change],
+        })
+      } else {
+        upgrades = upgrades.concat({
+          begin: css_string.startIndex + 1,
+          end: css_string.startIndex + 1,
+          grade: `\n${change}: ${changes[change]}px;`,
+        })
+      }
+    } else {
+      if(query[0] && query[0].captures[1]) {
+        upgrades = upgrades.concat({
+          begin: query[0].captures[0].node.startIndex,
+          end: query[0].captures[0].node.endIndex,
+          grade: '',
+        })
+      } else {
+        /* No upgrades */
+      }
+    }
+  })
+
   program.use_language(program.parsed.language)
 
   return push_upgrades(address, upgrades)
