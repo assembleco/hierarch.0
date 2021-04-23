@@ -54,35 +54,34 @@ class Box extends React.Component {
 
     return (
       <Observer>{() => {
+      var Original = makeDisplayBlock(original, code, children, scope)
 
-        var Original = makeDisplayBlock(original, code, children, scope)
+      return (
+        scope.change === code
+        ?
+        <Original
+          ref={this.changeableBox}
+          {...remainder}
+        >
+          {this.renderChangeableChildren(children, scope, code)}
+        </Original>
 
-        return (
-      scope.change === code
-      ?
-      <Original
-        ref={this.changeableBox}
-        {...remainder}
-      >
-        {this.renderChangeableChildren(children, scope, code)}
-      </Original>
+        :
+        scope.chosen === code
+        ?
+        <Original border="blue" {...remainder} >
+          {children}
+        </Original>
 
-      :
-      scope.chosen === code
-      ?
-      <Original border="blue" {...remainder} >
-        {children}
-      </Original>
+        :
+        scope.display === code
+        ?
+        <Original border="red" {...remainder} >
+          {this.renderChangedChildren(children)}
+        </Original>
 
-      :
-      scope.display === code
-      ?
-      <Original border="red" {...remainder} >
-        {this.renderChangedChildren(children)}
-      </Original>
-
-      :
-      <Original {...remainder} >{children}</Original>
+        :
+        <Original {...remainder} >{children}</Original>
 
       )}}</Observer>
     )
