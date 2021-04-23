@@ -1,5 +1,7 @@
 import { observable, makeAutoObservable, autorun } from "mobx"
 
+import apply_changes_by_code from "./engine/apply_changes_by_code"
+
 class Scope {
   address = "src/App.js"
 
@@ -18,6 +20,19 @@ class Scope {
     autorun(() => console.log("chosen", this.chosen))
     autorun(() => console.log("change", this.change))
     autorun(() => console.log("changes", JSON.stringify(this.changes)))
+  }
+
+  recordChangesOnChosen = () => {
+    apply_changes_by_code(
+      this.index,
+      this.address,
+      this.chosen,
+      this.changes,
+    )
+    .then(() => {
+      if(window.assemble && window.assemble.repull)
+        window.assemble.repull()
+    })
   }
 }
 
