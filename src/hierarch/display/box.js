@@ -15,7 +15,9 @@ import { HierarchScope } from "../index"
 var makeDisplayBlock = (original, code, children, scope) => (
   styled(original).attrs(({ border }) => ({
     "data-code": code,
-    style: { outline: border && `1px dashed ${border}` },
+    style: {
+      outline: border && `1px dashed ${border}`,
+    },
 
     onClick: (e) => {
       if(scope.chosen === code)
@@ -28,7 +30,14 @@ var makeDisplayBlock = (original, code, children, scope) => (
       e.bubbles = false
       return false
     },
-  }))``
+  }))`
+  ${() => (
+    scope.chosen === code && Object.keys(scope.changes).map(change => (
+      `${change}: ${scope.changes[change]}px;
+      `
+    ))
+  )}
+  `
 )
 
 class Box extends React.Component {

@@ -10,11 +10,14 @@ class Scope {
   hierarchy = [0,0,[],"",false]
   index = null
 
+  changes = {}
+
   constructor() {
     makeAutoObservable(this)
     autorun(() => console.log("display", this.display))
     autorun(() => console.log("chosen", this.chosen))
     autorun(() => console.log("change", this.change))
+    autorun(() => console.log("changes", JSON.stringify(this.changes)))
   }
 }
 

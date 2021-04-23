@@ -5,9 +5,6 @@ import { observable, autorun } from "mobx"
 
 import { HierarchScope } from "../index"
 
-var width = observable.box(0)
-autorun(() => console.log("width", width.get()))
-
 var Size = () => (
   <HierarchScope.Consumer>{scope => (
     <Observer>{() => (
@@ -16,11 +13,8 @@ var Size = () => (
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => {
-            console.log(scope.chosen)
-            width.set(e.target.value)
-          }}
-          value={width.get()}
+          onChange={(e) => scope.changes['width'] = e.target.value}
+          value={scope.changes.width || ''}
         />
 
         <span>Height</span>
