@@ -33,6 +33,7 @@ class Sidebar extends React.Component {
   render = () => (
     <HierarchScope.Consumer>
     {scope => (
+      <Observer>{() => (
       <Bar>
         {this.props.children}
 
@@ -64,6 +65,7 @@ class Sidebar extends React.Component {
           <img src={dynamics} alt="dynamics" />
         </Opener>
       </Bar>
+      )}</Observer>
     )}
     </HierarchScope.Consumer>
   )
