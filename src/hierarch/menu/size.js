@@ -58,6 +58,8 @@ var Size = () => (
         />
 
         <span>Overflow</span>
+
+        <Record>Record</Record>
       </Grid>
     )}</Observer>
   )}</HierarchScope.Consumer>
@@ -66,9 +68,20 @@ var Size = () => (
 var Grid = styled.div`
 display: grid;
 grid-template-columns: repeat(4, 4rem);
-grid-template-rows: repeat(3, 1fr) 1.5fr;
+grid-template-rows: repeat(3, 1fr) 1.5fr 1fr;
 width: 18rem;
 grid-column-gap: 0.5rem;
+`
+
+var Record = styled.button`
+grid-row: -1;
+grid-column: span 4;
+width: auto;
+padding: 0.25rem;
+background-color: #a0a0d0;
+color: beige;
+border: 2px solid #3d3b11;
+border-radius: 4px;
 `
 
 export default Size
