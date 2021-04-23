@@ -31,12 +31,11 @@ var makeDisplayBlock = (original, code, children, scope) => (
       return false
     },
   }))`
-  ${() => (
-    scope.chosen === code && Object.keys(scope.changes).map(change => (
+  ${scope.chosen === code && Object.keys(scope.changes).map(change => (
       `${change}: ${scope.changes[change]}px;
       `
     ))
-  )}
+  }
   `
 )
 
@@ -53,11 +52,12 @@ class Box extends React.Component {
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
 
-    var Original = makeDisplayBlock(original, code, children, scope)
-
     return (
-      <Observer>{() => (
+      <Observer>{() => {
 
+        var Original = makeDisplayBlock(original, code, children, scope)
+
+        return (
       scope.change === code
       ?
       <Original
@@ -84,7 +84,7 @@ class Box extends React.Component {
       :
       <Original {...remainder} >{children}</Original>
 
-      )}</Observer>
+      )}}</Observer>
     )
   }
 
