@@ -88,9 +88,9 @@ var Opener = ({ name, visible, children }) => {
 }
 
 var PopoverWrapper = styled.div`
-  background-color: white;
-  padding: 16px;
-  border: 1px solid rgba(33, 33, 33, 0.25);
+  background-color: #faf9dd;
+  padding: 8px;
+  border: 2px solid #3d3b11;
   border-radius: 4px;
   transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
   opacity: 0;
@@ -146,7 +146,7 @@ position: fixed;
 top: 0;
 left: 0;
 right: 0;
-background-color: #FAF9DD;
+background-color: #faf9dd;
 border-bottom: 2px solid #3d3b11;
 display: flex;
 flex-direction: row;

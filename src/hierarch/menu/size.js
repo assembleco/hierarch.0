@@ -79,8 +79,8 @@ grid-column: span 4;
 width: auto;
 padding: 0.25rem;
 background-color: #a0a0d0;
-color: beige;
-border: 2px solid #3d3b11;
+color: #3d3b11;
+border: 1px solid #3d3b11;
 border-radius: 4px;
 `
 
