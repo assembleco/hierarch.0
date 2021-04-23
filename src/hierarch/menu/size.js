@@ -4,6 +4,7 @@ import { Observer } from "mobx-react"
 import { observable, autorun } from "mobx"
 
 import { HierarchScope } from "../index"
+import Record from "./_record"
 
 var Size = () => (
   <HierarchScope.Consumer>{scope => (
@@ -59,7 +60,7 @@ var Size = () => (
 
         <span>Overflow</span>
 
-        <Record>Record</Record>
+        <Record onClick={() => scope.recordChangesOnChosen()} >Record</Record>
       </Grid>
     )}</Observer>
   )}</HierarchScope.Consumer>
@@ -68,20 +69,14 @@ var Size = () => (
 var Grid = styled.div`
 display: grid;
 grid-template-columns: repeat(4, 4rem);
-grid-template-rows: repeat(3, 1fr) 1.5fr 1fr;
+grid-template-rows: repeat(5, 1fr);
 width: 18rem;
 grid-column-gap: 0.5rem;
-`
 
-var Record = styled.button`
-grid-row: -1;
-grid-column: span 4;
-width: auto;
-padding: 0.25rem;
-background-color: #a0a0d0;
-color: #3d3b11;
-border: 1px solid #3d3b11;
-border-radius: 4px;
+${Record} {
+  grid-row: -1;
+  grid-column: span 4;
+}
 `
 
 export default Size
