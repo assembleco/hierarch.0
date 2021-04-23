@@ -144,7 +144,7 @@ const apply_changes_by_code = async (program, address, code, changes) => {
     } else {
       if(query[0] && query[0].captures[1]) {
         upgrades = upgrades.concat({
-          begin: query[0].captures[0].node.startIndex,
+          begin: query[0].captures[0].node.startIndex - 1, /* leading newline */
           end: query[0].captures[0].node.endIndex,
           grade: '',
         })
