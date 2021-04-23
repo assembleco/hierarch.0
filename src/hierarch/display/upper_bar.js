@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
       <Bar>
         {this.props.children}
 
-        <Opener name="Hierarch" >
+        <Opener name="hierarchy" >
           <Hierarchy
             hierarchy={scope.hierarchy}
             display={this.props.display}
