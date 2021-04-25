@@ -51,6 +51,8 @@ class Box extends React.Component {
 
   renderUsingScope(scope) {
     var { original, children, code, ...remainder } = this.props
+    if(scope.chosen === code)
+      this.assignScopeChanges(original, scope)
 
     return (
       <Observer>{() => {
@@ -85,6 +87,19 @@ class Box extends React.Component {
 
       )}}</Observer>
     )
+  }
+
+  assignScopeChanges = (original, scope) => {
+    original.componentStyle.rules.forEach(rule => {
+      var pieces = rule
+        .split(/[:;]/)
+        .map(x => x.trim())
+        .filter(x => x !== "")
+      var label = pieces[0]
+      var change = pieces[1]
+
+      scope.changes[label] = change
+    })
   }
 
   renderChangedChildren = (children) => (
@@ -168,4 +183,4 @@ class Box extends React.Component {
   }
 }
 
-export default observer(Box)
+export default Box
