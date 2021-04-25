@@ -128,13 +128,15 @@ const apply_changes_by_code = async (program, address, code, changes) => {
     `, css_node, 'css')
 
     if(changes[change]) {
-      if(query[0] && query[0].captures[1]) {
+      if(query[0] && query[0].captures[2]) {
+        /* A rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: query[0].captures[2].node.startIndex,
           end: query[0].captures[2].node.endIndex,
-          grade: changes[change],
+          grade: changes[change] + 'px',
         })
       } else {
+        /* No rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: css_string.startIndex + 1,
           end: css_string.startIndex + 1,
@@ -142,7 +144,8 @@ const apply_changes_by_code = async (program, address, code, changes) => {
         })
       }
     } else {
-      if(query[0] && query[0].captures[1]) {
+      if(query[0] && query[0].captures[2]) {
+        /* A rule is in place, and no change is needed */
         upgrades = upgrades.concat({
           begin: query[0].captures[0].node.startIndex - 1, /* leading newline */
           end: query[0].captures[0].node.endIndex,
@@ -150,6 +153,7 @@ const apply_changes_by_code = async (program, address, code, changes) => {
         })
       } else {
         /* No upgrades */
+        /* No rule is in place, and no change is needed */
       }
     }
   })
