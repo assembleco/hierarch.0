@@ -127,8 +127,10 @@ const apply_changes_by_code = async (program, address, code, changes) => {
     )
     `, css_node, 'css')
 
+    var rule_in_place = query[0] && query[0].captures[2]
+
     if(changes[change]) {
-      if(query[0] && query[0].captures[2]) {
+      if(rule_in_place) {
         /* A rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: query[0].captures[2].node.startIndex,
@@ -144,7 +146,7 @@ const apply_changes_by_code = async (program, address, code, changes) => {
         })
       }
     } else {
-      if(query[0] && query[0].captures[2]) {
+      if(rule_in_place) {
         /* A rule is in place, and no change is needed */
         upgrades = upgrades.concat({
           begin: query[0].captures[0].node.startIndex - 1, /* leading newline */
