@@ -4,7 +4,8 @@ var apply_changes = (address, program, code, changeArray) => {
   console.log(code)
 
   // * choose node <Box original={...} code=${this.props.code}
-  var matches = program.query(`(jsx_element
+  var matches = program.query(`
+  (jsx_element
     open_tag: (
       jsx_opening_element
       name: (_) @opening-name
@@ -18,7 +19,8 @@ var apply_changes = (address, program, code, changeArray) => {
     (#match? @code "^.${code}.$")
     (#eq? @opening-name "Box")
     (#eq? @closing-name "Box")
-  ) @element`)
+  ) @element
+  `)
 
   if(matches.length > 1)
     throw("oh no! more than one matching code during a change. " + code)
