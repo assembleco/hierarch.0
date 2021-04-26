@@ -58,12 +58,18 @@ var Size = () => (
         />
 
         <span>Overflow</span>
+        <ComingSoonLink href="https://github.com/hierarch/hierarch/issues/11">
+          Coming Soon
+        </ComingSoonLink>
 
         <Record onClick={() => scope.recordChangesOnChosen()} >Record</Record>
       </Grid>
     )}</Observer>
   )}</HierarchScope.Consumer>
 )
+
+var ComingSoonLink = styled.a`
+`
 
 var Grid = styled.div`
 display: grid;
@@ -75,6 +81,10 @@ grid-column-gap: 0.5rem;
 ${Record} {
   grid-row: -1;
   grid-column: span 4;
+}
+
+${ComingSoonLink} {
+  grid-column: span 3;
 }
 `
 

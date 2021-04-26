@@ -44,9 +44,8 @@ class Sidebar extends React.Component {
           />
         </Opener>
 
-        <Opener name="size" visible >
+        <Opener name="size" >
           <Size />
-          <img src={size} alt="size" />
         </Opener>
 
         <Opener name="spacing" >
