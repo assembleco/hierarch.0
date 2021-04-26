@@ -1,12 +1,13 @@
 import React from "react"
 import styled from "styled-components"
-import { observer } from "mobx-react"
+import { Observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
 import Record from "./_record"
 
 var Size = () => (
   <HierarchScope.Consumer>{scope => (
+    <Observer>{() => (
       <Grid>
         <span>Width</span>
         <input
@@ -60,6 +61,7 @@ var Size = () => (
 
         <Record onClick={() => scope.recordChangesOnChosen()} >Record</Record>
       </Grid>
+    )}</Observer>
   )}</HierarchScope.Consumer>
 )
 
@@ -76,4 +78,4 @@ ${Record} {
 }
 `
 
-export default observer(Size)
+export default Size
