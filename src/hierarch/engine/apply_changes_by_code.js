@@ -129,20 +129,26 @@ const apply_changes_by_code = async (program, address, code, changes) => {
 
     var rule_in_place = query[0] && query[0].captures[2]
 
-    if(changes[change]) {
+    var changed = changes[change]
+
+    if(changed && parseInt(changed).toString() === changed) {
+      changed = changed + 'px'
+    }
+
+    if(changed) {
       if(rule_in_place) {
         /* A rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: query[0].captures[2].node.startIndex,
           end: query[0].captures[2].node.endIndex,
-          grade: changes[change] + 'px',
+          grade: changed ,
         })
       } else {
         /* No rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: css_string.startIndex + 1,
           end: css_string.startIndex + 1,
-          grade: `\n${change}: ${changes[change]}px;`,
+          grade: `\n${change}: ${changed};`,
         })
       }
     } else {
