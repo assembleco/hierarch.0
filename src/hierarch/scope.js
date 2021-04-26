@@ -1,4 +1,4 @@
-import { observable, makeAutoObservable, autorun } from "mobx"
+import { makeAutoObservable, autorun } from "mobx"
 
 import apply_changes_by_code from "./engine/apply_changes_by_code"
 

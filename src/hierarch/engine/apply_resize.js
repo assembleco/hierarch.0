@@ -116,7 +116,7 @@ const apply_resize = async (program, address, code, width, height) => {
     })
   }
 
-  var query = program.query(`
+  query = program.query(`
   (stylesheet
     (declaration (property_name) @prop (_) @value)
     (#eq? @prop "width")

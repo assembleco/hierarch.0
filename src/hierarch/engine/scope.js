@@ -1,10 +1,8 @@
 import React from "react"
 
-import { autorun } from "mobx"
 import { types } from "mobx-state-tree"
 import { Observer } from "mobx-react"
 
-import { useMutation } from "@apollo/client";
 import gql from "graphql-tag"
 import graph from "./graph"
 
@@ -22,8 +20,6 @@ const makeQuery = (schema, order = {}) => {
   // console.log(schema)
 
   let keys = Object.keys(schema) // -> 'companies'
-  let model = {}
-  let builder = {}
 
   let inner_model = []
   keys.forEach(k => {

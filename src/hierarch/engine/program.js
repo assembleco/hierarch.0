@@ -120,7 +120,7 @@ function spliceInput(input, startIndex, lengthRemoved, newText) {
 function place_code_ends(text) {
   let row = 0
   let index;
-  for (index = 0; index != -1; index = text.indexOf('\n', index)) {
+  for (index = 0; index !== -1; index = text.indexOf('\n', index)) {
     index++
     row++;
   }
