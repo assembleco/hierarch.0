@@ -87,16 +87,23 @@ class Box extends React.Component {
 
     return (
       <Observer>{() => {
+      var Original = makeDisplayBlock(original, code, children, scope)
+
       return (
-        <>
-        <DropZone/>
-        <DraggableBox scope={scope} {...this.props} >
+        <Original
+          border={
+            scope.change === code ? "black"
+            : scope.chosen === code ? "blue"
+            : scope.display === code ? "red"
+            : "none"
+          }
+          {...remainder}
+        >
           { scope.change === code
           ? this.renderChangeableChildren(children, scope, code)
           : this.renderChangedChildren(children)
           }
-        </DraggableBox>
-        </>
+        </Original>
       )}}</Observer>
     )
   }
