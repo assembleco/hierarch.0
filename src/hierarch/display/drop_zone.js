@@ -1,5 +1,8 @@
 import { useDrop } from "react-dnd"
 
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowDownDropCircle from '@iconify-icons/mdi/arrow-down-drop-circle';
+
 var DropZone = () => {
   var [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "BOX",
@@ -15,9 +18,15 @@ var DropZone = () => {
   return (
     <div
       ref={drop}
-      style={{ backgroundColor: isOver ? 'red' : 'none' }}
+      style={{
+        border: isOver ? '2px solid rgb(40, 144, 199)' : 'none',
+        //height: "100%",
+        //width: "100%",
+      }}
     >
-      { canDrop ? "Drop here." : "Drop Zone."}
+      { canDrop &&
+        <Icon icon={arrowDownDropCircle} color="rgb(40, 144, 199)" />
+      }
     </div>
   )
 }
