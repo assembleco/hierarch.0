@@ -4,6 +4,8 @@ import styled, { css } from "styled-components"
 import { observer, Observer } from "mobx-react"
 import { computed } from "mobx"
 
+import { useDrag } from "react-dnd"
+
 import Change, { Field } from "./change"
 import Resize from "./resize"
 import apply_changes from "../engine/apply_changes"
@@ -39,6 +41,34 @@ var makeDisplayBlock = (original, code, children, scope) => (
   `
 )
 
+var DraggableBox = ({ scope, ...props }) => {
+  var { original, children, code, ...remainder } = props
+
+  var Original = makeDisplayBlock(original, code, children, scope)
+
+  var [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    type: "BOX",
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    })
+  }))
+
+  return (
+    <Original
+      ref={drag}
+      border={
+        scope.change === code ? "black"
+        : scope.chosen === code ? "blue"
+        : scope.display === code ? "red"
+        : "none"
+      }
+      {...remainder}
+    >
+      {children}
+    </Original>
+  )
+}
+
 class Box extends React.Component {
   changeableBox = React.createRef()
   state = { changes: [] }
@@ -56,35 +86,21 @@ class Box extends React.Component {
 
     return (
       <Observer>{() => {
-      var Original = makeDisplayBlock(original, code, children, scope)
-
       return (
-        scope.change === code
-        ?
-        <Original
+        <DraggableBox
           ref={this.changeableBox}
-          {...remainder}
+          scope={scope}
+          {...this.props}
         >
-          {this.renderChangeableChildren(children, scope, code)}
-        </Original>
-
-        :
-        scope.chosen === code
-        ?
-        <Original border="blue" {...remainder} >
-          {children}
-        </Original>
-
-        :
-        scope.display === code
-        ?
-        <Original border="red" {...remainder} >
-          {this.renderChangedChildren(children)}
-        </Original>
-
-        :
-        <Original {...remainder} >{children}</Original>
-
+          { scope.change === code
+          ? this.renderChangeableChildren(children, scope, code)
+          : scope.chosen === code
+          ? children
+          : scope.display === code
+          ? this.renderChangedChildren(children)
+          : children
+          }
+        </DraggableBox>
       )}}</Observer>
     )
   }

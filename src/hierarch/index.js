@@ -2,6 +2,9 @@ import React from "react"
 import styled, {css} from "styled-components"
 import { observer, Observer } from "mobx-react"
 
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
+
 import Scope from "./scope"
 import Logo from "./display/logo"
 import UpperBar from "./display/upper_bar"
@@ -54,7 +57,7 @@ class Hierarch extends React.Component {
     <HierarchScope.Provider value={this.scope} >
 
     <Observer>{() => (
-      <>
+      <DndProvider backend={HTML5Backend} >
         {this.state.open
           ?
           <UpperBar display={(code) => this.scope.display = code} >
@@ -90,7 +93,7 @@ class Hierarch extends React.Component {
         >
           {this.props.children}
         </Display>
-      </>
+      </DndProvider>
     )}</Observer>
     </HierarchScope.Provider>
   )
