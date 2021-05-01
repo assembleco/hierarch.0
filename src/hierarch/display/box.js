@@ -5,6 +5,7 @@ import { observer, Observer } from "mobx-react"
 import { computed } from "mobx"
 
 import { useDrag } from "react-dnd"
+import DropZone from "./drop_zone"
 
 import Change, { Field } from "./change"
 import Resize from "./resize"
@@ -88,6 +89,8 @@ class Box extends React.Component {
     return (
       <Observer>{() => {
       return (
+        <>
+        <DropZone/>
         <DraggableBox
           ref={this.changeableBox}
           scope={scope}
@@ -102,6 +105,7 @@ class Box extends React.Component {
           : children
           }
         </DraggableBox>
+        </>
       )}}</Observer>
     )
   }
