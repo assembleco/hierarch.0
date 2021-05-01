@@ -1,47 +1,47 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-class Change extends React.Component {
-  state = { value: null }
+import { makeAutoObservable, autorun } from "mobx"
 
+class Change extends React.Component {
   shouldComponentUpdate = (incomingProps, incomingState) => (
-    incomingProps.children !== this.props.children ||
-    this.state.value !== incomingState.value
+    incomingProps.children !== this.props.children
   )
 
   render = () => (
-  <Field
-    onClick={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false
-    }}
+    <ChangeScope.Consumer>
+    {scope => (
+      <Field
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          return false
+        }}
 
-    onChange={(e) => {
-      this.setState({ value: e.target.value || "" })
-    }}
+        onChange={(e) => {
+          console.log("Change", e.target.value || "")
+          scope.change(this.props.index, e.target.value || "")
+        }}
 
-    key={this.props.children}
-    type="text"
-    ref={e => this.props.focus(e)}
-    value={this.state.value === null ? this.props.children : this.state.value}
+        key={this.props.children}
+        type="text"
+        ref={e => this.props.focus(e)}
+        value={scope.group[this.props.index]}
 
-    onKeyDown={(e) => {
-      console.log(e.key)
-      if(e.key === ' ') {
-        e.stopPropagation()
-      }
-      if(e.key === "Escape") {
-        this.props.escape()
-      }
-      if(e.key === "Enter") {
-        this.props.record()
-        e.preventDefault();
-        e.stopPropagation();
-        return false
-      }
-    }}
-  />
+        onKeyDown={(e) => {
+          if(e.key === ' ') e.stopPropagation() // no scrolling please
+          if(e.key === "Escape") this.props.escape()
+
+          if(e.key === "Enter") {
+            this.props.record()
+            e.preventDefault();
+            e.stopPropagation();
+            return false
+          }
+        }}
+      />
+    )}
+    </ChangeScope.Consumer>
   )
 }
 
@@ -59,5 +59,22 @@ font-size: inherit;
 width: ${p => `${p.value.length}ch`};
 `
 
-export { Field }
+class ChangeGroup {
+  group = []
+
+  constructor(group) {
+    this.group = group
+    makeAutoObservable(this)
+    autorun(() => console.log("Changes", this.group))
+  }
+
+  change(index, value) {
+    console.log("Change", index, value)
+    this.group[index] = value
+  }
+}
+
+var ChangeScope = React.createContext()
+
+export { Field, ChangeGroup, ChangeScope }
 export default Change

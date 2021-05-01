@@ -7,7 +7,7 @@ import { computed } from "mobx"
 import { useDrag } from "react-dnd"
 import DropZone from "./drop_zone"
 
-import Change, { Field } from "./change"
+import Change, { Field, ChangeGroup, ChangeScope } from "./change"
 import Resize from "./resize"
 import apply_changes from "../engine/apply_changes"
 import apply_boxes from "../engine/apply_boxes"
@@ -72,8 +72,7 @@ var DraggableBox = ({ scope, ...props }) => {
 }
 
 class Box extends React.Component {
-  changeableBox = React.createRef()
-  state = { changes: [] }
+  changes = null
 
   render = () => (
     <HierarchScope.Consumer>
@@ -91,18 +90,10 @@ class Box extends React.Component {
       return (
         <>
         <DropZone/>
-        <DraggableBox
-          ref={this.changeableBox}
-          scope={scope}
-          {...this.props}
-        >
+        <DraggableBox scope={scope} {...this.props} >
           { scope.change === code
           ? this.renderChangeableChildren(children, scope, code)
-          : scope.chosen === code
-          ? children
-          : scope.display === code
-          ? this.renderChangedChildren(children)
-          : children
+          : this.renderChangedChildren(children)
           }
         </DraggableBox>
         </>
@@ -124,82 +115,48 @@ class Box extends React.Component {
   }
 
   renderChangedChildren = (children) => (
-    children instanceof Array
-    ? (() => {
-      var child_index = 0
-      return children.map((c, i) => {
-        if(typeof(c) === 'string' && this.state.changes[child_index]) {
-          child_index += 1
-          return this.state.changes[child_index - 1]
-        }
-        return c
-      })
-    })()
-    : (this.state.changes[0] || children)
+    children
   )
 
   renderChangeableChildren = (children, scope, code) => {
     var focus_count = 0
+    if(!this.changes)
+      this.changes = new ChangeGroup([children].flat())
 
     return (
-      children instanceof Array
-      ? children.map((c, i) => {
-        if(typeof(c) === 'string') {
-
-          return (
-            <Change
-            key={i}
-            focus={(e) => {
-              console.log('focusing?', focus_count, c)
-              if(e && focus_count === 0) {
-                e.focus()
-                focus_count += 1
+      <ChangeScope.Provider value={this.changes}>
+        {this.changes.group.map((c, i) => (
+          typeof(c) === 'string'
+          ? <Change
+              key={i}
+              index={i}
+              focus={(e) => {
+                if(e && focus_count === 0) { e.focus(); focus_count += 1 }
+              }}
+              record={() =>
+                this.recordChanges(scope.address, scope.index)
+                .then(() => scope.change = null)
               }
-            }}
-            record={() =>
-              this.recordChanges(scope.address, scope.index)
-              .then(() => scope.change = null)
-            }
-            escape={() => scope.change = null}
+              escape={() => scope.change = null}
             >
             {c}
             </Change>
-          )
-        }
-        return c
-      })
-      :
-      (typeof(children) === 'string'
-        ? <Change
-        focus={e => e && e.focus()}
-        record={() =>
-          this.recordChanges(scope.address, scope.index)
-          .then(() => scope.change = null)
-        }
-        escape={() => scope.change = null}
-        >
-        {children}
-        </Change>
-        : children
-      )
+          : c
+        ))}
+      </ChangeScope.Provider>
     )
   }
 
   recordChanges(address, index) {
     var changeArray = [];
 
-    // Group all possibly-changed values
-    [...this.changeableBox.current.children].forEach((child, x) => {
-      if(
-        [...child.classList]
-        .some(klass => klass === Field.toString().slice(1))
-      )
-        changeArray = changeArray.concat(child.value)
+    this.changes.group.forEach((child, x) => {
+      if(typeof(child) === 'string')
+        changeArray = changeArray.concat(child)
     })
 
     return (
       apply_changes(address, index, this.props.code, changeArray)
-      .then(() => this.setState({ changes: changeArray }))
     )
   }
 }
