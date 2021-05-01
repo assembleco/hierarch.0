@@ -48,6 +48,7 @@ var DraggableBox = ({ scope, ...props }) => {
 
   var [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: "BOX",
+    item: { code },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     })

@@ -108,9 +108,11 @@ var DropZone = () => {
     collect: monitor => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
-    })
+    }),
+    drop: (item, monitor) => {
+      console.log("Dropped", item)
+    },
   }))
-
 
   return (
     <div
