@@ -124,25 +124,28 @@ class Box extends React.Component {
       this.changes = new ChangeGroup([children].flat())
 
     return (
-      <ChangeScope.Provider value={this.changes}>
-        {this.changes.group.map((c, i) => (
-          typeof(c) === 'string'
-          ? <Change
-              key={i}
-              index={i}
-              focus={(e) => {
-                if(e && focus_count === 0) { e.focus(); focus_count += 1 }
-              }}
-              record={() =>
-                this.recordChanges(scope.address, scope.index)
-                .then(() => scope.change = null)
-              }
-              escape={() => scope.change = null}
-            >
-            {c}
-            </Change>
-          : c
-        ))}
+      <ChangeScope.Provider key="change" value={this.changes}>
+        <Observer>{() => (
+          this.changes.group.map((c, i) => (
+            typeof(c) === 'string'
+            ?
+            <Change
+                key={i}
+                index={i}
+                focus={(e) => {
+                  if(e && focus_count === 0) { e.focus(); focus_count += 1 }
+                }}
+                record={() =>
+                  this.recordChanges(scope.address, scope.index)
+                  .then(() => scope.change = null)
+                }
+                escape={() => scope.change = null}
+              >
+              {children[i]}
+              </Change>
+            : c
+          ))
+        )}</Observer>
       </ChangeScope.Provider>
     )
   }

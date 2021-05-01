@@ -4,10 +4,6 @@ import styled, { css } from "styled-components"
 import { makeAutoObservable, autorun } from "mobx"
 
 class Change extends React.Component {
-  shouldComponentUpdate = (incomingProps, incomingState) => (
-    incomingProps.children !== this.props.children
-  )
-
   render = () => (
     <ChangeScope.Consumer>
     {scope => (
