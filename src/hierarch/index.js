@@ -4,6 +4,7 @@ import { observer, Observer } from "mobx-react"
 
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import { useDrag, useDrop } from "react-dnd"
 
 import Scope from "./scope"
 import Logo from "./display/logo"
@@ -79,6 +80,8 @@ class Hierarch extends React.Component {
           </Corner>
         }
 
+        <DropZone />
+
         <Display
           open={this.state.open}
           onMouseMove={(e) => {
@@ -96,6 +99,26 @@ class Hierarch extends React.Component {
       </DndProvider>
     )}</Observer>
     </HierarchScope.Provider>
+  )
+}
+
+var DropZone = () => {
+  var [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: "BOX",
+    collect: monitor => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    })
+  }))
+
+
+  return (
+    <div
+      ref={drop}
+      style={{ marginTop: "6rem", backgroundColor: isOver ? 'red' : 'none' }}
+    >
+      { canDrop ? "Drop here." : "Drop Zone."}
+    </div>
   )
 }
 
