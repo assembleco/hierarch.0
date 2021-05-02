@@ -67,7 +67,11 @@ class Box extends React.Component {
   }
 
   renderChildrenIncludingChanges = (children, scope, code) => {
-    return children
+    return (
+      scope.cooldown === code
+      ? scope.changes
+      : children
+    )
   }
 
   renderChangeableChildren = (children, scope, code) => {
@@ -86,7 +90,12 @@ class Box extends React.Component {
               if(e && focus_count === 0) { e.focus(); focus_count += 1 }
             }}
             record={() =>
-              this.recordChanges(scope).then(() => scope.change = null)
+              this.recordChanges(scope)
+              .then(() => {
+                scope.cooldown = scope.change
+                setTimeout(() => scope.cooldown = null, 2000)
+                scope.change = null
+              })
             }
             escape={() => scope.change = null}
           >

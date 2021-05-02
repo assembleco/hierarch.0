@@ -8,6 +8,7 @@ class Scope {
   display = null
   chosen = null
   change = null
+  cooldown = null
 
   hierarchy = [0,0,[],"",false]
   index = null
