@@ -6,7 +6,7 @@ import { computed } from "mobx"
 
 import DropZone from "./drop_zone"
 
-import Change, { ChangeGroup, ChangeScope } from "./change"
+import Change from "./change"
 import Resize from "./resize"
 import apply_changes from "../engine/apply_changes"
 import apply_boxes from "../engine/apply_boxes"
@@ -17,8 +17,6 @@ import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
 
 class Box extends React.Component {
-  changes = null
-
   render = () => (
     <HierarchScope.Consumer>
     {scope => {
@@ -42,7 +40,7 @@ class Box extends React.Component {
           >
             { scope.change === code
             ? this.renderChangeableChildren(children, scope, code)
-            : this.renderChangedChildren(children)
+            : this.renderChildrenIncludingChanges(children, scope, code)
             }
           </Original>
         )}}</Observer>
@@ -60,56 +58,58 @@ class Box extends React.Component {
       var label = pieces[0]
       var change = pieces[1]
 
-      scope.changes[label] = change
+      scope.rules[label] = change
     })
   }
 
-  renderChangedChildren = (children) => (
-    children
-  )
-
-  renderChangeableChildren = (children, scope, code) => {
-    var focus_count = 0
-    if(!this.changes)
-      this.changes = new ChangeGroup([children].flat())
-
+  renderChildrenIncludingChanges = (children, scope, code) => {
     return (
-      <ChangeScope.Provider key="change" value={this.changes}>
-        <Observer>{() => (
-          this.changes.group.map((c, i) => (
-            typeof(c) === 'string'
-            ?
-            <Change
-                key={i}
-                index={i}
-                focus={(e) => {
-                  if(e && focus_count === 0) { e.focus(); focus_count += 1 }
-                }}
-                record={() =>
-                  this.recordChanges(scope.address, scope.index)
-                  .then(() => scope.change = null)
-                }
-                escape={() => scope.change = null}
-              >
-              {children[i]}
-              </Change>
-            : c
-          ))
-        )}</Observer>
-      </ChangeScope.Provider>
+      scope.change === code && scope.changes.some(() => 1)
+      ? scope.changes
+      : children
     )
   }
 
-  recordChanges(address, index) {
+  renderChangeableChildren = (children, scope, code) => {
+    var focus_count = 0
+    if(!scope.changes.some(() => 1))
+      scope.changes = [children].flat()
+
+    return (
+      <Observer>{() => (
+        scope.changes.map((c, i) => (
+          typeof(c) === 'string'
+          ?
+          <Change
+            key={i}
+            index={i}
+            scope={scope}
+            focus={(e) => {
+              if(e && focus_count === 0) { e.focus(); focus_count += 1 }
+            }}
+            record={() =>
+              this.recordChanges(scope).then(() => scope.change = null)
+            }
+            escape={() => scope.change = null}
+          >
+          {children[i]}
+          </Change>
+          : c
+        ))
+      )}</Observer>
+    )
+  }
+
+  recordChanges(scope) {
     var changeArray = [];
 
-    this.changes.group.forEach((child, x) => {
+    scope.changes.forEach((child, x) => {
       if(typeof(child) === 'string')
         changeArray = changeArray.concat(child)
     })
 
     return (
-      apply_changes(address, index, this.props.code, changeArray)
+      apply_changes(scope.address, scope.index, this.props.code, changeArray)
     )
   }
 }

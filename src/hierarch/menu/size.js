@@ -13,48 +13,48 @@ var Size = () => (
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.changes['width'] = e.target.value}
-          value={scope.changes['width'] || ''}
+          onChange={(e) => scope.rules['width'] = e.target.value}
+          value={scope.rules['width'] || ''}
         />
 
         <span>Height</span>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.changes['height'] = e.target.value}
-          value={scope.changes['height'] || ''}
+          onChange={(e) => scope.rules['height'] = e.target.value}
+          value={scope.rules['height'] || ''}
         />
 
         <span>Min W</span>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.changes['min-width'] = e.target.value}
-          value={scope.changes['min-width'] || ''}
+          onChange={(e) => scope.rules['min-width'] = e.target.value}
+          value={scope.rules['min-width'] || ''}
         />
 
         <span>Min H</span>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.changes['min-height'] = e.target.value}
-          value={scope.changes['min-height'] || ''}
+          onChange={(e) => scope.rules['min-height'] = e.target.value}
+          value={scope.rules['min-height'] || ''}
         />
 
         <span>Max W</span>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.changes['max-width'] = e.target.value}
-          value={scope.changes['max-width'] || ''}
+          onChange={(e) => scope.rules['max-width'] = e.target.value}
+          value={scope.rules['max-width'] || ''}
         />
 
         <span>Max H</span>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.changes['max-height'] = e.target.value}
-          value={scope.changes['max-height'] || ''}
+          onChange={(e) => scope.rules['max-height'] = e.target.value}
+          value={scope.rules['max-height'] || ''}
         />
 
         <span>Overflow</span>

@@ -12,14 +12,15 @@ class Scope {
   hierarchy = [0,0,[],"",false]
   index = null
 
-  changes = {}
+  changes = []
+  rules = {}
 
   constructor() {
     makeAutoObservable(this)
     autorun(() => console.log("display", this.display))
     autorun(() => console.log("chosen", this.chosen))
     autorun(() => console.log("change", this.change))
-    autorun(() => console.log("changes", JSON.stringify(this.changes)))
+    autorun(() => console.log("rules", JSON.stringify(this.rules)))
   }
 
   recordChangesOnChosen = () => {
@@ -27,7 +28,7 @@ class Scope {
       this.index,
       this.address,
       this.chosen,
-      this.changes,
+      this.rules,
     )
     .then(() => {
       if(window.assemble && window.assemble.repull)
