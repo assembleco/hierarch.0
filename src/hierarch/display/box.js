@@ -67,11 +67,7 @@ class Box extends React.Component {
   }
 
   renderChildrenIncludingChanges = (children, scope, code) => {
-    return (
-      scope.change === code && scope.changes.some(() => 1)
-      ? scope.changes
-      : children
-    )
+    return children
   }
 
   renderChangeableChildren = (children, scope, code) => {
