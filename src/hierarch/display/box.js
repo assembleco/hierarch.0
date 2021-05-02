@@ -4,7 +4,6 @@ import styled, { css } from "styled-components"
 import { observer, Observer } from "mobx-react"
 import { computed } from "mobx"
 
-import { useDrag } from "react-dnd"
 import DropZone from "./drop_zone"
 
 import Change, { ChangeGroup, ChangeScope } from "./change"
@@ -15,61 +14,7 @@ import { add_ahead, add_behind } from "../engine/add_block"
 
 import { HierarchScope } from "../index"
 
-var makeDisplayBlock = (original, code, children, scope) => (
-  styled(original).attrs(({ border }) => ({
-    "data-code": code,
-    style: {
-      outline: border && `1px dashed ${border}`,
-    },
-
-    onClick: (e) => {
-      if(scope.chosen === code)
-        scope.change = code
-      if(scope.display === code)
-        scope.chosen = code
-
-      e.stopPropagation()
-      e.preventDefault()
-      e.bubbles = false
-      return false
-    },
-  }))`
-  ${scope.chosen === code && Object.keys(scope.changes).map(change => (
-      `${change}: ${scope.changes[change]}px;
-      `
-    ))
-  }
-  `
-)
-
-var DraggableBox = ({ scope, ...props }) => {
-  var { original, children, code, ...remainder } = props
-
-  var Original = makeDisplayBlock(original, code, children, scope)
-
-  var [{ isDragging }, drag, dragPreview] = useDrag(() => ({
-    type: "BOX",
-    item: { code },
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-    })
-  }))
-
-  return (
-    <Original
-      ref={drag}
-      border={
-        scope.change === code ? "black"
-        : scope.chosen === code ? "blue"
-        : scope.display === code ? "red"
-        : "none"
-      }
-      {...remainder}
-    >
-      {children}
-    </Original>
-  )
-}
+import makeDisplayBlock from "./block"
 
 class Box extends React.Component {
   changes = null
