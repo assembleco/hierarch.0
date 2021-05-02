@@ -72,5 +72,5 @@ class ChangeGroup {
 
 var ChangeScope = React.createContext()
 
-export { Field, ChangeGroup, ChangeScope }
+export { ChangeGroup, ChangeScope }
 export default Change

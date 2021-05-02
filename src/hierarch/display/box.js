@@ -7,7 +7,7 @@ import { computed } from "mobx"
 import { useDrag } from "react-dnd"
 import DropZone from "./drop_zone"
 
-import Change, { Field, ChangeGroup, ChangeScope } from "./change"
+import Change, { ChangeGroup, ChangeScope } from "./change"
 import Resize from "./resize"
 import apply_changes from "../engine/apply_changes"
 import apply_boxes from "../engine/apply_boxes"
