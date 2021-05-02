@@ -76,37 +76,35 @@ class Box extends React.Component {
 
   render = () => (
     <HierarchScope.Consumer>
-    {this.renderUsingScope.bind(this)}
-    </HierarchScope.Consumer>
-  )
-
-  renderUsingScope(scope) {
-    var { original, children, code, ...remainder } = this.props
-    if(scope.chosen === code)
-      this.assignScopeChanges(original, scope)
-
-    return (
-      <Observer>{() => {
-      var Original = makeDisplayBlock(original, code, children, scope)
+    {scope => {
+      var { original, children, code, ...remainder } = this.props
+      if(scope.chosen === code)
+        this.assignScopeChanges(original, scope)
 
       return (
-        <Original
-          border={
-            scope.change === code ? "black"
-            : scope.chosen === code ? "blue"
-            : scope.display === code ? "red"
-            : "none"
-          }
-          {...remainder}
-        >
-          { scope.change === code
-          ? this.renderChangeableChildren(children, scope, code)
-          : this.renderChangedChildren(children)
-          }
-        </Original>
-      )}}</Observer>
-    )
-  }
+        <Observer>{() => {
+        var Original = makeDisplayBlock(original, code, children, scope)
+
+        return (
+          <Original
+            border={
+              scope.change === code ? "black"
+              : scope.chosen === code ? "blue"
+              : scope.display === code ? "red"
+              : "none"
+            }
+            {...remainder}
+          >
+            { scope.change === code
+            ? this.renderChangeableChildren(children, scope, code)
+            : this.renderChangedChildren(children)
+            }
+          </Original>
+        )}}</Observer>
+      )
+    }}
+    </HierarchScope.Consumer>
+  )
 
   assignScopeChanges = (original, scope) => {
     original.componentStyle.rules.forEach(rule => {
