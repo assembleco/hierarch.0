@@ -21,8 +21,12 @@ class Box extends React.Component {
     <HierarchScope.Consumer>
     {scope => {
       var { original, children, code, ...remainder } = this.props
+
       if(scope.chosen === code)
         this.assignScopeChanges(original, scope)
+
+      if(scope.change === code && !scope.changes.some(() => 1))
+        scope.changes = [children].flat()
 
       return (
         <Observer>{() => {
@@ -72,8 +76,6 @@ class Box extends React.Component {
 
   renderChangeableChildren = (children, scope, code) => {
     var focus_count = 0
-    if(!scope.changes.some(() => 1))
-      scope.changes = [children].flat()
 
     return (
       <Observer>{() => (
