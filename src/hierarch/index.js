@@ -24,21 +24,10 @@ class Hierarch extends React.Component {
     this.scope.pullSource()
   }
 
-  componentDidMount() {
-    if(!window.assemble || !window.assemble.repull) {
-      window.assemble = {}
-      window.assemble.repull = () => this.scope.pullSource()
-    }
-  }
-
-  componentWillUnmount() {
-    window.assemble.repull = null
-    if(!Object.keys(window.assemble).length) window.assemble = null
-  }
-
   apply_boxes = () => {
     this.setState({ open: !this.state.open })
-    apply_boxes(this.scope.index, this.scope.address).then(this.pullSource)
+    apply_boxes(this.scope.index, this.scope.address)
+      .then(() => this.scope.pullSource())
   }
 
   render = () => (

@@ -44,10 +44,7 @@ class Scope {
       this.chosen,
       this.rules,
     )
-    .then(() => {
-      if(window.assemble && window.assemble.repull)
-        window.assemble.repull()
-    })
+    .then(() => this.pullSource())
   }
 
   cooldown = () => {

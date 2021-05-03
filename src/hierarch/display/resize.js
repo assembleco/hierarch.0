@@ -25,7 +25,7 @@ class Resize extends React.Component {
 
       var resizeable = (scope) => ({
         resize: dimensions => this.setState(dimensions),
-        recordSize: () => this.recordSize(scope.index, scope.address),
+        recordSize: () => this.recordSize(scope),
       })
 
       return (
@@ -43,18 +43,15 @@ class Resize extends React.Component {
       )
     }
 
-    recordSize = (index, address) => {
+    recordSize = (scope) => {
       apply_resize(
-        index,
-        address,
+        scope.index,
+        scope.address,
         this.props.code,
         this.state.width,
         this.state.height,
       )
-      .then(() => {
-        if(window.assemble && window.assemble.repull)
-          window.assemble.repull()
-      })
+      .then(() => scope.pullSource())
     }
 }
 
