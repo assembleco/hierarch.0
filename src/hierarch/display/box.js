@@ -1,20 +1,10 @@
 import React from "react"
 import styled, { css } from "styled-components"
-
-import { observer, Observer } from "mobx-react"
-import { computed } from "mobx"
-
-import DropZone from "./drop_zone"
-
-import Change from "./change"
-import Resize from "./resize"
-import apply_changes from "../engine/apply_changes"
-import apply_boxes from "../engine/apply_boxes"
-import { add_ahead, add_behind } from "../engine/add_block"
+import { Observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
-
 import makeDisplayBlock from "./block"
+import Change from "./change"
 
 class Box extends React.Component {
   render = () => (
@@ -89,10 +79,7 @@ class Box extends React.Component {
             focus={(e) => {
               if(e && focus_count === 0) { e.focus(); focus_count += 1 }
             }}
-            record={() =>
-              this.recordChanges(scope)
-              .then(() => scope.cooldown())
-            }
+            record={() => scope.recordChanges() }
             escape={() => scope.change = null}
           >
           {children[i]}
@@ -100,19 +87,6 @@ class Box extends React.Component {
           : c
         ))
       )}</Observer>
-    )
-  }
-
-  recordChanges(scope) {
-    var changeArray = [];
-
-    scope.changes.forEach((child, x) => {
-      if(typeof(child) === 'string')
-        changeArray = changeArray.concat(child)
-    })
-
-    return (
-      apply_changes(scope.address, scope.index, this.props.code, changeArray)
     )
   }
 }

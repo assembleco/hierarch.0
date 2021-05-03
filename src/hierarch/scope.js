@@ -1,6 +1,7 @@
 import { makeAutoObservable, autorun } from "mobx"
 
 import apply_changes_by_code from "./engine/apply_changes_by_code"
+import apply_changes from "./engine/apply_changes"
 
 class Scope {
   address = "src/App.js"
@@ -44,6 +45,18 @@ class Scope {
       this.cooling = null
       this.changes = []
     }, 2000)
+  }
+
+  recordChanges() {
+    var changeArray = [];
+
+    this.changes.forEach((child, x) => {
+      if(typeof(child) === 'string')
+        changeArray = changeArray.concat(child)
+    })
+
+    apply_changes(this.address, this.index, this.change, changeArray)
+    this.cooldown()
   }
 }
 
