@@ -2,6 +2,8 @@ import { makeAutoObservable, autorun } from "mobx"
 
 import apply_changes_by_code from "./engine/apply_changes_by_code"
 import apply_changes from "./engine/apply_changes"
+import makeProgram from "./engine/program"
+import parse_hierarchy from "./engine/parse_hierarchy"
 
 class Scope {
   address = "src/App.js"
@@ -23,6 +25,16 @@ class Scope {
     autorun(() => console.log("chosen", this.chosen))
     autorun(() => console.log("change", this.change))
     autorun(() => console.log("rules", JSON.stringify(this.rules)))
+  }
+
+  pullSource = () => {
+    fetch(`http://${process.env.REACT_APP_HIERARCH_ADDRESS}/source?address=${this.address}`)
+      .then(response => response.text())
+      .then(response => makeProgram(response))
+      .then(program => {
+        this.index = program
+        parse_hierarchy(program, h => this.hierarchy = h)
+      })
   }
 
   recordChangesOnChosen = () => {

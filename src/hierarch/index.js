@@ -9,9 +9,7 @@ import Scope from "./scope"
 import Logo from "./display/logo"
 import UpperBar from "./display/upper_bar"
 
-import makeProgram from "./engine/program"
 import apply_boxes from "./engine/apply_boxes"
-import parse_hierarchy from "./engine/parse_hierarchy"
 
 const HierarchScope = React.createContext()
 
@@ -23,23 +21,13 @@ class Hierarch extends React.Component {
   constructor(p) {
     super(p)
     this.scope = new Scope()
-    this.pullSource()
-  }
-
-  pullSource = () => {
-    fetch(`http://${process.env.REACT_APP_HIERARCH_ADDRESS}/source?address=${this.scope.address}`)
-      .then(response => response.text())
-      .then(response => makeProgram(response))
-      .then(program => {
-        this.scope.index = program
-        parse_hierarchy(program, h => this.scope.hierarchy = h)
-      })
+    this.scope.pullSource()
   }
 
   componentDidMount() {
     if(!window.assemble || !window.assemble.repull) {
       window.assemble = {}
-      window.assemble.repull = this.pullSource.bind(this)
+      window.assemble.repull = () => this.scope.pullSource()
     }
   }
 
