@@ -68,7 +68,7 @@ class Box extends React.Component {
 
   renderChildrenIncludingChanges = (children, scope, code) => {
     return (
-      scope.cooldown === code
+      scope.cooling === code
       ? scope.changes
       : children
     )
@@ -91,11 +91,7 @@ class Box extends React.Component {
             }}
             record={() =>
               this.recordChanges(scope)
-              .then(() => {
-                scope.cooldown = scope.change
-                setTimeout(() => scope.cooldown = null, 2000)
-                scope.change = null
-              })
+              .then(() => scope.cooldown())
             }
             escape={() => scope.change = null}
           >

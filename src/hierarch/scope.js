@@ -8,7 +8,7 @@ class Scope {
   display = null
   chosen = null
   change = null
-  cooldown = null
+  cooling = null
 
   hierarchy = [0,0,[],"",false]
   index = null
@@ -35,6 +35,15 @@ class Scope {
       if(window.assemble && window.assemble.repull)
         window.assemble.repull()
     })
+  }
+
+  cooldown = () => {
+    this.cooling = this.change
+    this.change = null
+    setTimeout(() => {
+      this.cooling = null
+      this.changes = []
+    }, 2000)
   }
 }
 
