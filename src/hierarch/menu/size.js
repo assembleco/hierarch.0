@@ -9,7 +9,7 @@ var Size = () => (
   <HierarchScope.Consumer>{scope => (
     <Observer>{() => (
       <Grid>
-        <span>Width</span>
+        <Small>Width</Small>
         <input
           type="text"
           placeholder="None"
@@ -17,7 +17,7 @@ var Size = () => (
           value={scope.rules['width'] || ''}
         />
 
-        <span>Height</span>
+        <Small>Height</Small>
         <input
           type="text"
           placeholder="None"
@@ -25,7 +25,7 @@ var Size = () => (
           value={scope.rules['height'] || ''}
         />
 
-        <span>Min W</span>
+        <Small>Min W</Small>
         <input
           type="text"
           placeholder="None"
@@ -33,7 +33,7 @@ var Size = () => (
           value={scope.rules['min-width'] || ''}
         />
 
-        <span>Min H</span>
+        <Small>Min H</Small>
         <input
           type="text"
           placeholder="None"
@@ -41,7 +41,7 @@ var Size = () => (
           value={scope.rules['min-height'] || ''}
         />
 
-        <span>Max W</span>
+        <Small>Max W</Small>
         <input
           type="text"
           placeholder="None"
@@ -49,7 +49,7 @@ var Size = () => (
           value={scope.rules['max-width'] || ''}
         />
 
-        <span>Max H</span>
+        <Small>Max H</Small>
         <input
           type="text"
           placeholder="None"
@@ -73,9 +73,9 @@ var ComingSoonLink = styled.a`
 
 var Grid = styled.div`
 display: grid;
-grid-template-columns: repeat(4, 3.6rem);
+grid-template-columns: repeat(4, 3.2rem);
 grid-template-rows: repeat(5, 1fr);
-grid-column-gap: 0.4rem;
+grid-column-gap: 0.5rem;
 
 ${Record} {
   grid-row: -1;
