@@ -76,7 +76,6 @@ display: grid;
 grid-template-columns: repeat(4, 3.6rem);
 grid-template-rows: repeat(5, 1fr);
 grid-column-gap: 0.4rem;
-padding: 0.2rem;
 
 ${Record} {
   grid-row: -1;

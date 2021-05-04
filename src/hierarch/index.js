@@ -69,6 +69,7 @@ class Hierarch extends React.Component {
             </UpperBar>
 
             <Sidebar side="left" >
+              <Sidebar.Header>Hierarchy</Sidebar.Header>
               <Hierarchy
                 hierarchy={this.scope.hierarchy}
                 display={this.props.display}
@@ -76,6 +77,7 @@ class Hierarch extends React.Component {
             </Sidebar>
 
             <Sidebar side="right" size="16rem" >
+              <Sidebar.Header>Size</Sidebar.Header>
               <Size/>
             </Sidebar>
           </>

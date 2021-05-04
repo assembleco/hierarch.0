@@ -25,6 +25,11 @@ background-color: #faf9dd;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
+padding: 0.2rem;
+`
+
+Sidebar.Header = styled.h3`
+margin: 0;
 `
 
 export default Sidebar
