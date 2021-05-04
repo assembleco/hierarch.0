@@ -26,6 +26,10 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 0.2rem;
+overflow-y: scroll;
+::-webkit-scrollbar {
+  display: none;
+}
 `
 
 Sidebar.Header = styled.h3`

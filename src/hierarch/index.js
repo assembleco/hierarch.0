@@ -13,6 +13,10 @@ import UpperBar from "./display/upper_bar"
 import Sidebar from "./display/sidebar"
 
 import Size from "./menu/size"
+import spacing from "./mockup/spacing.png"
+import symbols from "./mockup/typography.png"
+import place from "./mockup/position.png"
+import dynamics from "./mockup/layout.png"
 
 import apply_boxes from "./engine/apply_boxes"
 
@@ -69,6 +73,26 @@ class Hierarch extends React.Component {
             <Sidebar side="right" size="16rem" >
               <Sidebar.Header>Size</Sidebar.Header>
               <Size/>
+
+              <Sidebar.Header>Spacing</Sidebar.Header>
+              <a href="https://github.com/assembleapp/hierarch/issues/12">Coming Soon</a>
+              <Mockup src={spacing} alt="spacing" />
+              <br/>
+
+              <Sidebar.Header>Symbols</Sidebar.Header>
+              <a href="https://github.com/assembleapp/hierarch/issues/13">Coming Soon</a>
+              <Mockup src={symbols} alt="symbols" />
+              <br/>
+
+              <Sidebar.Header>Place</Sidebar.Header>
+              <a href="https://github.com/assembleapp/hierarch/issues/14">Coming Soon</a>
+              <Mockup src={place} alt="place" />
+              <br/>
+
+              <Sidebar.Header>Dynamics</Sidebar.Header>
+              <a href="https://github.com/assembleapp/hierarch/issues/15">Coming Soon</a>
+              <Mockup src={dynamics} alt="dynamics" />
+              <br/>
             </Sidebar>
 
             <UpperBar display={(code) => this.scope.display = code} >
@@ -115,6 +139,10 @@ top: 0;
 left: 0;
 height: 40px;
 width: 40px;
+`
+
+var Mockup = styled.img`
+width: 100%;
 `
 
 export { HierarchScope }
