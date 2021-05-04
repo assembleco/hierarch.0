@@ -21,27 +21,27 @@ class UpperBar extends React.Component {
       <Bar>
         {this.props.children}
 
-        <Opener name="size" >
-          <Size />
-        </Opener>
-
         <Opener name="spacing" >
           <a href="https://github.com/assembleapp/hierarch/issues/12">Coming Soon</a>
+          <br/>
           <img src={spacing} alt="spacing" />
         </Opener>
 
         <Opener name="symbols" >
           <a href="https://github.com/assembleapp/hierarch/issues/13">Coming Soon</a>
+          <br/>
           <img src={symbols} alt="symbols" />
         </Opener>
 
         <Opener name="place" >
           <a href="https://github.com/assembleapp/hierarch/issues/14">Coming Soon</a>
+          <br/>
           <img src={place} alt="place" />
         </Opener>
 
         <Opener name="dynamics" >
           <a href="https://github.com/assembleapp/hierarch/issues/15">Coming Soon</a>
+          <br/>
           <img src={dynamics} alt="dynamics" />
         </Opener>
       </Bar>
