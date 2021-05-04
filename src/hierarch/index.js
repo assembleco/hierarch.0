@@ -62,6 +62,16 @@ class Hierarch extends React.Component {
         {this.state.open
           ?
           <>
+            <UpperBar display={(code) => this.scope.display = code} >
+              <LogoSpace>
+                <Logo
+                  size={20}
+                  repeat={5000}
+                  onClick={() => this.apply_boxes()}
+                />
+              </LogoSpace>
+            </UpperBar>
+
             <Sidebar side="left" >
               <Sidebar.Header>Hierarchy</Sidebar.Header>
               <Hierarchy
@@ -94,16 +104,6 @@ class Hierarch extends React.Component {
               <Mockup src={dynamics} alt="dynamics" />
               <br/>
             </Sidebar>
-
-            <UpperBar display={(code) => this.scope.display = code} >
-              <LogoSpace>
-                <Logo
-                  size={20}
-                  repeat={5000}
-                  onClick={() => this.apply_boxes()}
-                />
-              </LogoSpace>
-            </UpperBar>
           </>
           :
           <Corner>
