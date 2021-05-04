@@ -57,8 +57,8 @@ var Size = () => (
           value={scope.rules['max-height'] || ''}
         />
 
-        <span>Overflow</span>
-        <ComingSoonLink href="https://github.com/hierarch/hierarch/issues/11">
+        <Small>Overflow</Small>
+        <ComingSoonLink href="https://github.com/assembleapp/hierarch/issues/11">
           Coming Soon
         </ComingSoonLink>
 
@@ -73,10 +73,10 @@ var ComingSoonLink = styled.a`
 
 var Grid = styled.div`
 display: grid;
-grid-template-columns: repeat(4, 4rem);
+grid-template-columns: repeat(4, 3.6rem);
 grid-template-rows: repeat(5, 1fr);
-width: 18rem;
-grid-column-gap: 0.5rem;
+grid-column-gap: 0.4rem;
+padding: 0.2rem;
 
 ${Record} {
   grid-row: -1;
@@ -86,6 +86,10 @@ ${Record} {
 ${ComingSoonLink} {
   grid-column: span 3;
 }
+`
+
+var Small = styled.span`
+font-size: 0.8rem;
 `
 
 export default Size

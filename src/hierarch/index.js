@@ -6,8 +6,13 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
 import Scope from "./scope"
+
+import Hierarchy from "./display/hierarchy"
 import Logo from "./display/logo"
 import UpperBar from "./display/upper_bar"
+import Sidebar from "./display/sidebar"
+
+import Size from "./menu/size"
 
 import apply_boxes from "./engine/apply_boxes"
 
@@ -35,27 +40,6 @@ class Hierarch extends React.Component {
 
     <Observer>{() => (
       <DndProvider backend={HTML5Backend} >
-        {this.state.open
-          ?
-          <UpperBar display={(code) => this.scope.display = code} >
-            <LogoSpace>
-              <Logo
-                size={20}
-                repeat={5000}
-                onClick={() => this.apply_boxes()}
-              />
-            </LogoSpace>
-          </UpperBar>
-          :
-          <Corner>
-            <Logo
-              size={20}
-              repeat={5000}
-              onClick={() => this.apply_boxes()}
-            />
-          </Corner>
-        }
-
         <Display
           open={this.state.open}
           onMouseMove={(e) => {
@@ -70,6 +54,40 @@ class Hierarch extends React.Component {
         >
           {this.props.children}
         </Display>
+
+        {this.state.open
+          ?
+          <>
+            <UpperBar display={(code) => this.scope.display = code} >
+              <LogoSpace>
+                <Logo
+                  size={20}
+                  repeat={5000}
+                  onClick={() => this.apply_boxes()}
+                />
+              </LogoSpace>
+            </UpperBar>
+
+            <Sidebar side="left" >
+              <Hierarchy
+                hierarchy={this.scope.hierarchy}
+                display={this.props.display}
+              />
+            </Sidebar>
+
+            <Sidebar side="right" size="16rem" >
+              <Size/>
+            </Sidebar>
+          </>
+          :
+          <Corner>
+            <Logo
+              size={20}
+              repeat={5000}
+              onClick={() => this.apply_boxes()}
+            />
+          </Corner>
+        }
       </DndProvider>
     )}</Observer>
     </HierarchScope.Provider>
@@ -81,7 +99,12 @@ var LogoSpace = styled.div`
 
 const Display = styled.div`
 margin: 0;
-${({open}) => open && css`margin-top: 4rem;`}
+${({open}) => open && css`
+position: fixed;
+top: 4rem;
+left: 12rem;
+right: 16rem;
+`}
 `
 
 const Corner = styled.div`

@@ -1,15 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import Icon from "@mdi/react"
-import { mdiClose } from "@mdi/js"
-import { observable } from "mobx"
 import { Observer } from "mobx-react"
-
-import { HierarchScope } from "../index"
-import Scope from "../engine/scope"
-
-import Grid from "./grid"
-import Hierarchy from "./hierarchy"
 
 import {
   usePopoverState,
@@ -24,24 +15,11 @@ import symbols from "../mockup/typography.png"
 import place from "../mockup/position.png"
 import dynamics from "../mockup/layout.png"
 
-class Sidebar extends React.Component {
-  state = {
-    open: null,
-  }
-
+class UpperBar extends React.Component {
   render = () => (
-    <HierarchScope.Consumer>
-    {scope => (
-      <Observer>{() => (
+    <Observer>{() => (
       <Bar>
         {this.props.children}
-
-        <Opener name="hierarchy" >
-          <Hierarchy
-            hierarchy={scope.hierarchy}
-            display={this.props.display}
-          />
-        </Opener>
 
         <Opener name="size" >
           <Size />
@@ -67,9 +45,7 @@ class Sidebar extends React.Component {
           <img src={dynamics} alt="dynamics" />
         </Opener>
       </Bar>
-      )}</Observer>
-    )}
-    </HierarchScope.Consumer>
+    )}</Observer>
   )
 }
 
@@ -104,44 +80,6 @@ var PopoverWrapper = styled.div`
   }
 `
 
-const BaseColumn = styled.div`
-background: #2a2a2aa0;
-color: #b1b1e2cc;
-`
-
-const Column = styled(BaseColumn)`
-padding: 0.5rem;
-`
-
-const ScrollColumn = styled(Column)`
-position: relative;
-overflow: hidden;
-display: flex;
-flex-direction: row;
-`
-
-const Scroller = styled.div`
-width: 100%;
-height: 10000px;
-display: flex;
-flex-direction: column;
-`
-const Scrollable = styled.div`
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-overflow-y: scroll;
-::-webkit-scrollbar {
-  display: none;
-}
-`
-
-const Close = styled.span`
-float: right;
-`
-
 var Bar = styled.div`
 height: 4rem;
 position: fixed;
@@ -156,4 +94,4 @@ justify-content: space-between;
 align-items: baseline;
 `
 
-export default Sidebar
+export default UpperBar
