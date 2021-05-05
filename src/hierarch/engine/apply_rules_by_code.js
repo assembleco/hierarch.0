@@ -1,6 +1,6 @@
 import push_upgrades from "./push_upgrades"
 
-const apply_changes_by_code = async (program, address, code, changes) => {
+const apply_rules_by_code = async (program, address, code, rules) => {
   var upgrades = []
 
   console.log(
@@ -119,36 +119,36 @@ const apply_changes_by_code = async (program, address, code, changes) => {
     css,
   ).rootNode
 
-  Object.keys(changes).forEach(change => {
+  Object.keys(rules).forEach(rule => {
     var query = program.query(`
     (stylesheet
       (declaration (property_name) @prop (_) @value) @declare
-      (#eq? @prop "${change}")
+      (#eq? @prop "${rule}")
     )
     `, css_node, 'css')
 
     var rule_in_place = query[0] && query[0].captures[2]
 
-    var changed = changes[change]
+    var upgraded_rule = rules[rule]
 
-    if(changed && parseInt(changed).toString() === changed) {
-      changed = changed + 'px'
+    if(upgraded_rule && parseInt(upgraded_rule).toString() === upgraded_rule) {
+      upgraded_rule = upgraded_rule + 'px'
     }
 
-    if(changed) {
+    if(upgraded_rule) {
       if(rule_in_place) {
         /* A rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: query[0].captures[2].node.startIndex,
           end: query[0].captures[2].node.endIndex,
-          grade: changed ,
+          grade: upgraded_rule ,
         })
       } else {
         /* No rule is in place, and a change is needed */
         upgrades = upgrades.concat({
           begin: css_string.startIndex + 1,
           end: css_string.startIndex + 1,
-          grade: `\n${change}: ${changed};`,
+          grade: `\n${rule}: ${upgraded_rule};`,
         })
       }
     } else {
@@ -171,4 +171,4 @@ const apply_changes_by_code = async (program, address, code, changes) => {
   return push_upgrades(address, upgrades)
 }
 
-export default apply_changes_by_code
+export default apply_rules_by_code

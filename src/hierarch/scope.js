@@ -1,6 +1,6 @@
 import { makeAutoObservable, autorun } from "mobx"
 
-import apply_changes_by_code from "./engine/apply_changes_by_code"
+import apply_rules_by_code from "./engine/apply_rules_by_code"
 import apply_changes from "./engine/apply_changes"
 import makeProgram from "./engine/program"
 import parse_hierarchy from "./engine/parse_hierarchy"
@@ -38,7 +38,7 @@ class Scope {
   }
 
   recordChangesOnChosen = () => {
-    apply_changes_by_code(
+    apply_rules_by_code(
       this.index,
       this.address,
       this.chosen,
