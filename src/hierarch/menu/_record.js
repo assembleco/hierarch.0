@@ -1,6 +1,9 @@
 import styled from "styled-components"
 
 var Record = styled.button`
+position: fixed;
+top: 1rem;
+right: 2rem;
 width: auto;
 padding: 0.25rem;
 background-color: #a0a0d0;
