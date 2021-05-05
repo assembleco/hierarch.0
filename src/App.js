@@ -77,7 +77,7 @@ color: #3f0894;
 `
 
 const H3 = styled.h3`
-margin: 0;
+margin: 0px;
 `
 
 export default App;

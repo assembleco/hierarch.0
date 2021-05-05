@@ -13,6 +13,8 @@ import UpperBar from "./display/upper_bar"
 import Sidebar from "./display/sidebar"
 
 import Size from "./menu/size"
+import Symbols from "./menu/symbols"
+import Record from "./menu/_record"
 import spacing from "./mockup/spacing.png"
 import symbols from "./mockup/typography.png"
 import place from "./mockup/position.png"
@@ -81,17 +83,21 @@ class Hierarch extends React.Component {
             </Sidebar>
 
             <Sidebar side="right" size="16rem" >
+              <Record onClick={() =>
+                this.scope.recordChangesOnChosen()
+              } >Record</Record>
+
               <Sidebar.Header>Size</Sidebar.Header>
               <Size/>
+
+              <Sidebar.Header>Symbols</Sidebar.Header>
+              <Symbols/>
+              <Mockup src={symbols} alt="symbols" />
+              <br/>
 
               <Sidebar.Header>Spacing</Sidebar.Header>
               <a href="https://github.com/assembleapp/hierarch/issues/12">Coming Soon</a>
               <Mockup src={spacing} alt="spacing" />
-              <br/>
-
-              <Sidebar.Header>Symbols</Sidebar.Header>
-              <a href="https://github.com/assembleapp/hierarch/issues/13">Coming Soon</a>
-              <Mockup src={symbols} alt="symbols" />
               <br/>
 
               <Sidebar.Header>Place</Sidebar.Header>
