@@ -25,41 +25,43 @@ var Symbols = () => (
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.rules['height'] = e.target.value}
-          value={scope.rules['height'] || ''}
+          onChange={(e) => scope.rules['font-weight'] = e.target.value}
+          value={scope.rules['font-weight'] || ''}
         />
 
         <Small>Size</Small>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.rules['min-width'] = e.target.value}
-          value={scope.rules['min-width'] || ''}
+          onChange={(e) => scope.rules['font-size'] = e.target.value}
+          value={scope.rules['font-size'] || ''}
         />
 
         <Small>Color</Small>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.rules['min-height'] = e.target.value}
-          value={scope.rules['min-height'] || ''}
+          onChange={(e) => scope.rules['color'] = e.target.value}
+          value={scope.rules['color'] || ''}
         />
 
+      {/*
         <Small>Align</Small>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.rules['max-width'] = e.target.value}
-          value={scope.rules['max-width'] || ''}
+          onChange={(e) => scope.rules['text-align'] = e.target.value}
+          value={scope.rules['text-align'] || ''}
         />
 
         <Small>Style</Small>
         <input
           type="text"
           placeholder="None"
-          onChange={(e) => scope.rules['max-height'] = e.target.value}
-          value={scope.rules['max-height'] || ''}
+          onChange={(e) => scope.rules['text-decoration'] = e.target.value}
+          value={scope.rules['text-decoration'] || ''}
         />
+      */}
       </Grid>
     )}</Observer>
   )}</HierarchScope.Consumer>
