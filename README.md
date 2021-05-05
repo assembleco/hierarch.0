@@ -74,7 +74,7 @@ During our build phase,
 Assemble's Hierarch engine code is open-source and unlicensed.  
 Use of this unlicensed code is dangerous.
 
-No legal permission is epxressed for our code's use,  
+No legal permission is expressed for our code's use,  
 because we need more secure policies and boundaries programmed in.
 
 If you would like to use this engine to build a program,  
