@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { Observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
+import Opener from "../display/opener"
+import { ChromePicker } from "react-color"
 
 var Symbols = () => (
   <HierarchScope.Consumer>{scope => (
@@ -38,12 +40,21 @@ var Symbols = () => (
         />
 
         <Small>Color</Small>
-        <input
-          type="text"
-          placeholder="None"
-          onChange={(e) => scope.rules['color'] = e.target.value}
-          value={scope.rules['color'] || ''}
-        />
+        <Opener name="color" style={{ gridColumn: '2'}}>
+          <button onClick={() => scope.rules['color'] = null}>Clear</button>
+          <ChromePicker
+            onChange={(color) => scope.rules['color'] = color.hex}
+            color={scope.rules['color'] || ''}
+          />
+        </Opener>
+
+        <Opener name="background" style={{ gridColumn: '2'}}>
+          <button onClick={() => scope.rules['background-color'] = null}>Clear</button>
+          <ChromePicker
+            onChange={(color) => scope.rules['background-color'] = color.hex}
+            color={scope.rules['background-color'] || ''}
+          />
+        </Opener>
 
       {/*
         <Small>Align</Small>
