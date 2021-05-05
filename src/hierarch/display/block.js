@@ -20,7 +20,7 @@ var makeDisplayBlock = (original, code, children, scope) => (
     },
   }))`
   ${scope.chosen === code && Object.keys(scope.rules).map(change => (
-      `${change}: ${scope.rules[change]}px;
+      `${change}: ${scope.rules[change]};
       `
     ))
   }
