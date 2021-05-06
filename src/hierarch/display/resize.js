@@ -5,54 +5,54 @@ import { HierarchScope } from "../index"
 import apply_resize from "../engine/apply_resize"
 
 class Resize extends React.Component {
-    state = {
-        height: null,
-        width: null,
-    }
+  state = {
+    height: null,
+    width: null,
+  }
 
-    constructor(p) {
-        super(p)
-        this.component = styled(p.original).attrs(p => {
-            var styles = {}
-            styles.height = p.height || null
-            styles.width = p.width || null
-            return { style: styles }
-        })``
-    }
+  constructor(p) {
+    super(p)
+    this.component = styled(p.original).attrs(p => {
+      var styles = {}
+      styles.height = p.height || null
+      styles.width = p.width || null
+      return { style: styles }
+    })``
+  }
 
-    render = () => {
-      const Component = this.component
+  render = () => {
+    const Component = this.component
 
-      var resizeable = (scope) => ({
-        resize: dimensions => this.setState(dimensions),
-        recordSize: () => this.recordSize(scope),
-      })
+    var resizeable = (scope) => ({
+      resize: dimensions => this.setState(dimensions),
+      recordSize: () => this.recordSize(scope),
+    })
 
-      return (
-        <HierarchScope.Consumer>
-          {scope => (
-            <ResizeBox {...this.state}>
-              <Corner {...resizeable(scope)} x={-1} y={-1} />
-              <Corner {...resizeable(scope)} x={-1} y={1} />
-              <Corner {...resizeable(scope)} x={1} y={-1} />
-              <Corner {...resizeable(scope)} x={1} y={1} />
-              <Component {...this.state} {...this.props} />
-            </ResizeBox>
-          )}
-        </HierarchScope.Consumer>
-      )
-    }
+    return (
+      <HierarchScope.Consumer>
+        {scope => (
+          <ResizeBox {...this.state}>
+            <Corner {...resizeable(scope)} x={-1} y={-1} />
+            <Corner {...resizeable(scope)} x={-1} y={1} />
+            <Corner {...resizeable(scope)} x={1} y={-1} />
+            <Corner {...resizeable(scope)} x={1} y={1} />
+            <Component {...this.state} {...this.props} />
+          </ResizeBox>
+        )}
+      </HierarchScope.Consumer>
+    )
+  }
 
-    recordSize = (scope) => {
-      apply_resize(
-        scope.index,
-        scope.address,
-        this.props.code,
-        this.state.width,
-        this.state.height,
-      )
-      .then(() => scope.pullSource())
-    }
+  recordSize = (scope) => {
+    apply_resize(
+      scope.index,
+      scope.address,
+      this.props.code,
+      this.state.width,
+      this.state.height,
+    )
+    .then(() => scope.pullSource())
+  }
 }
 
 var original_mouseX = 0
@@ -63,47 +63,47 @@ var element_original_width = 0
 var element_original_height = 0
 
 const resize = p => e => {
-    var mouseX = e.pageX
-    var mouseY = e.pageY
-    var new_width = 0
-    var new_height = 0
-    // var new_x = 0
-    // var new_y = 0
+  var mouseX = e.pageX
+  var mouseY = e.pageY
+  var new_width = 0
+  var new_height = 0
+  // var new_x = 0
+  // var new_y = 0
 
-    var width_scaling_factor = 2
-    var height_scaling_factor = 1
+  var width_scaling_factor = 2
+  var height_scaling_factor = 1
 
-    // bottom-right:
-    if(p.x > 0 && p.y > 0) {
-        new_width = element_original_width + width_scaling_factor * (mouseX - original_mouseX)
-        new_height = element_original_height - height_scaling_factor * (mouseY - original_mouseY)
-    }
-    // bottom-left:
-    if(p.x < 0 && p.y > 0) {
-        new_width = element_original_width - width_scaling_factor * (mouseX - original_mouseX)
-        new_height = element_original_height - height_scaling_factor * (mouseY - original_mouseY)
-        // new_x = element_original_x - (mouseX - original_mouseX)
-    }
-    // top-right:
-    if(p.x > 0 && p.y < 0) {
-        new_width = element_original_width + width_scaling_factor * (mouseX - original_mouseX)
-        new_height = element_original_height + height_scaling_factor * (mouseY - original_mouseY)
-        // new_y = element_original_y + (mouseY - original_mouseY)
-    }
-    // top-left:
-    if(p.x < 0 && p.y < 0) {
-        new_width = element_original_width - width_scaling_factor * (mouseX - original_mouseX)
-        new_height = element_original_height + height_scaling_factor * (mouseY - original_mouseY)
-        // new_x = element_original_x + (mouseX - original_mouseX)
-        // new_y = element_original_y + (mouseY - original_mouseY)
-    }
+  // bottom-right:
+  if(p.x > 0 && p.y > 0) {
+    new_width = element_original_width + width_scaling_factor * (mouseX - original_mouseX)
+    new_height = element_original_height - height_scaling_factor * (mouseY - original_mouseY)
+  }
+  // bottom-left:
+  if(p.x < 0 && p.y > 0) {
+    new_width = element_original_width - width_scaling_factor * (mouseX - original_mouseX)
+    new_height = element_original_height - height_scaling_factor * (mouseY - original_mouseY)
+    // new_x = element_original_x - (mouseX - original_mouseX)
+  }
+  // top-right:
+  if(p.x > 0 && p.y < 0) {
+    new_width = element_original_width + width_scaling_factor * (mouseX - original_mouseX)
+    new_height = element_original_height + height_scaling_factor * (mouseY - original_mouseY)
+    // new_y = element_original_y + (mouseY - original_mouseY)
+  }
+  // top-left:
+  if(p.x < 0 && p.y < 0) {
+    new_width = element_original_width - width_scaling_factor * (mouseX - original_mouseX)
+    new_height = element_original_height + height_scaling_factor * (mouseY - original_mouseY)
+    // new_x = element_original_x + (mouseX - original_mouseX)
+    // new_y = element_original_y + (mouseY - original_mouseY)
+  }
 
-    p.resize({width: `${new_width}px`, height: `${new_height}px`})
+  p.resize({width: `${new_width}px`, height: `${new_height}px`})
 }
 
 const endResize = (resizer, recordSize) => () => {
-    window.removeEventListener('mousemove', resizer)
-    window.removeEventListener('mouseup', recordSize)
+  window.removeEventListener('mousemove', resizer)
+  window.removeEventListener('mouseup', recordSize)
 }
 
 
@@ -115,20 +115,20 @@ overflow: visible;
 `
 
 const Corner = styled.span.attrs(p => ({
-    onMouseDown: (e) => {
-        e.preventDefault()
-        original_mouseX = e.pageX
-        original_mouseY = e.pageY
-        // element_original_x = e.target.parentElement.getBoundingClientRect().left
-        // element_original_y = e.target.parentElement.getBoundingClientRect().bottom
-        element_original_width = e.target.parentElement.getBoundingClientRect().width
-        element_original_height = e.target.parentElement.getBoundingClientRect().height
-        var resizer = resize(p)
-        window.addEventListener('mousemove', resizer)
-        window.addEventListener('mouseup', p.recordSize)
-        window.addEventListener('mouseup', endResize(resizer, p.recordSize))
-    },
-    onClick: (e) => { e.stopPropagation() },
+  onMouseDown: (e) => {
+    e.preventDefault()
+    original_mouseX = e.pageX
+    original_mouseY = e.pageY
+    // element_original_x = e.target.parentElement.getBoundingClientRect().left
+    // element_original_y = e.target.parentElement.getBoundingClientRect().bottom
+    element_original_width = e.target.parentElement.getBoundingClientRect().width
+    element_original_height = e.target.parentElement.getBoundingClientRect().height
+    var resizer = resize(p)
+    window.addEventListener('mousemove', resizer)
+    window.addEventListener('mouseup', p.recordSize)
+    window.addEventListener('mouseup', endResize(resizer, p.recordSize))
+  },
+  onClick: (e) => { e.stopPropagation() },
 }))`
 position: absolute;
 height: 1rem;
