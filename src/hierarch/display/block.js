@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components"
 
+import Resize from "./resize"
+
 var makeDisplayBlock = (original, code, children, scope) => {
   var Block = styled(original).attrs({
     "data-code": code,
@@ -30,6 +32,12 @@ var makeDisplayBlock = (original, code, children, scope) => {
     ))
   }
   `
+
+  if(scope.change !== code && scope.chosen === code) {
+    return (({ children }) => (
+      <Resize original={Block}>{children}</Resize>
+    ))
+  }
 
   return Block
 }
