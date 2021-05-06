@@ -1,10 +1,15 @@
 import styled, { css } from "styled-components"
 
-var makeDisplayBlock = (original, code, children, scope) => (
-  styled(original).attrs(({ border }) => ({
+var makeDisplayBlock = (original, code, children, scope) => {
+  var Block = styled(original).attrs({
     "data-code": code,
     style: {
-      outline: border && `1px dashed ${border}`,
+      outline: `1px dashed ${
+        scope.change === code ? "black"
+          : scope.chosen === code ? "blue"
+          : scope.display === code ? "red"
+          : "none"
+      }`,
     },
 
     onClick: (e) => {
@@ -18,13 +23,15 @@ var makeDisplayBlock = (original, code, children, scope) => (
       e.bubbles = false
       return false
     },
-  }))`
+  })`
   ${scope.chosen === code && Object.keys(scope.rules).map(change => (
       `${change}: ${scope.rules[change]};
       `
     ))
   }
   `
-)
+
+  return Block
+}
 
 export default makeDisplayBlock

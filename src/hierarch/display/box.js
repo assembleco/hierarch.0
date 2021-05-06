@@ -23,15 +23,7 @@ class Box extends React.Component {
         var Original = makeDisplayBlock(original, code, children, scope)
 
         return (
-          <Original
-            border={
-              scope.change === code ? "black"
-              : scope.chosen === code ? "blue"
-              : scope.display === code ? "red"
-              : "none"
-            }
-            {...remainder}
-          >
+          <Original {...remainder} >
             { scope.change === code
             ? this.renderChangeableChildren(children, scope, code)
             : this.renderChildrenIncludingChanges(children, scope, code)
