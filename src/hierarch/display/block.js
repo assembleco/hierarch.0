@@ -2,16 +2,13 @@ import styled, { css } from "styled-components"
 
 import Resize from "./resize"
 
-var makeDisplayBlock = (original, code, children, scope) => {
-  var Block = styled(original).attrs({
+var makeDisplayBlock = (original, code, children) => {
+  console.log("making display block")
+
+  var Block = styled(original).attrs(({ border, scope }) => ({
     "data-code": code,
     style: {
-      outline: `1px dashed ${
-        scope.change === code ? "black"
-          : scope.chosen === code ? "blue"
-          : scope.display === code ? "red"
-          : "none"
-      }`,
+      outline: border && `1px dashed ${border}`,
     },
 
     onClick: (e) => {
@@ -25,19 +22,20 @@ var makeDisplayBlock = (original, code, children, scope) => {
       e.bubbles = false
       return false
     },
-  })`
-  ${scope.chosen === code && Object.keys(scope.rules).map(change => (
+  }))`
+  ${({ scope }) => (
+  scope.chosen === code && Object.keys(scope.rules).map(change => (
       `${change}: ${scope.rules[change]};
       `
     ))
-  }
+  )}
   `
 
-  if(scope.change !== code && scope.chosen === code) {
-    return (({ children }) => (
-      <Resize original={Block}>{children}</Resize>
-    ))
-  }
+  // if(scope.change !== code && scope.chosen === code) {
+  //   return (({ children }) => (
+  //     <Resize original={Block}>{children}</Resize>
+  //   ))
+  // }
 
   return Block
 }
