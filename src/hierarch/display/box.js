@@ -29,16 +29,7 @@ class Box extends React.Component {
       return (
         <Observer>{() => {
         return (
-          <Original
-            {...remainder}
-            scope={scope}
-            border={
-              scope.change === code ? "black"
-              : scope.chosen === code ? "blue"
-              : scope.display === code ? "red"
-              : null
-            }
-          >
+          <Original {...remainder} scope={scope} >
             { scope.change === code
             ? this.renderChangeableChildren(children, scope, code)
             : this.renderChildrenIncludingChanges(children, scope, code)
