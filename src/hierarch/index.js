@@ -1,6 +1,7 @@
 import React from "react"
 import styled, {css} from "styled-components"
 import { observer, Observer } from "mobx-react"
+import { runInAction } from "mobx"
 
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
@@ -55,7 +56,7 @@ class Hierarch extends React.Component {
               : null
 
             if(code_key)
-              this.scope.display = code_key
+              runInAction(() => this.scope.display = code_key)
           }}
         >
           {this.props.children}

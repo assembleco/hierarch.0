@@ -24,18 +24,24 @@ class Box extends React.Component {
       if(scope.change === code && !scope.changes.some(() => 1))
         scope.changes = [children].flat()
 
-      var Original = this.displayBlock
-
       return (
-        <Observer>{() => {
-        return (
-          <Original {...remainder} scope={scope} >
+        <Observer>{() => (
+          <this.displayBlock
+          {...remainder}
+          scope={scope}
+          border={
+            scope.change === code ? "black"
+            : scope.chosen === code ? "blue"
+            : scope.display === code ? "red"
+            : null
+          }
+          >
             { scope.change === code
             ? this.renderChangeableChildren(children, scope, code)
             : this.renderChildrenIncludingChanges(children, scope, code)
             }
-          </Original>
-        )}}</Observer>
+          </this.displayBlock>
+        )}</Observer>
       )
     }}
     </HierarchScope.Consumer>
