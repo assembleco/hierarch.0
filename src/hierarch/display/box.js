@@ -19,30 +19,26 @@ class Box extends React.Component {
 
       return (
         <Observer>{() => (
-          scope.change !== code && scope.chosen === code
-          ? <Resize
-              original={this.displayBlock}
-              scope={scope}
-              {...remainder}
-            >
-              {children}
-            </Resize>
-          :
-            <this.displayBlock
-              {...remainder}
-              scope={scope}
-              border={
-                scope.change === code ? "black"
-                : scope.chosen === code ? "blue"
-                : scope.display === code ? "red"
-                : null
-              }
-            >
-              { scope.change === code
-              ? this.renderChangeableChildren(children, scope, code)
-              : this.renderChildrenIncludingChanges(children, scope, code)
-              }
+          scope.change === code
+          ?
+            <this.displayBlock {...remainder} scope={scope} border="red" >
+              {this.renderChangeableChildren(children, scope, code)}
             </this.displayBlock>
+
+          : scope.chosen === code
+          ? <Resize original={this.displayBlock} scope={scope} {...remainder} >
+              {this.renderChildrenIncludingChanges(children, scope, code)}
+            </Resize>
+
+          : scope.display === code
+          ? <this.displayBlock {...remainder} scope={scope} border="blue" >
+              {this.renderChildrenIncludingChanges(children, scope, code)}
+            </this.displayBlock>
+
+          : <this.displayBlock {...remainder} scope={scope} >
+              {this.renderChildrenIncludingChanges(children, scope, code)}
+            </this.displayBlock>
+
         )}</Observer>
       )
     }}
