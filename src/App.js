@@ -77,4 +77,6 @@ const H3 = styled.h3`
 margin: 0px;
 `
 
+var blocks = { Column, Logo, Header, Link, H3 }
+export { blocks }
 export default App;

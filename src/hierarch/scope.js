@@ -18,6 +18,7 @@ class Scope {
 
   changes = []
   rules = {}
+  blocks = []
 
   constructor() {
     makeAutoObservable(this)

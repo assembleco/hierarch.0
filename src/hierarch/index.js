@@ -23,6 +23,8 @@ import dynamics from "./mockup/layout.png"
 
 import apply_boxes from "./engine/apply_boxes"
 
+import { blocks } from "../App.js"
+
 const HierarchScope = React.createContext()
 
 class Hierarch extends React.Component {
@@ -33,6 +35,8 @@ class Hierarch extends React.Component {
   constructor(p) {
     super(p)
     this.scope = new Scope()
+    window.scope = this.scope
+    this.scope.blocks = blocks
     this.scope.pullSource()
   }
 
