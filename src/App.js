@@ -1,4 +1,4 @@
-import { P, Box, Code, Div, H1, S } from './hierarch/display/lens'
+import { Box, P, Div } from './hierarch/display/lens'
 
 import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
@@ -31,14 +31,6 @@ function App() {
   );
 }
 
-const Block = styled.div`
-border: 2px solid purple;
-border-radius: 6px;
-padding: 2rem;
-overflow: hidden;
-background: #2a2a2a2a;
-`
-
 const Column = styled.div`
 min-height: 100vh;
 
@@ -63,7 +55,12 @@ height: 6rem;
 margin-right: 2rem;
 `
 
-const Header = styled(Block)`
+const Header = styled.div`
+border: 2px solid purple;
+border-radius: 6px;
+padding: 2rem;
+overflow: hidden;
+background: #2a2a2a2a;
 display: flex;
 flex-direction: row;
 font-size: 1rem;
