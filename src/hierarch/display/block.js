@@ -3,7 +3,7 @@ import { runInAction } from "mobx"
 
 import Resize from "./resize"
 
-var makeDisplayBlock = (original, code) => {
+var makeDisplayBlock = (original, code, children) => {
   console.log("making display block")
 
   var Block = styled(original).attrs(({ border, scope }) => ({
@@ -14,7 +14,10 @@ var makeDisplayBlock = (original, code) => {
 
     onClick: (e) => {
       if(scope.chosen === code)
-        runInAction(() => scope.change = code)
+        runInAction(() => {
+          scope.change = code
+          scope.changes = [children].flat()
+        })
       if(scope.display === code)
         runInAction(() => scope.chosen = code)
 

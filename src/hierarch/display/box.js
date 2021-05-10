@@ -12,13 +12,10 @@ class Box extends React.Component {
     {scope => {
       var { original, children, code, ...remainder } = this.props
       original = scope.blocks[original]
-      this.displayBlock = makeDisplayBlock(original, code)
+      this.displayBlock = makeDisplayBlock(original, code, children)
 
       if(scope.chosen === code)
         this.assignScopeChanges(original, scope)
-
-      if(scope.change === code && !scope.changes.some(() => 1))
-        scope.changes = [children].flat()
 
       return (
         <Observer>{() => (
