@@ -6,28 +6,28 @@ import logo from './logo.svg'
 
 function App() {
   return (
-    <Box original="Column" code="38071053986258363">
-      <Box original="Header" code="7874390589898883">
-        <Box original="Logo" code="7791605515319688" src={logo} alt="hierarch logo" />
+    <Column>
+      <Header>
+        <Logo src={logo} alt="hierarch logo" />
 
-        <Box original="Div" code="820713828901745">
-          <Box original="H3" code="35956821817278684">Hierarch!</Box>
+        <Div>
+          <H3>Hierarch!</H3>
 
-          <Box original="P" code="4083578664536587">
+          <P>
             A programming engine breaking many rules –<br/>
             change code by clicking and clacking.
-          </Box>
+          </P>
 
-          <Box original="Div" code="7819632276226269">
+          <Div>
             click. clack!
-          </Box>
+          </Div>
 
-          <Box original="Link" code="5525793050494476" address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
             Read our engine's code.
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+          </Link>
+        </Div>
+      </Header>
+    </Column>
   );
 }
 
@@ -79,6 +79,4 @@ font-family: Georgia;
 font-size: 1rem;
 `
 
-var blocks = { Column, Logo, Header, Link, H3, Div, P }
-export { blocks }
 export default App;

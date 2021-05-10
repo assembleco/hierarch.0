@@ -36,15 +36,14 @@ class Hierarch extends React.Component {
     super(p)
     this.scope = new Scope()
     window.scope = this.scope
-    this.scope.blocks = blocks
     this.scope.pullSource()
   }
 
   apply_boxes = () => {
     this.setState({ open: !this.state.open })
-    // apply_boxes(this.scope.index, this.scope.address)
-    //  .then(() => this.scope.pullSource())
-    this.scope.pullSource()
+    apply_boxes(this.scope.index, this.scope.address)
+      .then(() => this.scope.pullSource())
+    // this.scope.pullSource()
   }
 
   render = () => (

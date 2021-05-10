@@ -1,5 +1,7 @@
 import React from "react"
 import styled from "styled-components"
+import { runInAction } from "mobx"
+import { Observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
 import apply_resize from "../engine/apply_resize"
@@ -24,20 +26,28 @@ class Resize extends React.Component {
     const Component = this.component
 
     var resizeable = (scope) => ({
-      resize: dimensions => this.setState(dimensions),
+      resize: dimensions => runInAction(() =>
+        Object.keys(dimensions).forEach(x => scope.rules[x] = dimensions[x])
+      ),
       recordSize: () => this.recordSize(scope),
     })
 
     return (
       <HierarchScope.Consumer>
         {scope => (
-          <ResizeBox {...this.state}>
-            <Corner {...resizeable(scope)} x={-1} y={-1} />
-            <Corner {...resizeable(scope)} x={-1} y={1} />
-            <Corner {...resizeable(scope)} x={1} y={-1} />
-            <Corner {...resizeable(scope)} x={1} y={1} />
-            <Component {...this.state} {...this.props} />
-          </ResizeBox>
+          <Observer>{() => (
+            <ResizeBox width={scope.rules.width} height={scope.rules.height} >
+              <Corner {...resizeable(scope)} x={-1} y={-1} />
+              <Corner {...resizeable(scope)} x={-1} y={1} />
+              <Corner {...resizeable(scope)} x={1} y={-1} />
+              <Corner {...resizeable(scope)} x={1} y={1} />
+              <Component
+                width={scope.rules.width}
+                height={scope.rules.height}
+                {...this.props}
+              />
+            </ResizeBox>
+          )}</Observer>
         )}
       </HierarchScope.Consumer>
     )
@@ -48,8 +58,8 @@ class Resize extends React.Component {
       scope.index,
       scope.address,
       this.props.code,
-      this.state.width,
-      this.state.height,
+      scope.rules.width,
+      scope.rules.height,
     )
     .then(() => scope.pullSource())
   }

@@ -13,9 +13,7 @@ class Box extends React.Component {
     <HierarchScope.Consumer>
     {scope => {
       var { original, children, code, ...remainder } = this.props
-      original = scope.blocks[original]
       this.displayBlock = makeDisplayBlock(original, code, children)
-
 
       return (
         <Observer>{() => (
