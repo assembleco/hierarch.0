@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components"
 import { runInAction } from "mobx"
 
-import Resize from "./resize"
-
 var makeDisplayBlock = (original, code, children) => {
   console.log("making display block")
 
@@ -39,12 +37,6 @@ var makeDisplayBlock = (original, code, children) => {
     ))
   )}
   `
-
-  // if(scope.change !== code && scope.chosen === code) {
-  //   return (({ children }) => (
-  //     <Resize original={Block}>{children}</Resize>
-  //   ))
-  // }
 
   return Block
 }

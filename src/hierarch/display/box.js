@@ -6,6 +6,8 @@ import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
 import Change from "./change"
 
+import Resize from "./resize"
+
 class Box extends React.Component {
   render = () => (
     <HierarchScope.Consumer>
@@ -14,23 +16,33 @@ class Box extends React.Component {
       original = scope.blocks[original]
       this.displayBlock = makeDisplayBlock(original, code, children)
 
+
       return (
         <Observer>{() => (
-          <this.displayBlock
-          {...remainder}
-          scope={scope}
-          border={
-            scope.change === code ? "black"
-            : scope.chosen === code ? "blue"
-            : scope.display === code ? "red"
-            : null
-          }
-          >
-            { scope.change === code
-            ? this.renderChangeableChildren(children, scope, code)
-            : this.renderChildrenIncludingChanges(children, scope, code)
-            }
-          </this.displayBlock>
+          scope.change !== code && scope.chosen === code
+          ? <Resize
+              original={this.displayBlock}
+              scope={scope}
+              {...remainder}
+            >
+              {children}
+            </Resize>
+          :
+            <this.displayBlock
+              {...remainder}
+              scope={scope}
+              border={
+                scope.change === code ? "black"
+                : scope.chosen === code ? "blue"
+                : scope.display === code ? "red"
+                : null
+              }
+            >
+              { scope.change === code
+              ? this.renderChangeableChildren(children, scope, code)
+              : this.renderChildrenIncludingChanges(children, scope, code)
+              }
+            </this.displayBlock>
         )}</Observer>
       )
     }}
