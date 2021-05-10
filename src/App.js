@@ -75,6 +75,8 @@ color: #3f0894;
 
 const H3 = styled.h3`
 margin: 0px;
+font-family: Georgia;
+font-size: 1rem;
 `
 
 var blocks = { Column, Logo, Header, Link, H3, Div, P }

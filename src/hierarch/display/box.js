@@ -14,9 +14,6 @@ class Box extends React.Component {
       original = scope.blocks[original]
       this.displayBlock = makeDisplayBlock(original, code, children)
 
-      if(scope.chosen === code)
-        this.assignScopeChanges(original, scope)
-
       return (
         <Observer>{() => (
           <this.displayBlock
@@ -39,19 +36,6 @@ class Box extends React.Component {
     }}
     </HierarchScope.Consumer>
   )
-
-  assignScopeChanges = (original, scope) => {
-    original.componentStyle.rules.forEach(rule => {
-      var pieces = rule
-        .split(/[:;]/)
-        .map(x => x.trim())
-        .filter(x => x !== "")
-      var label = pieces[0]
-      var change = pieces[1]
-
-      scope.rules[label] = change
-    })
-  }
 
   renderChildrenIncludingChanges = (children, scope, code) => {
     return (

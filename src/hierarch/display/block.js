@@ -19,7 +19,12 @@ var makeDisplayBlock = (original, code, children) => {
           scope.changes = [children].flat()
         })
       if(scope.display === code)
-        runInAction(() => scope.chosen = code)
+        runInAction(() => {
+          scope.chosen = code
+          scope.rules = {}
+
+          assignChosenRules(original, scope)
+        })
 
       e.stopPropagation()
       e.preventDefault()
@@ -42,6 +47,21 @@ var makeDisplayBlock = (original, code, children) => {
   // }
 
   return Block
+}
+
+var assignChosenRules = (original, scope) => {
+  original.componentStyle.rules[0]
+    .split("\n").filter(x => x !== "")
+    .forEach(rule => {
+      var pieces = rule
+        .split(/[:;]/)
+        .map(x => x.trim())
+        .filter(x => x !== "")
+      var label = pieces[0]
+      var rule = pieces[1]
+
+      scope.rules[label] = rule
+    })
 }
 
 export default makeDisplayBlock
