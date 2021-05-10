@@ -83,7 +83,7 @@ class Box extends React.Component {
             focus={(e) => {
               if(e && focus_count === 0) { e.focus(); focus_count += 1 }
             }}
-            record={() => scope.recordChanges() }
+            record={() => scope.applyChanges() }
             escape={() => scope.change = null}
           >
           {children[i]}

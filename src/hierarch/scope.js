@@ -37,7 +37,7 @@ class Scope {
       })
   }
 
-  recordChangesOnChosen = () => {
+  applyRulesOnChosen = () => {
     apply_rules_by_code(
       this.index,
       this.address,
@@ -56,7 +56,7 @@ class Scope {
     }, 2000)
   }
 
-  recordChanges() {
+  applyChanges() {
     var changeArray = [];
 
     this.changes.forEach((child, x) => {

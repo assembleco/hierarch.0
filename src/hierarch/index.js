@@ -85,7 +85,7 @@ class Hierarch extends React.Component {
 
             <Sidebar side="right" size="16rem" >
               <Record onClick={() =>
-                this.scope.recordChangesOnChosen()
+                this.scope.applyRulesOnChosen()
               } >Record</Record>
 
               <Sidebar.Header>Size</Sidebar.Header>
