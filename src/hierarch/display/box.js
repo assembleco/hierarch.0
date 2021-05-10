@@ -7,16 +7,12 @@ import makeDisplayBlock from "./block"
 import Change from "./change"
 
 class Box extends React.Component {
-  constructor(p) {
-    super(p)
-    var { original, code } = this.props
-    this.displayBlock = makeDisplayBlock(original, code)
-  }
-
   render = () => (
     <HierarchScope.Consumer>
     {scope => {
       var { original, children, code, ...remainder } = this.props
+      original = scope.blocks[original]
+      this.displayBlock = makeDisplayBlock(original, code)
 
       if(scope.chosen === code)
         this.assignScopeChanges(original, scope)
