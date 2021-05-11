@@ -1,4 +1,4 @@
-import { Box, P, Div } from './hierarch/display/lens'
+import { Box } from './hierarch/display/box'
 
 import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
@@ -77,6 +77,12 @@ const H3 = styled.h3`
 margin: 0px;
 font-family: Georgia;
 font-size: 1rem;
+`
+
+const P = styled.p`
+`
+
+const Div = styled.div`
 `
 
 export default App;
