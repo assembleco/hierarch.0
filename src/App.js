@@ -1,4 +1,4 @@
-import { Box } from './hierarch/display/box'
+import Box from './hierarch/display/box'
 
 import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
