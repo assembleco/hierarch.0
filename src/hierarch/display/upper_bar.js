@@ -48,6 +48,7 @@ margin-left: 10rem;
 
 var Modal = styled.div`
 height: ${({open}) => open ? '80vh' : '0rem'};
+cursor: pointer;
 transition: height ease-in-out 0.5s;
 width: calc(100vw - 12rem - 18rem - 2rem);
 background-color: #a0a0d0;
@@ -61,6 +62,7 @@ var Monaco = styled.div`
 border: 2px solid #3d3b11;
 background: #d0d0d0;
 height: 100%;
+cursor: auto;
 `
 
 export default UpperBar
