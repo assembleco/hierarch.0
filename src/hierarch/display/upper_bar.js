@@ -4,6 +4,7 @@ import { Observer } from "mobx-react"
 
 import CodeMirror from "codemirror"
 import "codemirror/lib/codemirror.css"
+import "codemirror/mode/jsx/jsx"
 
 // import {EditorState, basicSetup} from "@codemirror/basic-setup"
 // import {EditorView, keymap} from "@codemirror/view"
@@ -59,6 +60,7 @@ class UpperBar extends React.Component {
       this.source.current,
       {
         lineNumbers: true,
+        mode: "jsx"
       },
     )
   }
