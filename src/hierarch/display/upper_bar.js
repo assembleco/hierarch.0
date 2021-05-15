@@ -66,7 +66,7 @@ align-items: flex-start;
 `
 
 var Modal = styled.div`
-height: ${({open}) => open ? '80vh' : '0rem'};
+height: ${({open}) => open ? '90vh' : '0rem'};
 cursor: pointer;
 transition: height ease-in-out 0.5s;
 width: calc(100vw - 12rem - 18rem - 2rem);
@@ -76,15 +76,16 @@ border-radius: 4px;
 margin-top: 1rem;
 margin-left: 10rem;
 padding: 1rem;
+position: relative;
 `
 
-var Monaco = styled.div`
-border: 2px solid #3d3b11;
-background: #d0d0d0;
+var Wrapper = styled.div`
+position: relative;
 height: 100%;
-cursor: auto;
-`
 
-var Wrapper = styled.div``
+.CodeMirror {
+height: 100%;
+}
+`
 
 export default UpperBar
