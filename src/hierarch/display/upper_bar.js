@@ -6,11 +6,6 @@ import CodeMirror from "codemirror"
 import "codemirror/lib/codemirror.css"
 import "codemirror/mode/jsx/jsx"
 
-// import {EditorState, basicSetup} from "@codemirror/basic-setup"
-// import {EditorView, keymap} from "@codemirror/view"
-// import {defaultTabBinding} from "@codemirror/commands"
-// import {javascript} from "@codemirror/lang-javascript"
-
 class UpperBar extends React.Component {
   state = {
     open: false,
@@ -45,17 +40,6 @@ class UpperBar extends React.Component {
   )
 
   componentDidMount() {
-    // this.codemirror = new EditorView({
-    //   state: EditorState.create({
-    //     doc: this.props.index.source,
-    //     extensions: [
-    //       basicSetup,
-    //       javascript(),
-    //     ]
-    //   }),
-    //   parent: this.source.current
-    // })
-
     this.codemirror = CodeMirror.fromTextArea(
       this.source.current,
       {
