@@ -5,6 +5,11 @@ import { Observer } from "mobx-react"
 import CodeMirror from "codemirror"
 import "codemirror/lib/codemirror.css"
 
+// import {EditorState, basicSetup} from "@codemirror/basic-setup"
+// import {EditorView, keymap} from "@codemirror/view"
+// import {defaultTabBinding} from "@codemirror/commands"
+// import {javascript} from "@codemirror/lang-javascript"
+
 class UpperBar extends React.Component {
   state = {
     open: false,
@@ -12,7 +17,7 @@ class UpperBar extends React.Component {
 
   constructor(p) {
     super(p)
-    this.codemirror = React.createRef()
+    this.source = React.createRef()
   }
 
   render = () => (
@@ -29,7 +34,7 @@ class UpperBar extends React.Component {
             onClick={(e) => e.stopPropagation() }
           >
             <textarea
-              ref={this.codemirror}
+              ref={this.source}
               value={this.props.index.source}
             />
           </Wrapper>
@@ -39,8 +44,19 @@ class UpperBar extends React.Component {
   )
 
   componentDidMount() {
-    this.editor = CodeMirror.fromTextArea(
-      this.codemirror.current,
+    // this.codemirror = new EditorView({
+    //   state: EditorState.create({
+    //     doc: this.props.index.source,
+    //     extensions: [
+    //       basicSetup,
+    //       javascript(),
+    //     ]
+    //   }),
+    //   parent: this.source.current
+    // })
+
+    this.codemirror = CodeMirror.fromTextArea(
+      this.source.current,
       {
         lineNumbers: true,
       },
