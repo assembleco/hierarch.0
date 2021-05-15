@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Observer } from "mobx-react"
 
 import CodeMirror from "codemirror"
+import "codemirror/lib/codemirror.css"
 
 class UpperBar extends React.Component {
   state = {
@@ -25,6 +26,7 @@ class UpperBar extends React.Component {
         >
           <Wrapper
             style={{visibility: this.state.open ? 'visible' : 'hidden' }}
+            onClick={(e) => e.stopPropagation() }
           >
             <textarea
               ref={this.codemirror}
@@ -39,7 +41,9 @@ class UpperBar extends React.Component {
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(
       this.codemirror.current,
-      { linNumbers: true },
+      {
+        lineNumbers: true,
+      },
     )
   }
 }
