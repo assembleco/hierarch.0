@@ -23,11 +23,14 @@ class UpperBar extends React.Component {
           open={this.state.open}
           onClick={() => this.setState({open: !this.state.open})}
         >
-          <textarea
-            ref={this.codemirror}
-            value={this.props.index.source}
+          <Wrapper
             style={{visibility: this.state.open ? 'visible' : 'hidden' }}
-          />
+          >
+            <textarea
+              ref={this.codemirror}
+              value={this.props.index.source}
+            />
+          </Wrapper>
         </Modal>
       </Bar>
     )}</Observer>
@@ -75,5 +78,7 @@ background: #d0d0d0;
 height: 100%;
 cursor: auto;
 `
+
+var Wrapper = styled.div``
 
 export default UpperBar
