@@ -2,9 +2,16 @@ import React from "react"
 import styled from "styled-components"
 import { Observer } from "mobx-react"
 
+import CodeMirror from "codemirror"
+
 class UpperBar extends React.Component {
   state = {
     open: false,
+  }
+
+  constructor(p) {
+    super(p)
+    this.codemirror = React.createRef()
   }
 
   render = () => (
@@ -17,14 +24,23 @@ class UpperBar extends React.Component {
             open={this.state.open}
             onClick={() => this.setState({open: !this.state.open})}
           >
-            {this.state.open &&
-              <Monaco/>
-            }
+            <textarea
+              ref={this.codemirror}
+              value={this.props.index}
+              style={{display: this.state.open ? 'block' : 'none' }}
+            />
           </Modal>
         </UpperBar.Header>
       </Bar>
     )}</Observer>
   )
+
+  componentDidMount() {
+    this.editor = CodeMirror.fromTextArea(
+      this.codemirror.current,
+      { linNumbers: true },
+    )
+  }
 }
 
 var Bar = styled.div`
