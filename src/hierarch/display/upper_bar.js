@@ -19,18 +19,16 @@ class UpperBar extends React.Component {
       <Bar>
         {this.props.children}
 
-        <UpperBar.Header>
-          <Modal
-            open={this.state.open}
-            onClick={() => this.setState({open: !this.state.open})}
-          >
-            <textarea
-              ref={this.codemirror}
-              value={this.props.index}
-              style={{display: this.state.open ? 'block' : 'none' }}
-            />
-          </Modal>
-        </UpperBar.Header>
+        <Modal
+          open={this.state.open}
+          onClick={() => this.setState({open: !this.state.open})}
+        >
+          <textarea
+            ref={this.codemirror}
+            value={this.props.index.source}
+            style={{visibility: this.state.open ? 'visible' : 'hidden' }}
+          />
+        </Modal>
       </Bar>
     )}</Observer>
   )
@@ -58,10 +56,6 @@ justify-content: flex-start;
 align-items: flex-start;
 `
 
-UpperBar.Header = styled.div`
-margin-left: 10rem;
-`
-
 var Modal = styled.div`
 height: ${({open}) => open ? '80vh' : '0rem'};
 cursor: pointer;
@@ -71,6 +65,7 @@ background-color: #a0a0d0;
 border: 2px solid #3d3b11;
 border-radius: 4px;
 margin-top: 1rem;
+margin-left: 10rem;
 padding: 1rem;
 `
 
