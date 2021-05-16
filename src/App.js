@@ -38,6 +38,24 @@ function App() {
   return (
     <Column>
       <Header>
+        <Logo src={logo} alt="hierarch logo" />
+
+        <Div>
+          <H3>Hierarch!</H3>
+
+          <P>
+            A programming engine breaking many rules –<br/>
+            change code by clicking and clacking.
+          </P>
+
+          <Div>
+            click. clack!
+          </Div>
+
+          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+            Read our engine's code.
+          </Link>
+        </Div>
 
         <Observer>{() => (
           <>
