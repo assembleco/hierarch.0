@@ -4,28 +4,52 @@ import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
 import logo from './logo.svg'
 
+import { makeAutoObservable } from "mobx"
+import { Observer } from "mobx-react"
+import { ChromePicker } from "react-color"
+
+var makeBlock = () => {
+  var Block = styled.div`
+  ${({ scope }) => (
+    Object.keys(scope.rules).map(change => (
+        `${change}: ${scope.rules[change]};
+        `
+      ))
+    )
+  }
+  `
+
+  return Block
+}
+
+class LocalScope {
+  rules = {}
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+}
+
+var localScope = new LocalScope()
+
 function App() {
+  var Block = makeBlock()
+
   return (
     <Column>
       <Header>
-        <Logo src={logo} alt="hierarch logo" />
 
-        <Div>
-          <H3>Hierarch!</H3>
+        <Observer>{() => (
+          <>
+          <Block scope={localScope} >Hello</Block>
 
-          <P>
-            A programming engine breaking many rules –<br/>
-            change code by clicking and clacking.
-          </P>
+          <ChromePicker
+            onChange={(color) => localScope.rules['color'] = color.hex}
+            color={localScope.rules['color'] || ''}
+          />
+          </>
+        )}</Observer>
 
-          <Div>
-            click. clack!
-          </Div>
-
-          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
-            Read our engine's code.
-          </Link>
-        </Div>
       </Header>
     </Column>
   );
@@ -62,7 +86,7 @@ padding: 2rem;
 overflow: hidden;
 background: #2a2a2a2a;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 font-size: 1rem;
 align-items: flex-end;
 `
