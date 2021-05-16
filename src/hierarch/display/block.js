@@ -30,12 +30,15 @@ var makeDisplayBlock = (original, code, children) => {
       return false
     },
   }))`
-  ${({ scope }) => (
-  scope.chosen === code && Object.keys(scope.rules).map(change => (
-      `${change}: ${scope.rules[change]};
-      `
-    ))
-  )}
+  ${({ scope }) => {
+    console.log("Rendering display block", code)
+    return (
+    scope.chosen === code && Object.keys(scope.rules).map(change => (
+        `${change}: ${scope.rules[change]};
+        `
+      ))
+    )
+  }}
   `
 
   return Block

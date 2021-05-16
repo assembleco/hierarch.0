@@ -4,18 +4,21 @@ import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
 import logo from './logo.svg'
 
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, autorun } from "mobx"
 import { Observer } from "mobx-react"
 import { ChromePicker } from "react-color"
 
 var makeBlock = () => {
   var Block = styled.div`
-  ${({ scope }) => (
+  ${({ scope }) => {
+  console.log("Rendering local block")
+  return (
     Object.keys(scope.rules).map(change => (
         `${change}: ${scope.rules[change]};
         `
       ))
     )
+    }
   }
   `
 
@@ -27,6 +30,7 @@ class LocalScope {
 
   constructor() {
     makeAutoObservable(this)
+    autorun(() => console.log("local rules", JSON.stringify(this.rules)))
   }
 }
 

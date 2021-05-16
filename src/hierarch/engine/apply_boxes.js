@@ -101,6 +101,7 @@ const apply_boxes = (program, address) => {
   query = query.filter(m => !(m.captures.some(c => c.name === 'opening-name' && program.display(c.node) === 'Scope')))
   query = query.filter(m => !(m.captures.some(c => c.name === 'opening-name' && program.display(c.node) === 'Block')))
   query = query.filter(m => !(m.captures.some(c => c.name === 'opening-name' && program.display(c.node) === '')))
+  query = query.filter(m => !(m.captures.some(c => c.name === 'opening-name' && program.display(c.node) === 'Observer')))
 
   query.forEach(m => {
     program.debug_query([m])

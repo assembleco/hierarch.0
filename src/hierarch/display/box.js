@@ -9,35 +9,42 @@ import Change from "./change"
 import Resize from "./resize"
 
 class Box extends React.Component {
+  constructor(p) {
+    super(p)
+    var { original, children, code, ...remainder } = this.props
+    this.Block = makeDisplayBlock(original, code, children)
+  }
+
   render = () => (
     <HierarchScope.Consumer>
     {scope => {
       var { original, children, code, ...remainder } = this.props
-      this.displayBlock = makeDisplayBlock(original, code, children)
 
       return (
-        <Observer>{() => (
+        <Observer>{() => {
+          return (
           scope.change === code
           ?
-            <this.displayBlock {...remainder} scope={scope} border="red" >
+            <this.Block {...remainder} scope={scope} border="red" >
               {this.renderChangeableChildren(children, scope, code)}
-            </this.displayBlock>
+            </this.Block>
 
           : scope.chosen === code
-          ? <Resize original={this.displayBlock} scope={scope} {...remainder} >
+          ? <this.Block original={this.Block} scope={scope} {...remainder} border="green" >
               {this.renderChildrenIncludingChanges(children, scope, code)}
-            </Resize>
+            </this.Block>
 
           : scope.display === code
-          ? <this.displayBlock {...remainder} scope={scope} border="blue" >
+          ? <this.Block {...remainder} scope={scope} border="blue" >
               {this.renderChildrenIncludingChanges(children, scope, code)}
-            </this.displayBlock>
+            </this.Block>
 
-          : <this.displayBlock {...remainder} scope={scope} >
+          : <this.Block {...remainder} scope={scope} >
               {this.renderChildrenIncludingChanges(children, scope, code)}
-            </this.displayBlock>
+            </this.Block>
 
-        )}</Observer>
+        )
+        }}</Observer>
       )
     }}
     </HierarchScope.Consumer>
