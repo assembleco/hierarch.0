@@ -129,6 +129,9 @@ const apply_boxes = (program, address) => {
   `)
   query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === 'Box')))
   query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === 'br')))
+  query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === 'ChromePicker')))
+  query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === 'Block')))
+  query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === '')))
 
   query.forEach(m => {
     var m = query[0]
