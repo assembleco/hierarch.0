@@ -1,4 +1,4 @@
-import { makeAutoObservable, autorun } from "mobx"
+import { makeAutoObservable /*, autorun */ } from "mobx"
 
 import apply_rules_by_code from "./engine/apply_rules_by_code"
 import apply_changes from "./engine/apply_changes"
@@ -22,10 +22,10 @@ class Scope {
 
   constructor() {
     makeAutoObservable(this)
-    autorun(() => console.log("display", this.display))
-    autorun(() => console.log("chosen", this.chosen))
-    autorun(() => console.log("change", this.change))
-    autorun(() => console.log("rules", JSON.stringify(this.rules)))
+    // autorun(() => console.log("display", this.display))
+    // autorun(() => console.log("chosen", this.chosen))
+    // autorun(() => console.log("change", this.change))
+    // autorun(() => console.log("rules", JSON.stringify(this.rules)))
   }
 
   pullSource = () => {
