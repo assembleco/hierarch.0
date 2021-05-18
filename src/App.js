@@ -4,6 +4,7 @@ import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
 import logo from './logo.svg'
 
+import { HierarchScope } from "./hierarch/index"
 import { makeAutoObservable, autorun, runInAction } from "mobx"
 import { Observer } from "mobx-react"
 import { ChromePicker } from "react-color"
@@ -40,31 +41,38 @@ var Block = makeBlock()
 
 function App() {
   return (
-    <Column>
-      <Header>
-        <Logo src={logo} alt="hierarch logo" />
+    <Box original={Column} code="925588771933622">
+      <Box original={Header} code="07915938704153302">
+        <Box original={Logo} code="8480688490305877" src={logo} alt="hierarch logo" />
 
-        <Div>
-          <H3>Hierarch!</H3>
+        <Box original={Div} code="5969100518791792">
+          <Box original={H3} code="1383673215796528">Hierarch!</Box>
 
-          <P>
+
+    <HierarchScope.Consumer>
+    {mainScope => (
+        <Observer>{() => (
+          <Box original={P} code="5520927980384607" scope={mainScope} >
             A programming engine breaking many rules –<br/>
             change code by clicking and clacking.
-          </P>
+          </Box>
+        )}</Observer>
+    )}
+    </HierarchScope.Consumer>
 
-          <Div>
+          <Box original={Div} code="4169704637156062">
             click. clack!
-          </Div>
+          </Box>
 
-          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+          <Box original={Link} code="6164124580793706" address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
             Read our engine's code.
-          </Link>
-        </Div>
+          </Box>
+        </Box>
 
         <Observer>{() => (
           <>
-          <Block scope={localScope} >Hello</Block>
           <Box code="abc" scope={localScope} original={Div}>Hello</Box>
+          <Block scope={localScope} >Hello</Block>
 
           <ChromePicker
             onChange={(color) => runInAction(() => localScope.rules['color'] = color.hex)}
@@ -73,8 +81,8 @@ function App() {
           </>
         )}</Observer>
 
-      </Header>
-    </Column>
+      </Box>
+    </Box>
   );
 }
 

@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { Observer } from "mobx-react"
+import { Observer, observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
@@ -20,9 +20,12 @@ class Box extends React.Component {
     {mainScope => {
       var { original, children, code, ...remainder } = this.props
       var scope = this.props.scope || mainScope
+      console.log("Rendering box", code)
 
       return (
         <Observer>{() => {
+      console.log("Rendering inside box", code)
+          console.log(scope.change, scope.chosen, scope.display, JSON.stringify(scope.rules))
           return (
           scope.change === code
           ?
@@ -86,4 +89,4 @@ class Box extends React.Component {
   }
 }
 
-export default Box
+export default observer(Box)
