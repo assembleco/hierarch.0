@@ -4,7 +4,7 @@ import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
 import logo from './logo.svg'
 
-import { makeAutoObservable, autorun } from "mobx"
+import { makeAutoObservable, autorun, runInAction } from "mobx"
 import { Observer } from "mobx-react"
 import { ChromePicker } from "react-color"
 
@@ -67,7 +67,7 @@ function App() {
           <Box code="abc" scope={localScope} original={Div}>Hello</Box>
 
           <ChromePicker
-            onChange={(color) => localScope.rules['color'] = color.hex}
+            onChange={(color) => runInAction(() => localScope.rules['color'] = color.hex)}
             color={localScope.rules['color'] || ''}
           />
           </>

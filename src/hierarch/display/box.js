@@ -17,8 +17,9 @@ class Box extends React.Component {
 
   render = () => (
     <HierarchScope.Consumer>
-    {scope => {
+    {mainScope => {
       var { original, children, code, ...remainder } = this.props
+      var scope = this.props.scope || mainScope
 
       return (
         <Observer>{() => {
@@ -30,9 +31,9 @@ class Box extends React.Component {
             </this.Block>
 
           : scope.chosen === code
-          ? <this.Block original={this.Block} scope={scope} {...remainder} border="green" >
+          ? <Resize original={this.Block} scope={scope} {...remainder} border="green" >
               {this.renderChildrenIncludingChanges(children, scope, code)}
-            </this.Block>
+            </Resize>
 
           : scope.display === code
           ? <this.Block {...remainder} scope={scope} border="blue" >

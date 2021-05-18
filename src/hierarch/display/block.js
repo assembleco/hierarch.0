@@ -31,13 +31,18 @@ var makeDisplayBlock = (original, code, children) => {
     },
   }))`
   ${({ scope }) => {
-    console.log("Rendering display block", code)
-    return (
-    scope.chosen === code && Object.keys(scope.rules).map(change => (
-        `${change}: ${scope.rules[change]};
-        `
-      ))
-    )
+    if(scope.chosen === code) {
+      console.log("Rendering display block", code)
+      return (
+        Object.keys(scope.rules).map(change => (
+          `${change}: ${scope.rules[change]};
+          `
+        ))
+      )
+    } else {
+      console.log("No longer rendering", code)
+      return null
+    }
   }}
   `
 
