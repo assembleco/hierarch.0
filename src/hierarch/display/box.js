@@ -55,7 +55,7 @@ class Box extends React.Component {
 
   renderChildrenIncludingChanges = (children, scope, code) => {
     return (
-      scope.cooling === code
+      scope.cooling_change === code
       ? scope.changes
       : children
     )

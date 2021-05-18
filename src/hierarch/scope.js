@@ -11,7 +11,8 @@ class Scope {
   display = null
   chosen = null
   change = null
-  cooling = null
+  cooling_change = null
+  cooling_chosen = null
 
   hierarchy = [0,0,[],"",false]
   index = null
@@ -44,14 +45,22 @@ class Scope {
       this.chosen,
       this.rules,
     )
+    // .then(this.cooldown)
     .then(() => this.pullSource())
   }
 
   cooldown = () => {
-    this.cooling = this.change
+    // this.cooling_chosen = this.chosen
+    // this.chosen = null
+    // setTimeout(() => {
+    //   this.cooling_chosen = null
+    //   this.rules = {}
+    // }, 2000)
+
+    this.cooling_change = this.change
     this.change = null
     setTimeout(() => {
-      this.cooling = null
+      this.cooling_change = null
       this.changes = []
     }, 2000)
   }
@@ -65,7 +74,7 @@ class Scope {
     })
 
     apply_changes(this.address, this.index, this.change, changeArray)
-    this.cooldown()
+    .then(this.cooldown)
   }
 }
 

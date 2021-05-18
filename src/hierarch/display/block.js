@@ -31,7 +31,7 @@ var makeDisplayBlock = (original, code, children) => {
     },
   }))`
   ${({ scope }) => {
-    if(scope.chosen === code) {
+    if(scope.chosen === code || scope.cooling_chosen === code) {
       console.log("Rendering display block", code)
       return (
         Object.keys(scope.rules).map(change => (
