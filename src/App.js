@@ -4,85 +4,30 @@ import Scope from './hierarch/engine/scope'
 import styled, { keyframes } from "styled-components"
 import logo from './logo.svg'
 
-import { HierarchScope } from "./hierarch/index"
-import { makeAutoObservable, autorun, runInAction } from "mobx"
-import { Observer } from "mobx-react"
-import { ChromePicker } from "react-color"
-
-var makeBlock = () => {
-  var Block = styled.div`
-  ${({ scope }) => {
-  console.log("Rendering local block")
-  return (
-    Object.keys(scope.rules).map(change => (
-        `${change}: ${scope.rules[change]};
-        `
-      ))
-    )
-    }
-  }
-  `
-
-  return Block
-}
-
-class LocalScope {
-  chosen = "abc"
-  rules = {}
-
-  constructor() {
-    makeAutoObservable(this)
-    autorun(() => console.log("local rules", JSON.stringify(this.rules)))
-  }
-}
-
-var localScope = new LocalScope()
-var Block = makeBlock()
-
 function App() {
   return (
-    <Box original={Column} code="925588771933622">
-      <Box original={Header} code="07915938704153302">
-        <Box original={Logo} code="8480688490305877" src={logo} alt="hierarch logo" />
+    <Column>
+      <Header>
+        <Logo src={logo} alt="hierarch logo" />
 
-        <Box original={Div} code="5969100518791792">
-          <Box original={H3} code="1383673215796528">Hierarch!</Box>
+        <Div>
+          <H3>Hierarch!</H3>
 
-
-    <HierarchScope.Consumer>
-    {mainScope => (
-        <Observer>{() => (
-          <Box original={P} code="5520927980384607" scope={mainScope} >
+          <P>
             A programming engine breaking many rules –<br/>
             change code by clicking and clacking.
-          </Box>
-        )}</Observer>
-    )}
-    </HierarchScope.Consumer>
+          </P>
 
-          <Box original={Div} code="4169704637156062">
+          <Div>
             click. clack!
-          </Box>
+          </Div>
 
-          <Box original={Link} code="6164124580793706" address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
             Read our engine's code.
-          </Box>
-        </Box>
-
-        <Observer>{() => (
-          <>
-          <Box code="abc" scope={localScope} original={Div}>Hello</Box>
-          <Block scope={localScope} >Hello</Block>
-
-          <ChromePicker
-            onChange={(color) => runInAction(() => localScope.rules['color'] = color.hex)}
-            color={localScope.rules['color'] || ''}
-          />
-          </>
-        )}</Observer>
-
-      </Box>
-    </Box>
+          </Link>
+        </Div>
+      </Header>
+    </Column>
   );
 }
 
@@ -117,7 +62,7 @@ padding: 2rem;
 overflow: hidden;
 background: #2a2a2a2a;
 display: flex;
-flex-direction: column;
+flex-direction: row;
 font-size: 1rem;
 align-items: flex-end;
 `

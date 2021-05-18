@@ -41,9 +41,9 @@ class Hierarch extends React.Component {
 
   apply_boxes = () => {
     this.setState({ open: !this.state.open })
-    // apply_boxes(this.scope.index, this.scope.address)
-      // .then(() => this.scope.pullSource())
-    this.scope.pullSource()
+    apply_boxes(this.scope.index, this.scope.address)
+      .then(() => this.scope.pullSource())
+    // this.scope.pullSource()
   }
 
   render = () => (
