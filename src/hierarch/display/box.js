@@ -23,7 +23,8 @@ class Box extends React.Component {
 
       return (
         <Observer>{() => {
-          console.log(scope.change, scope.chosen, scope.display, JSON.stringify(scope.rules))
+          console.warn(JSON.stringify(scope.rules))
+
           return (
           scope.change === code
           ?
