@@ -20,11 +20,9 @@ class Box extends React.Component {
     {mainScope => {
       var { original, children, code, ...remainder } = this.props
       var scope = this.props.scope || mainScope
-      console.log("Rendering box", code)
 
       return (
         <Observer>{() => {
-      console.log("Rendering inside box", code)
           console.log(scope.change, scope.chosen, scope.display, JSON.stringify(scope.rules))
           return (
           scope.change === code
