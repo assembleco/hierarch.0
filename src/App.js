@@ -26,6 +26,7 @@ var makeBlock = () => {
 }
 
 class LocalScope {
+  chosen = "abc"
   rules = {}
 
   constructor() {
@@ -35,10 +36,9 @@ class LocalScope {
 }
 
 var localScope = new LocalScope()
+var Block = makeBlock()
 
 function App() {
-  var Block = makeBlock()
-
   return (
     <Column>
       <Header>
@@ -64,6 +64,7 @@ function App() {
         <Observer>{() => (
           <>
           <Block scope={localScope} >Hello</Block>
+          <Box code="abc" scope={localScope} original={Div}>Hello</Box>
 
           <ChromePicker
             onChange={(color) => localScope.rules['color'] = color.hex}
