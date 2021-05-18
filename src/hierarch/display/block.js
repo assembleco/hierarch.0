@@ -39,10 +39,7 @@ var makeDisplayBlock = (original, code, children) => {
           `
         ))
       )
-    } else {
-      console.log("No longer rendering", code)
-      return null
-    }
+    } else return null
   }}
   `
 
