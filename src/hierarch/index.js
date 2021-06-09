@@ -72,7 +72,7 @@ class Hierarch extends React.Component {
             onClick={() => this.apply_boxes()}
           />
           {this.state.open
-            ? <ModalBox />
+            ? <ModalBox scope={this.scope} />
             : null
           }
         </Corner>

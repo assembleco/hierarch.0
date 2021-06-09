@@ -1,4 +1,4 @@
-import { makeAutoObservable /*, autorun */ } from "mobx"
+import { makeAutoObservable, runInAction, autorun } from "mobx"
 
 import apply_rules_by_code from "./engine/apply_rules_by_code"
 import apply_changes from "./engine/apply_changes"
@@ -7,6 +7,7 @@ import parse_hierarchy from "./engine/parse_hierarchy"
 
 class Scope {
   address = "src/App.js"
+  signal = null
 
   display = null
   chosen = null
@@ -26,6 +27,7 @@ class Scope {
     // autorun(() => console.log("chosen", this.chosen))
     // autorun(() => console.log("change", this.change))
     // autorun(() => console.log("rules", JSON.stringify(this.rules)))
+    autorun(() => console.log("signal", this.signal))
   }
 
   pullSource = () => {
@@ -76,6 +78,10 @@ class Scope {
     apply_changes(this.address, this.index, this.change, changeArray)
     .then(this.cooldown)
   }
+
+  sign = (signal) => runInAction(() => {
+    this.signal = signal
+  })
 }
 
 export default Scope

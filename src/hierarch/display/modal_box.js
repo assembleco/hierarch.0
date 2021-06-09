@@ -1,14 +1,34 @@
 import styled from "styled-components"
+import { observer } from "mobx-react"
 
 import { Icon, InlineIcon } from '@iconify/react';
 import add_behind from '@iconify-icons/gg/insert-before-r';
 import add_ahead from '@iconify-icons/gg/insert-after-r';
 
-
-var ModalBox = () => (
+var ModalBox = ({ scope }) => (
   <Border>
-    <Icon icon={add_ahead} height="2rem" color="#3d3b11" />
-    <Icon icon={add_behind} height="2rem" color="#3d3b11" />
+    <Icon
+      icon={add_ahead}
+      height="2rem"
+      color={scope.signal === "add_ahead" ? "blue" : "#3d3b11"}
+      onClick={() => {
+        scope.signal === "add_ahead"
+        ? scope.sign(null)
+        : scope.sign("add_ahead")
+      }}
+    />
+
+    <Icon
+      icon={add_behind}
+      height="2rem"
+      color="#3d3b11"
+      color={scope.signal === "add_behind" ? "blue" : "#3d3b11"}
+      onClick={() => {
+        scope.signal === "add_behind"
+        ? scope.sign(null)
+        : scope.sign("add_behind")
+      }}
+    />
   </Border>
 )
 
@@ -24,4 +44,4 @@ grid-template-columns: repeat(2, 2rem);
 grid-column-gap: 1rem;
 `
 
-export default ModalBox
+export default observer(ModalBox)
