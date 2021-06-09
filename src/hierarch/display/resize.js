@@ -38,7 +38,7 @@ class Resize extends React.Component {
           <Observer>{() => (
             <ResizeBox width={scope.rules.width} height={scope.rules.height} >
               <ModalBox>
-                Hello.
+                <div>Hello.</div>
               </ModalBox>
 
               <Corner {...resizeable(scope)} x={-1} y={-1} />
@@ -129,14 +129,18 @@ overflow: visible;
 `
 
 const ModalBox = styled.div`
+position: absolute;
+top: -4rem;
+
+div {
+position: fixed;
+
 border: 2px solid #3d3b11;
 border-radius: 4px;
 background-color: #faf9dd;
 padding: 0.5rem 1rem;
 height: 2rem;
-
-position: absolute;
-top: -4rem;
+}
 `
 
 const Corner = styled.span.attrs(p => ({
