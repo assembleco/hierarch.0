@@ -13,22 +13,14 @@ var ModalBox = ({ scope }) => (
       icon={add_ahead}
       width="2rem"
       color={scope.signal === "add_ahead" ? "blue" : "#3d3b11"}
-      onClick={() => {
-        scope.signal === "add_ahead"
-        ? scope.sign(null)
-        : scope.sign("add_ahead")
-      }}
+      onClick={() => scope.sign("add_ahead") }
     />
 
     <Icon
       icon={add_behind}
       width="2rem"
       color={scope.signal === "add_behind" ? "blue" : "#3d3b11"}
-      onClick={() => {
-        scope.signal === "add_behind"
-        ? scope.sign(null)
-        : scope.sign("add_behind")
-      }}
+      onClick={() => scope.sign("add_behind") }
     />
 
     <Icon

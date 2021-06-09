@@ -120,7 +120,20 @@ class Scope {
   }
 
   sign = (signal) => runInAction(() => {
-    this.signal = signal
+    if(this.chosen) {
+      add_block[signal](
+        this.address,
+        this.index,
+        this.chosen,
+      )
+      .then(() => this.pullSource())
+    }
+    else {
+      if(this.signal === signal)
+        this.signal = null
+      else
+        this.signal = signal
+    }
   })
 }
 
