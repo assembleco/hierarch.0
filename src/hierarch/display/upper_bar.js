@@ -47,6 +47,28 @@ class UpperBar extends React.Component {
         mode: "jsx"
       },
     )
+
+    this.props.index.query(`
+      (jsx_element
+        open_tag: (
+          jsx_opening_element
+          name: (_) @opening-name
+          attribute: (jsx_attribute (property_identifier) @_original "=" (jsx_expression (_) @original))
+          attribute: (jsx_attribute (property_identifier) @_code "=" (string) @code)
+        )
+        close_tag: (
+          jsx_closing_element
+          name: (_) @closing-name
+          (#eq? @closing-name "Box")
+        )
+
+        (#eq? @opening-name "Box")
+        (#eq? @_original "original")
+        (#eq? @_code "code")
+      ) @element
+    `)
+
+
   }
 }
 
