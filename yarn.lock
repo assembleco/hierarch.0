@@ -1401,6 +1401,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@iconify-icons/gg@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/gg/-/gg-1.1.0.tgz#2a308c27fbb80fa0675b96fd1724963df1370aab"
+  integrity sha512-vsM5NIoIj5u9Whm6WiAbYvRa8Qlv0RxLeK0xnYyW9cwa50P//7FbuxBkG2qB03V9vYMhQQJdrynlw4WBF7fToQ==
+
 "@iconify-icons/mdi@^1.1.15":
   version "1.1.15"
   resolved "https://registry.yarnpkg.com/@iconify-icons/mdi/-/mdi-1.1.15.tgz#eff8e16d5095828e60bacc476c9facc993e8c301"
