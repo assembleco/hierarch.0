@@ -10,6 +10,7 @@ import Scope from "./scope"
 
 import Hierarchy from "./display/hierarchy"
 import Logo from "./display/logo"
+import ModalBox from "./display/modal_box"
 
 import Size from "./menu/size"
 import Symbols from "./menu/symbols"
@@ -71,7 +72,7 @@ class Hierarch extends React.Component {
             onClick={() => this.apply_boxes()}
           />
           {this.state.open
-            ? <ModalBox>Hello.</ModalBox>
+            ? <ModalBox />
             : null
           }
         </Corner>
@@ -88,13 +89,6 @@ const Display = styled.div`
 margin: 0;
 `
 
-const ModalBox = styled.div`
-border: 2px solid #3d3b11;
-border-radius: 4px;
-background-color: #faf9dd;
-padding: 0.5rem;
-`
-
 const Corner = styled.div`
 position: fixed;
 top: 0;
@@ -103,10 +97,6 @@ height: 60px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-
-${ModalBox} {
-margin-left: 2.4rem;
-}
 `
 
 var Mockup = styled.img`
