@@ -79,6 +79,36 @@ class Scope {
     .then(this.cooldown)
   }
 
+  click = (code, original, children) => {
+    if(this.chosen === code)
+      runInAction(() => {
+        this.change = code
+        this.changes = [children].flat()
+      })
+    if(this.display === code)
+      runInAction(() => {
+        this.chosen = code
+        this.rules = {}
+
+        this.assignChosenRules(original)
+      })
+  }
+
+  assignChosenRules = (original) => {
+    original.componentStyle.rules[0]
+      .split("\n").filter(x => x !== "")
+      .forEach(rule => {
+        var pieces = rule
+          .split(/[:;]/)
+          .map(x => x.trim())
+          .filter(x => x !== "")
+        var label = pieces[0]
+        var rule = pieces[1]
+
+        this.rules[label] = rule
+      })
+  }
+
   sign = (signal) => runInAction(() => {
     this.signal = signal
   })
