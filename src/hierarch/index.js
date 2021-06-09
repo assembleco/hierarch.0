@@ -10,8 +10,6 @@ import Scope from "./scope"
 
 import Hierarchy from "./display/hierarchy"
 import Logo from "./display/logo"
-import UpperBar from "./display/upper_bar"
-import Sidebar from "./display/sidebar"
 
 import Size from "./menu/size"
 import Symbols from "./menu/symbols"
@@ -66,68 +64,17 @@ class Hierarch extends React.Component {
           {this.props.children}
         </Display>
 
-        {this.state.open
-          ?
-          <>
-            <UpperBar
-              display={(code) => this.scope.display = code}
-              index={this.scope.index}
-            >
-              <LogoSpace>
-                <Logo
-                  size={20}
-                  repeat={5000}
-                  onClick={() => this.apply_boxes()}
-                />
-              </LogoSpace>
-            </UpperBar>
-
-            <Sidebar side="left" >
-              <Sidebar.Header>Hierarchy</Sidebar.Header>
-              <Hierarchy
-                hierarchy={this.scope.hierarchy}
-                display={this.props.display}
-              />
-            </Sidebar>
-
-            <Sidebar side="right" size="16rem" >
-              <Record onClick={() =>
-                this.scope.applyRulesOnChosen()
-              } >Record</Record>
-
-              <Sidebar.Header>Size</Sidebar.Header>
-              <Size/>
-
-              <Sidebar.Header>Symbols</Sidebar.Header>
-              <Symbols/>
-              <Mockup src={symbols} alt="symbols" />
-              <br/>
-
-              <Sidebar.Header>Spacing</Sidebar.Header>
-              <a href="https://github.com/assembleapp/hierarch/issues/12">Coming Soon</a>
-              <Mockup src={spacing} alt="spacing" />
-              <br/>
-
-              <Sidebar.Header>Place</Sidebar.Header>
-              <a href="https://github.com/assembleapp/hierarch/issues/14">Coming Soon</a>
-              <Mockup src={place} alt="place" />
-              <br/>
-
-              <Sidebar.Header>Dynamics</Sidebar.Header>
-              <a href="https://github.com/assembleapp/hierarch/issues/15">Coming Soon</a>
-              <Mockup src={dynamics} alt="dynamics" />
-              <br/>
-            </Sidebar>
-          </>
-          :
-          <Corner>
-            <Logo
-              size={20}
-              repeat={5000}
-              onClick={() => this.apply_boxes()}
-            />
-          </Corner>
-        }
+        <Corner>
+          <Logo
+            size={20}
+            repeat={5000}
+            onClick={() => this.apply_boxes()}
+          />
+          {this.state.open
+            ? <ModalBox>Hello.</ModalBox>
+            : null
+          }
+        </Corner>
       </DndProvider>
     )}</Observer>
     </HierarchScope.Provider>
@@ -139,20 +86,27 @@ var LogoSpace = styled.div`
 
 const Display = styled.div`
 margin: 0;
-${({open}) => open && css`
-position: fixed;
-top: 4rem;
-left: 12rem;
-right: 16rem;
-`}
+`
+
+const ModalBox = styled.div`
+border: 2px solid #3d3b11;
+border-radius: 4px;
+background-color: #faf9dd;
+padding: 0.5rem;
 `
 
 const Corner = styled.div`
 position: fixed;
 top: 0;
 left: 0;
-height: 40px;
-width: 40px;
+height: 60px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+${ModalBox} {
+margin-left: 2.4rem;
+}
 `
 
 var Mockup = styled.img`
