@@ -5,7 +5,6 @@ import { Observer, observer } from "mobx-react"
 import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
 import Change from "./change"
-
 import Resize from "./resize"
 
 class Box extends React.Component {
@@ -33,7 +32,12 @@ class Box extends React.Component {
             </this.Block>
 
           : scope.chosen === code
-          ? <Resize original={this.Block} scope={scope} {...remainder} border="green" >
+          ? <Resize
+              original={this.Block}
+              scope={scope}
+              {...remainder}
+              border="green"
+            >
               {this.renderChildrenIncludingChanges(children, scope, code)}
             </Resize>
 
