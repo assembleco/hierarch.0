@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction, autorun } from "mobx"
 
+import * as add_block from "./engine/add_block"
 import apply_rules_by_code from "./engine/apply_rules_by_code"
 import apply_changes from "./engine/apply_changes"
 import makeProgram from "./engine/program"
@@ -80,6 +81,15 @@ class Scope {
   }
 
   click = (code, original, children) => {
+    if(this.signal === "add_ahead" || this.signal === "add_behind") {
+      add_block[this.signal](
+        this.address,
+        this.index,
+        code,
+      )
+      .then(() => this.pullSource())
+    }
+
     if(this.chosen === code)
       runInAction(() => {
         this.change = code

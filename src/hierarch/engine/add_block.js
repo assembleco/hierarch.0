@@ -1,6 +1,6 @@
 import push_upgrades from "./push_upgrades"
 
-var add_ahead = (address, program, code, block_name) => {
+var add_ahead = (address, program, code) => {
   var block = choose_block(code, program)
   var lead = leading_spaces(program, block)
   var block_code = Math.random().toString().slice(2)
@@ -19,7 +19,7 @@ var add_ahead = (address, program, code, block_name) => {
   return push_upgrades(address, upgrades).then(() => block_code)
 }
 
-var add_behind = (address, program, code, block_name) => {
+var add_behind = (address, program, code) => {
   var block = choose_block(code, program)
   var lead = leading_spaces(program, block)
   var block_code = Math.random().toString().slice(2)
