@@ -5,6 +5,7 @@ import { Observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
 import apply_resize from "../engine/apply_resize"
+import DraggableBox from "./draggable"
 
 class Resize extends React.Component {
   state = {
@@ -45,11 +46,14 @@ class Resize extends React.Component {
               <Corner {...resizeable(scope)} x={-1} y={1} />
               <Corner {...resizeable(scope)} x={1} y={-1} />
               <Corner {...resizeable(scope)} x={1} y={1} />
-              <Component
-                width={scope.rules.width}
-                height={scope.rules.height}
-                {...this.props}
-              />
+
+              <DraggableBox code={this.props.code}>
+                <Component
+                  width={scope.rules.width}
+                  height={scope.rules.height}
+                  {...this.props}
+                />
+              </DraggableBox>
             </ResizeBox>
           )}</Observer>
         )}

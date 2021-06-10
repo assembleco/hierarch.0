@@ -6,6 +6,7 @@ import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
 import Change from "./change"
 import Resize from "./resize"
+import DropZone from "./drop_zone"
 
 class Box extends React.Component {
   constructor(p) {
@@ -25,30 +26,35 @@ class Box extends React.Component {
           console.warn(JSON.stringify(scope.rules))
 
           return (
-          scope.change === code
-          ?
-            <this.Block {...remainder} scope={scope} border="red" >
-              {this.renderChangeableChildren(children, scope, code)}
-            </this.Block>
+            <>
+              <DropZone/>
 
-          : scope.chosen === code
-          ? <Resize
-              original={this.Block}
-              scope={scope}
-              {...remainder}
-              border="green"
-            >
-              {this.renderChildrenIncludingChanges(children, scope, code)}
-            </Resize>
+              {scope.change === code
+              ?
+                <this.Block {...remainder} scope={scope} border="red" >
+                  {this.renderChangeableChildren(children, scope, code)}
+                </this.Block>
 
-          : scope.display === code
-          ? <this.Block {...remainder} scope={scope} border="blue" >
-              {this.renderChildrenIncludingChanges(children, scope, code)}
-            </this.Block>
+              : scope.chosen === code
+              ? <Resize
+                  original={this.Block}
+                  scope={scope}
+                  {...remainder}
+                  border="green"
+                >
+                  {this.renderChildrenIncludingChanges(children, scope, code)}
+                </Resize>
 
-          : <this.Block {...remainder} scope={scope} >
-              {this.renderChildrenIncludingChanges(children, scope, code)}
-            </this.Block>
+              : scope.display === code
+              ? <this.Block {...remainder} scope={scope} border="blue" >
+                  {this.renderChildrenIncludingChanges(children, scope, code)}
+                </this.Block>
+
+              : <this.Block {...remainder} scope={scope} >
+                  {this.renderChildrenIncludingChanges(children, scope, code)}
+                </this.Block>
+              }
+            </>
 
         )
         }}</Observer>

@@ -1,11 +1,11 @@
 import { useDrag } from "react-dnd"
 import React from "react"
+import styled from "styled-components"
 
 import makeDisplayBlock from "./block"
 
-var DraggableBox = ({ scope, ...props }) => {
-  var { original, children, code, ...remainder } = props
-  var Original = makeDisplayBlock(original, code, children, scope)
+var DraggableBox = ({ ...props }) => {
+  var { children, code, ...remainder } = props
 
   var [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: "BOX",
@@ -16,18 +16,9 @@ var DraggableBox = ({ scope, ...props }) => {
   }))
 
   return (
-    <Original
-      ref={drag}
-      border={
-        scope.change === code ? "black"
-        : scope.chosen === code ? "blue"
-        : scope.display === code ? "red"
-        : "none"
-      }
-      {...remainder}
-    >
+    <div ref={drag} >
       {children}
-    </Original>
+    </div>
   )
 }
 
