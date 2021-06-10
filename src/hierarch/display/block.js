@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components"
 import { runInAction } from "mobx"
+import DraggableBox from "./draggable"
 
 var makeDisplayBlock = (original, code, children) => {
   console.log("making display block")
@@ -32,7 +33,11 @@ var makeDisplayBlock = (original, code, children) => {
   }}
   `
 
-  return Block
+  return (props) => (
+    <DraggableBox code={code}>
+      <Block {...props} />
+    </DraggableBox>
+  )
 }
 
 export default makeDisplayBlock
