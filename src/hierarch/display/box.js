@@ -6,6 +6,7 @@ import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
 import Change from "./change"
 import Resize from "./resize"
+import DraggableBox from "./draggable"
 import DropZone from "./drop_zone"
 
 class Box extends React.Component {
@@ -27,7 +28,7 @@ class Box extends React.Component {
 
           return (
             <>
-              <DropZone/>
+              <DropZone code={code} />
 
               {scope.change === code
               ?
@@ -36,7 +37,8 @@ class Box extends React.Component {
                 </this.Block>
 
               : scope.chosen === code
-              ? <Resize
+              ?
+                <Resize
                   original={this.Block}
                   scope={scope}
                   {...remainder}
@@ -46,11 +48,15 @@ class Box extends React.Component {
                 </Resize>
 
               : scope.display === code
-              ? <this.Block {...remainder} scope={scope} border="blue" >
-                  {this.renderChildrenIncludingChanges(children, scope, code)}
-                </this.Block>
+              ?
+                <DraggableBox code={code}>
+                  <this.Block {...remainder} scope={scope} border="blue" >
+                    {this.renderChildrenIncludingChanges(children, scope, code)}
+                  </this.Block>
+                </DraggableBox>
 
-              : <this.Block {...remainder} scope={scope} >
+              :
+                <this.Block {...remainder} scope={scope} >
                   {this.renderChildrenIncludingChanges(children, scope, code)}
                 </this.Block>
               }

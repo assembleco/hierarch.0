@@ -3,15 +3,18 @@ import { useDrop } from "react-dnd"
 import { Icon, InlineIcon } from '@iconify/react';
 import arrowDownDropCircle from '@iconify-icons/mdi/arrow-down-drop-circle';
 
-var DropZone = () => {
+var DropZone = ({ code }) => {
   var [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "BOX",
+    hover(item) {
+      console.log("Drop zone", code, "|", "Dragging", item.code)
+    },
     collect: monitor => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
     drop: (item, monitor) => {
-      console.log("Dropped", item)
+      console.log("Dropped", item.code, "on", code)
     },
   }))
 
