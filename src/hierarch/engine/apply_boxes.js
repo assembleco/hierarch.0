@@ -30,7 +30,7 @@ const apply_boxes = (program, address) => {
     var original = program.display(m.captures.filter(c => c.name === "original")[0].node)
 
     var code_attr = m.captures.filter(c => c.name === "_code")[0].node.parent
-    var original_attr = m.captures.filter(c => c.name === "_original")[0].node.parent
+    // var original_attr = m.captures.filter(c => c.name === "_original")[0].node.parent
 
     upgrades = upgrades.concat([
       {
@@ -59,15 +59,13 @@ const apply_boxes = (program, address) => {
   ) @element
   `)
 
+  program.debug_query(query)
   query.forEach(m => {
-    var m = query[0]
-    program.debug_query([m])
-
     var name = m.captures.filter(c => c.name === "name")[0].node
     var original = program.display(m.captures.filter(c => c.name === "original")[0].node)
 
     var code_attr = m.captures.filter(c => c.name === "_code")[0].node.parent
-    var original_attr = m.captures.filter(c => c.name === "_original")[0].node.parent
+    // var original_attr = m.captures.filter(c => c.name === "_original")[0].node.parent
 
     upgrades = upgrades.concat([
       {
@@ -135,7 +133,6 @@ const apply_boxes = (program, address) => {
   query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === 'ChromePicker')))
 
   query.forEach(m => {
-    var m = query[0]
     program.debug_query([m])
 
     const name = m.captures.filter(c => c.name === "name")[0].node

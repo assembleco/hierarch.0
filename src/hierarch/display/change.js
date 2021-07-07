@@ -1,7 +1,5 @@
 import React from "react"
-import styled, { css } from "styled-components"
-
-import { makeAutoObservable, autorun } from "mobx"
+import styled from "styled-components"
 
 class Change extends React.Component {
   render = () => (

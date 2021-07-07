@@ -69,7 +69,7 @@ const apply_rules_by_code = async (program, address, code, rules) => {
         )
         arguments: (template_string) @css
     )
-    ${original_name && `(#eq? @name "${original_name}")` || ""}
+    ${(original_name && `(#eq? @name "${original_name}")`) || ""}
   )`,
   `(
     variable_declarator
@@ -105,7 +105,7 @@ const apply_rules_by_code = async (program, address, code, rules) => {
       arguments: (template_string) @css
       (#eq? @_styled "styled")
     ) @expr
-    ${original_name && `(#eq? @name "${original_name}")` || ""}
+    ${(original_name && `(#eq? @name "${original_name}")`) || ""}
   )`
   ])
   // program.debug_query(matches)

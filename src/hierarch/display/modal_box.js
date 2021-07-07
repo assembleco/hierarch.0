@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { observer } from "mobx-react"
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import add_behind from '@iconify-icons/gg/insert-before-r';
 import add_ahead from '@iconify-icons/gg/insert-after-r';
 import borderOutside from '@iconify-icons/mdi/border-outside';
-import borderInside from '@iconify-icons/mdi/border-inside';
+// import borderInside from '@iconify-icons/mdi/border-inside';
 
 var ModalBox = ({ scope }) => (
   <Border>

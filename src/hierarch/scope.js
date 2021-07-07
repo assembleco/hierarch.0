@@ -113,9 +113,9 @@ class Scope {
           .map(x => x.trim())
           .filter(x => x !== "")
         var label = pieces[0]
-        var rule = pieces[1]
+        var ruleContent = pieces[1]
 
-        this.rules[label] = rule
+        this.rules[label] = ruleContent
       })
   }
 

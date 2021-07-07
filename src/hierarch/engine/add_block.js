@@ -75,10 +75,4 @@ var leading_spaces = (program, block) => {
   return ' '.repeat(number_leading_spaces)
 }
 
-var display_surroundings = (program, block) => {
-  console.log(
-    program.source.slice(block.startIndex - 20, block.endIndex + 20)
-  )
-}
-
 export { add_ahead, add_behind }

@@ -1,13 +1,10 @@
 import { useDrag } from "react-dnd"
 import React from "react"
-import styled from "styled-components"
-
-import makeDisplayBlock from "./block"
 
 var DraggableBox = ({ ...props }) => {
   var { children, code, ...remainder } = props
 
-  var [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+  var [, drag, ] = useDrag(() => ({
     type: "BOX",
     item: { code },
     collect: monitor => ({
@@ -16,9 +13,9 @@ var DraggableBox = ({ ...props }) => {
   }))
 
   return (
-    <div ref={drag} >
-      {children}
-    </div>
+      <div ref={drag} {...remainder} >
+        {children}
+      </div>
   )
 }
 

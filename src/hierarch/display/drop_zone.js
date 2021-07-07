@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd"
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import arrowDownDropCircle from '@iconify-icons/mdi/arrow-down-drop-circle';
 
 var DropZone = ({ code }) => {

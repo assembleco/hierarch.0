@@ -1,5 +1,5 @@
 import React from "react"
-import styled, {css} from "styled-components"
+import styled from "styled-components"
 import { observer, Observer } from "mobx-react"
 import { runInAction } from "mobx"
 
@@ -8,21 +8,10 @@ import { DndProvider } from 'react-dnd'
 
 import Scope from "./scope"
 
-import Hierarchy from "./display/hierarchy"
 import Logo from "./display/logo"
 import ModalBox from "./display/modal_box"
 
-import Size from "./menu/size"
-import Symbols from "./menu/symbols"
-import Record from "./menu/_record"
-import spacing from "./mockup/spacing.png"
-import symbols from "./mockup/typography.png"
-import place from "./mockup/position.png"
-import dynamics from "./mockup/layout.png"
-
 import apply_boxes from "./engine/apply_boxes"
-
-import { blocks } from "../App.js"
 
 const HierarchScope = React.createContext()
 
@@ -82,9 +71,6 @@ class Hierarch extends React.Component {
   )
 }
 
-var LogoSpace = styled.div`
-`
-
 const Display = styled.div`
 margin: 0;
 `
@@ -97,10 +83,6 @@ height: 60px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-`
-
-var Mockup = styled.img`
-width: 100%;
 `
 
 export { HierarchScope }

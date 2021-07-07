@@ -1,5 +1,4 @@
 import React from "react"
-import styled, { css } from "styled-components"
 import { Observer, observer } from "mobx-react"
 
 import { HierarchScope } from "../index"
@@ -12,7 +11,7 @@ import DropZone from "./drop_zone"
 class Box extends React.Component {
   constructor(p) {
     super(p)
-    var { original, children, code, ...remainder } = this.props
+    var { original, children, code } = this.props
     this.Block = makeDisplayBlock(original, code, children)
   }
 

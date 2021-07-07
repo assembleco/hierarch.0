@@ -1,33 +1,36 @@
 import Box from './hierarch/display/box'
 
-import Scope from './hierarch/engine/scope'
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import logo from './logo.svg'
 
 function App() {
   return (
-    <Column>
-      <Header>
-        <Logo src={logo} alt="hierarch logo" />
+    <Box original={Column} code="13525001524008662">
+      <Box original={Header} code="9554438041073858">
+        <Box original={Logo} code="5921037502634912" src={logo} alt="hierarch logo" />
 
-        <Div>
-          <H3>Hierarch!</H3>
+        <Box original={Div} code="5394112737296386">
+          <Box original={H3} code="2214143356039595">Hierarch!</Box>
 
-          <P>
+          <Box original={Div} code="4753211320021966">
+            click and change.
+          </Box>
+
+          <Box original={P} code="5517781731929035">
             A programming engine breaking many rules –<br/>
             change code by clicking and clacking.
-          </P>
+          </Box>
 
-          <Div>
+          <Box original={Div} code="7678377854145912">
             click. clack!
-          </Div>
+          </Box>
 
-          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+          <Box original={Link} code="9664058381279854" address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
             Read our engine's code.
-          </Link>
-        </Div>
-      </Header>
-    </Column>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
