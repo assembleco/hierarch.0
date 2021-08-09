@@ -5,8 +5,8 @@ import { HierarchScope } from "../index"
 import makeDisplayBlock from "./block"
 import Change from "./change"
 import Resize from "./resize"
-import DraggableBox from "./draggable"
-import DropZone from "./drop_zone"
+
+import { MuuriComponent } from "muuri-react"
 
 class Box extends React.Component {
   constructor(p) {
@@ -27,8 +27,6 @@ class Box extends React.Component {
 
           return (
             <>
-              <DropZone code={code} />
-
               {scope.change === code
               ?
                 <this.Block {...remainder} scope={scope} border="red" >
@@ -48,11 +46,9 @@ class Box extends React.Component {
 
               : scope.display === code
               ?
-                <DraggableBox code={code}>
-                  <this.Block {...remainder} scope={scope} border="blue" >
-                    {this.renderChildrenIncludingChanges(children, scope, code)}
-                  </this.Block>
-                </DraggableBox>
+                <this.Block {...remainder} scope={scope} border="blue" >
+                  {this.renderChildrenIncludingChanges(children, scope, code)}
+                </this.Block>
 
               :
                 <this.Block {...remainder} scope={scope} >
@@ -69,11 +65,23 @@ class Box extends React.Component {
   )
 
   renderChildrenIncludingChanges = (children, scope, code) => {
-    return (
-      scope.cooling_change === code
-      ? scope.changes
-      : children
-    )
+    if(children) {
+      console.log(children)
+      return (
+        scope.cooling_change === code
+        ? scope.changes
+
+        : typeof(children) === "string"
+        ? children
+
+        : children instanceof Array
+        ? <MuuriComponent>
+            {children.map((x, i) => <div key={i}><div>{x}</div></div>)}
+          </MuuriComponent>
+
+        : children
+      )
+    }
   }
 
   renderChangeableChildren = (children, scope, code) => {

@@ -61,6 +61,8 @@
     "mobx": "^6.0.4",
     "mobx-react": "^7.0.5",
     "mobx-state-tree": "^4.0.2",
+    "muuri": "^0.9.5",
+    "muuri-react": "XEonAX/muuri-react",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.2.1",

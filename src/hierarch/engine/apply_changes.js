@@ -25,7 +25,7 @@ var apply_changes = (address, program, code, changeArray) => {
   if(matches.length > 1)
     throw("oh no! more than one matching code during a change. " + code)
 
-  program.debug_query(matches)
+  // program.debug_query(matches)
   var block = matches[0].captures.filter(x => x.name === "element")[0]
 
   // * query `(jsx_text)` opening and closing indices

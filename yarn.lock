@@ -8666,6 +8666,18 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
+muuri-react@XEonAX/muuri-react:
+  version "3.1.5"
+  resolved "https://codeload.github.com/XEonAX/muuri-react/tar.gz/3466bd2432efbf40e1c6f8fea35f34938fbc3ecf"
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    prop-types "^15.7.2"
+
+muuri@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/muuri/-/muuri-0.9.5.tgz#ce5ccf28a596f67a4d9370cac6d3e661db43a380"
+  integrity sha512-nJL9/Pd5IaIXGAVunBs/LLQ+v6tPkvlqCYrlauWESgkVFr+F+CRf8HnayRh4AqiQ1S/PIEN39fhJSe4L5rLlxg==
+
 nan@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"

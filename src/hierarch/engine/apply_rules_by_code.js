@@ -44,7 +44,6 @@ const apply_rules_by_code = async (program, address, code, rules) => {
   `
   ])
 
-  // program.debug_query(original_matches)
   if(original_matches.length > 1) {
     program.debug_query(original_matches)
     throw `oh no! more than 1 match`
@@ -54,7 +53,6 @@ const apply_rules_by_code = async (program, address, code, rules) => {
     throw `oh no! no match`
   }
   var original_name = program.display(original_matches[0].captures.filter(c => c.name === "original")[0].node)
-  // console.log(original_name)
 
   var matches = program.query([
   `(

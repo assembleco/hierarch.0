@@ -3,9 +3,6 @@ import styled from "styled-components"
 import { observer, Observer } from "mobx-react"
 import { runInAction } from "mobx"
 
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
-
 import Scope from "./scope"
 
 import Logo from "./display/logo"
@@ -38,7 +35,7 @@ class Hierarch extends React.Component {
     <HierarchScope.Provider value={this.scope} >
 
     <Observer>{() => (
-      <DndProvider backend={HTML5Backend} >
+      <>
         <Display
           open={this.state.open}
           onMouseMove={(e) => {
@@ -65,7 +62,7 @@ class Hierarch extends React.Component {
             : null
           }
         </Corner>
-      </DndProvider>
+      </>
     )}</Observer>
     </HierarchScope.Provider>
   )

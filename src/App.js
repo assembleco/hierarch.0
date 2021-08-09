@@ -5,32 +5,32 @@ import logo from './logo.svg'
 
 function App() {
   return (
-    <Box original={Column} code="13525001524008662">
-      <Box original={Header} code="9554438041073858">
-        <Box original={Logo} code="5921037502634912" src={logo} alt="hierarch logo" />
+    <Column>
+      <Header>
+        <Logo src={logo} alt="hierarch logo" />
 
-        <Box original={Div} code="5394112737296386">
-          <Box original={H3} code="2214143356039595">Hierarch!</Box>
+        <Div>
+          <H3>Hierarch!</H3>
 
-          <Box original={Div} code="4753211320021966">
+          <Div>
             click and change.
-          </Box>
+          </Div>
 
-          <Box original={P} code="5517781731929035">
+          <P>
             A programming engine breaking many rules –<br/>
             change code by clicking and clacking.
-          </Box>
+          </P>
 
-          <Box original={Div} code="7678377854145912">
+          <Div>
             click. clack!
-          </Box>
+          </Div>
 
-          <Box original={Link} code="9664058381279854" address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
+          <Link address="https://github.com/assembleapp/hierarch" target="_blank" rel="noopener noreferrer" >
             Read our engine's code.
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+          </Link>
+        </Div>
+      </Header>
+    </Column>
   );
 }
 

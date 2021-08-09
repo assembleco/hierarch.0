@@ -59,7 +59,7 @@ const apply_boxes = (program, address) => {
   ) @element
   `)
 
-  program.debug_query(query)
+  // program.debug_query(query)
   query.forEach(m => {
     var name = m.captures.filter(c => c.name === "name")[0].node
     var original = program.display(m.captures.filter(c => c.name === "original")[0].node)
@@ -102,7 +102,7 @@ const apply_boxes = (program, address) => {
   query = query.filter(m => !(m.captures.some(c => c.name === 'opening-name' && program.display(c.node) === 'Observer')))
 
   query.forEach(m => {
-    program.debug_query([m])
+    // program.debug_query([m])
 
     const opening_name= m.captures.filter(c => c.name === "opening-name")[0].node
     const closing_name = m.captures.filter(c => c.name === "closing-name")[0].node
@@ -133,7 +133,7 @@ const apply_boxes = (program, address) => {
   query = query.filter(m => !(m.captures.some(c => c.name === 'name' && program.display(c.node) === 'ChromePicker')))
 
   query.forEach(m => {
-    program.debug_query([m])
+    // program.debug_query([m])
 
     const name = m.captures.filter(c => c.name === "name")[0].node
     const original = program.display(name)
