@@ -6,3 +6,5 @@ COPY package.json yarn.lock /hierarch/
 RUN yarn
 
 COPY . /hierarch/
+
+CMD yarn go
