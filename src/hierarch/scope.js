@@ -29,13 +29,13 @@ class Scope {
   }
 
   pullSource = () => {
-    fetch(`http://${process.env.REACT_APP_HIERARCH_ADDRESS}/source?address=${this.address}`)
-      .then(response => response.text())
-      .then(response => makeProgram(response))
-      .then(program => {
-        this.index = program
-        parse_hierarchy(program, h => this.hierarchy = h)
-      })
+    // fetch(`http://${process.env.REACT_APP_HIERARCH_ADDRESS}/source?address=${this.address}`)
+    //   .then(response => response.text())
+    //   .then(response => makeProgram(response))
+    //   .then(program => {
+    //     this.index = program
+    //     parse_hierarchy(program, h => this.hierarchy = h)
+    //   })
   }
 
   applyRulesOnChosen = () => {
